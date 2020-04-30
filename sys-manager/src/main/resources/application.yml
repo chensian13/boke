@@ -1,0 +1,11 @@
+#服务端
+server:
+    port: 8090
+
+spring:
+    application:
+        name: sys-manager
+    servlet:
+        multipart:
+            max-request-size: 100MB
+            max-file-size: 50MB

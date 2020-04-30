@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="csa.stu.app.userwork.dao.BokeMapper">
+
+  <sql id="cols">
+    b.boke_id, b.boke_subtitle, b.boke_type, b.boke_title, b.boke_code, b.creater,b.ispublic,
+    b.createtime, b.isdel, b.version,b.collect_num,b.state,b.picture_code,b.path
+  </sql>
+
+  <select id="selectTable" parameterType="map" resultType="Boke">
+    select
+    <include refid="cols" />
+    from boke_boke b
+    <where>
+      <if test="bokeTitle!=null and bokeTitle!=''">
+        and (b.boke_subtitle like '%${bokeTitle}%' or b.boke_title like '%${bokeTitle}%')
+      </if>
+      <if test="isdel!=null and isdel!=''">
+        and b.isdel=#{isdel}
+      </if>
+    </where>
+    order by b.createtime desc
+  </select>
+
+</mapper>

@@ -1,0 +1,24 @@
+server:
+  port: 2001
+
+spring:
+  application:
+    name: eureka-server
+
+# 关闭保护模式
+# 主机名
+# 不注册,不拉取
+eureka:
+  server:
+    enable-self-preservation: false # 保护模式
+  instance:
+    hostname: eurekva
+    prefer-ip-address: true
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+
+#引入日志信息
+logging:
+  level:
+    com.jt.mapper: debug

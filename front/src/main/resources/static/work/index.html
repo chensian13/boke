@@ -1,0 +1,185 @@
+<!doctype html>
+<html class="scroll">
+<head>
+    <!-- Basic -->
+    <meta charset="UTF-8">
+    <title>boke-工作室</title>
+    <!-- Web Fonts  -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="assets/vendor/magnific-popup/magnific-popup.css" />
+    <link rel="stylesheet" href="assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="assets/stylesheets/theme.css" />
+    <!-- Skin CSS -->
+    <link rel="stylesheet" href="assets/stylesheets/skins/default.css" />
+    <!-- Theme Custom CSS -->
+    <link rel="stylesheet" href="assets/stylesheets/theme-custom.css">
+    <!-- Head Libs -->
+    <script src="assets/vendor/modernizr/modernizr.js"></script>
+
+    <!--self-->
+    <script type="text/javascript" src="../web2/component/component-tag.js" ></script>
+    <link rel="stylesheet" href="../web2/css/common.css">
+    <script type="text/javascript" src="assets/url.js" ></script>
+    <script type="text/javascript" src="../web2/analyse/analyse-common.js" ></script>
+</head>
+<body>
+<section class="body">
+    <!-- start: header -->
+    <header class="header">
+        <div class="logo-container">
+            <a href="../" class="logo">
+                <h3>boke-工作室</h3>
+            </a>
+        </div>
+
+        <!-- start: search & user box -->
+        <div class="header-right">
+            <div id="userbox" class="userbox">
+                <a href="#" data-toggle="dropdown">
+                    <figure class="profile-picture">
+                        <img src="assets/images/logged-user.jpg"  class="img-circle"  />
+                    </figure>
+                    <div class="profile-info">
+                        <span class="name">懒龙卧道</span>
+                        <span class="role">作者</span>
+                    </div>
+                    <i class="fa custom-caret"></i>
+                </a>
+
+                <div class="dropdown-menu">
+                    <ul class="list-unstyled">
+                        <li class="divider"></li>
+                        <li>
+                            <a role="menuitem" tabindex="-1" href="pages-user-profile.html"><i class="fa fa-user"></i>作者信息</a>
+                        </li>
+                        <li>
+                            <a role="menuitem" tabindex="-1" href="#" data-lock-screen="true"><i class="fa fa-lock"></i>修改密码</a>
+                        </li>
+                        <li>
+                            <a role="menuitem" id="logout" tabindex="-1"><i class="fa fa-power-off"></i>登出</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- end: search & user box -->
+    </header>
+    <!-- end: header -->
+
+    <div class="inner-wrapper">
+        <!-- start: sidebar -->
+        <aside id="sidebar-left" class="sidebar-left">
+
+            <div class="sidebar-header">
+                <div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
+                    <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+                </div>
+            </div>
+
+            <div class="nano">
+                <div class="nano-content">
+                    <nav id="menu" class="nav-main" role="navigation">
+                        <ul class="nav nav-main">
+                            <li class="nav-parent">
+                                <a>
+                                    <i class="fa fa-copy" aria-hidden="true"></i>
+                                    <span>我的博客</span>
+                                </a>
+                                <ul class="nav nav-children">
+                                    <li>
+                                        <a tag-target="tag" tag-href="boke_manage.html">博客管理</a>
+                                    </li>
+                                    <li>
+                                        <a tag-target="tag" tag-href="boke_add.html">新建博客</a>
+                                    </li>
+                                    <li>
+                                        <a tag-target="tag" tag-href="boke_depot.html">回收站</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!--<li class="nav-parent">-->
+                                <!--<a>-->
+                                    <!--<i class="fa fa-copy" aria-hidden="true"></i>-->
+                                    <!--<span>我的专辑</span>-->
+                                <!--</a>-->
+                                <!--<ul class="nav nav-children">-->
+                                    <!--<li>-->
+                                        <!--<a tag-target="tag" tag-href="special_manage.html">专辑管理</a>-->
+                                    <!--</li>-->
+                                    <!--<li>-->
+                                        <!--<a tag-target="tag" tag-href="special_add.html">新建专辑</a>-->
+                                    <!--</li>-->
+                                <!--</ul>-->
+                            <!--</li>-->
+                            <li class="nav-parent">
+                                <a>
+                                    <i class="fa fa-copy" aria-hidden="true"></i>
+                                    <span>资源管理</span>
+                                </a>
+                                <ul class="nav nav-children">
+                                    <li>
+                                        <a tag-target="tag" tag-href="dic_manage.html">数据字典</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-parent">
+                                <a>
+                                    <i class="fa fa-copy" aria-hidden="true"></i>
+                                    <span>健康检测</span>
+                                </a>
+                                <ul class="nav nav-children">
+                                    <li>
+                                        <a tag-target="tag" tag-href="http://127.0.0.1:2001/">注册中心</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </aside>
+        <!-- end: sidebar -->
+
+        <section role="main" class="content-body" >
+            <!-- start: page -->
+            <tag id="tag"  style="height: 100%;width: 100%;">
+                <tag-top style="background: #777777;"></tag-top>
+                <tag-body></tag-body>
+            </tag>
+            <!-- end: page -->
+        </section>
+    </div>
+
+
+    <!-- Vendor -->
+    <script src="assets/vendor/jquery/jquery.js"></script>
+    <script src="assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.js"></script>
+    <script src="assets/vendor/nanoscroller/nanoscroller.js"></script>
+    <script src="assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
+
+    <!-- Specific Page Vendor -->
+    <!-- Theme Base, Components and Settings -->
+    <script src="assets/javascripts/theme.js"></script>
+    <!-- Theme Custom -->
+    <script src="assets/javascripts/theme.custom.js"></script>
+    <!-- Theme Initialization Files -->
+    <script src="assets/javascripts/theme.init.js"></script>
+
+    <script>
+        tagComponent("tag");
+        $("#logout").click(function () {
+            post(userUrl+"logout",null,function (res) {
+                if(res.code=='OK'){
+                    window.location.href="/work/signin";
+                }
+            });
+        });
+    </script>
+</section>
+</body>
+</html>

@@ -1,0 +1,55 @@
+#业务微服务基础配置
+
+#数据源配置
+spring:
+    cloud:
+        config:
+            override-none: true
+    datasource:
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/csaplat2?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
+        username: root
+        password: root
+        type: com.alibaba.druid.pool.DruidDataSource
+        druid:
+            initial-size: 5
+            min-idle: 5
+            max-active: 20
+            # 配置获取连接等待超时的时间 ms
+            max-wait: 5000
+            # 是否缓存preparedStatement
+            pool-prepared-statements: true
+            max-pool-prepared-statement-per-connection-size: 20
+
+#mybatis配置
+mybatis-plus:
+    mapper-locations: classpath:mappers/*Mapper.xml
+    type-aliases-package: csa.stu.app.common.entity
+pagehelper:
+    reasonable: true
+
+#引入日志信息
+#logging:
+#    level:
+#        com.jt.mapper: debug
+
+#ribbon配置
+ribbon:
+    ConnectTimeout: 2000
+    ReadTimeout: 2000
+    MaxAutoRetries: 1
+    MaxAutoRetriesNextServer: 2
+
+#hystrix配置
+hystrix:
+    command:
+        default:
+            execution:
+                isolation:
+                    thread:
+                        timeoutInMilliseconds: 10000
+
+#feign配置
+feign:
+    hystrix:
+        enabled: true

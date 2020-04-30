@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="csa.stu.app.userwork.service.SpecialService">
+
+  <sql id="cols">
+    special_id, special_code, ispublic, special_name, creater, createtime, isdel ,info
+  </sql>
+
+
+
+  <select id="selectTable" parameterType="map" resultType="Special">
+    select
+    <include refid="cols" />
+    from boke_special
+    <where>
+        <if test="specialName!=null">
+          and special_name like '%${specialName}%'
+        </if>
+        <if test="1==1">
+          and isdel='0'
+        </if>
+    </where>
+    order by createtime desc
+  </select>
+
+  <select id="selectSimpleTable" parameterType="map" resultType="Special">
+    select
+    <include refid="cols" />
+    from boke_special
+    <where>
+      <if test="specialName!=null">
+        and special_name like '%${specialName}%'
+      </if>
+      <if test="1==1">
+        and isdel='0'
+      </if>
+    </where>
+    order by createtime desc
+  </select>
+
+  <!--校验同一名用户下面专辑名称-->
+  <select id="checkSpecialName" parameterType="Special" resultType="Special">
+    select  <include refid="cols" /> from boke_special where special_name=#{specialName} and creater=#{creater}
+  </select>
+
+</mapper>

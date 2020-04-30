@@ -1,0 +1,14 @@
+#服务端
+server:
+    port: 9000
+
+spring:
+    application:
+        name: front
+    servlet:
+        multipart:
+            max-request-size: 100MB
+            max-file-size: 50MB
+
+csa:
+    filepath: E:/base/boke  #上传图片位置

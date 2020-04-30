@@ -1,0 +1,7 @@
+#服务端
+server:
+    port: 8085
+
+spring:
+    application:
+        name: sso
