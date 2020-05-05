@@ -1,11 +1,3 @@
-spring:
-  cloud:
-    config:
-      discovery:
-        enabled: true
-        service-id: config-center
-      name: base-application
-      profile: dev
 
 eureka:
   instance:
@@ -13,3 +5,12 @@ eureka:
   client:
     service-url:
       defaultZone: http://eurekava:2001/eureka #,http://eurekavb:2002/eureka
+
+spring:
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: server-center
+      name: base-application
+      profile: dev

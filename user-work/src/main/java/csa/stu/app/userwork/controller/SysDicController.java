@@ -1,14 +1,16 @@
-package csa.stu.app.sysmanager.controller;
+package csa.stu.app.userwork.controller;
 
 import csa.stu.app.common.entity.SysDic;
 import csa.stu.app.common.entity.TreeNode;
-import csa.stu.app.sysmanager.service.SysDicService;
+import csa.stu.app.userwork.service.SysDicService;
 import csa.stu.util.ap.mvc.IService;
 import csa.stu.util.ap.mvc.plus.MyController;
 import csa.stu.util.myutils.pojo.ResultPojo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * 

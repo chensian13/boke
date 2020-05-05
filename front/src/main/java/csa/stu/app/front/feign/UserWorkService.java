@@ -2,6 +2,8 @@ package csa.stu.app.front.feign;
 
 import csa.stu.app.common.entity.Boke;
 import csa.stu.app.common.entity.Picture;
+import csa.stu.app.common.entity.SysDic;
+import csa.stu.app.common.entity.TreeNode;
 import csa.stu.util.myutils.pojo.ParamPojo;
 import csa.stu.util.myutils.pojo.ResultPojo;
 import feign.codec.Encoder;
@@ -17,8 +19,8 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-@FeignClient(name = "user-work",configuration = BokeService.FeignMultipartSupportConfig.class)
-public interface BokeService {
+@FeignClient(name = "user-work",configuration = UserWorkService.FeignMultipartSupportConfig.class)
+public interface UserWorkService {
 
     @RequestMapping("/boke/data/add")
     ResultPojo<Boke> addOne(@RequestBody Boke entity);
@@ -42,6 +44,30 @@ public interface BokeService {
 
     @RequestMapping({"/boke/queryById/{id}"})
     public ResultPojo<Boke> queryById(@PathVariable String id);
+
+
+    //*********************************************数据字典********************************************
+    @RequestMapping("/dic/getTree")
+    public ResultPojo<TreeNode> getTree(@RequestParam(name="parentId",required = false) String parentId);
+
+    @RequestMapping("/dic/getBokeTypes")
+    public ResultPojo<SysDic> getBokeTypes();
+
+    @RequestMapping("/dic/data/add")
+    ResultPojo<SysDic> addOne(@RequestBody SysDic entity);
+
+    @RequestMapping("/dic/data/upd")
+    ResultPojo<SysDic> updOne(@RequestBody SysDic entity);
+
+    @RequestMapping("/dic/data/del")
+    ResultPojo<SysDic> delOne(@RequestBody SysDic entity);
+
+
+    @RequestMapping({"/dic/queryById/{id}"})
+    public ResultPojo<SysDic> queryDicById(@PathVariable String id) ;
+
+
+
 
     /**
      * 既支持文件上传也支持实体类作为参数接收

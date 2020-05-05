@@ -9,8 +9,6 @@
         <module>common</module>
         <module>front</module>
         <module>server-center</module>
-        <module>config-center</module>
-        <module>sys-manager</module>
     </modules>
 
     <parent>

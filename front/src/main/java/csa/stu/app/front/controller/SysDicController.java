@@ -3,7 +3,7 @@ package csa.stu.app.front.controller;
 import csa.stu.app.common.entity.SysDic;
 import csa.stu.app.common.entity.TreeNode;
 import csa.stu.app.common.util.UserinfoUtil;
-import csa.stu.app.front.feign.SysDicService;
+import csa.stu.app.front.feign.UserWorkService;
 import csa.stu.util.myutils.constant.OperConstant;
 import csa.stu.util.myutils.pojo.ResultPojo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,20 +20,20 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/dic")
 public class SysDicController{
 	@Autowired
-	private SysDicService sysDicService;
+	private UserWorkService userWorkService;
 	@Autowired
 	private UserinfoUtil userinfoUtil;
 	
 	@ResponseBody
 	@RequestMapping("/getTree")
 	public ResultPojo<TreeNode> getTree(@RequestParam(name="parentId",required = false) String parentId){
-		return sysDicService.getTree(parentId);
+		return userWorkService.getTree(parentId);
 	}
 
 	@ResponseBody
 	@RequestMapping("/getBokeTypes")
 	public ResultPojo<SysDic> getBokeTypes(){
-		return sysDicService.getBokeTypes();
+		return userWorkService.getBokeTypes();
 	}
 
 
@@ -41,11 +41,11 @@ public class SysDicController{
 	@ResponseBody
 	public ResultPojo<SysDic> operData(@RequestBody SysDic entity, @PathVariable String oper, HttpServletRequest request){
 		if(OperConstant.OPER_ADD.equals(oper)){
-			return sysDicService.addOne(entity);
+			return userWorkService.addOne(entity);
 		}else if(OperConstant.OPER_DEL.equals(oper)){
-			return sysDicService.delOne(entity);
+			return userWorkService.delOne(entity);
 		}else if(OperConstant.OPER_UPD.equals(oper)){
-			return sysDicService.updOne(entity);
+			return userWorkService.updOne(entity);
 		}
 		return ResultPojo.newInstance(ResultPojo.NO,"没有该操作");
 	}
@@ -53,7 +53,7 @@ public class SysDicController{
 	@RequestMapping({"/queryById/{id}"})
 	@ResponseBody
 	public ResultPojo<SysDic> queryById(@PathVariable String id) {
-		return sysDicService.queryById(id);
+		return userWorkService.queryDicById(id);
 	}
 
 }

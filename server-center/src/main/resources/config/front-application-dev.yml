@@ -1,0 +1,31 @@
+#业务微服务基础配置
+
+spring:
+    cloud:
+        config:
+            override-none: true
+    servlet:
+        multipart:
+            max-request-size: 100MB
+            max-file-size: 50MB
+
+#ribbon配置
+ribbon:
+    ConnectTimeout: 2000
+    ReadTimeout: 2000
+    MaxAutoRetries: 1
+    MaxAutoRetriesNextServer: 2
+
+#hystrix配置
+hystrix:
+    command:
+        default:
+            execution:
+                isolation:
+                    thread:
+                        timeoutInMilliseconds: 10000
+
+#feign配置
+feign:
+    hystrix:
+        enabled: true

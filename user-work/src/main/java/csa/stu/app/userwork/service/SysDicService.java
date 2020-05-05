@@ -1,4 +1,4 @@
-package csa.stu.app.sysmanager.service;
+package csa.stu.app.userwork.service;
 
 import csa.stu.app.common.entity.SysDic;
 import csa.stu.app.common.entity.TreeNode;

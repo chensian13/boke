@@ -37,8 +37,8 @@ CKEDITOR.editorConfig = function( config ) {
 	config.removeDialogTabs = 'image:advanced;link:advanced';
 	//新增配置
 	config.language='zh-cn';
-	config.image_previewText=''; //预览区域显示内容
-	config.filebrowserImageUploadUrl = 'http://127.0.0.1:9000/boke/upload';
+	config.image_previewText='&nbsp;'; //预览区域显示内容
+	config.filebrowserImageUploadUrl = bokeUrl+"upload";
 	// 解决request.getParameter("CKEditorFuncNum")获取不到
 	config.filebrowserUploadMethod = 'form';
 };

@@ -3,7 +3,14 @@ server:
 
 spring:
   application:
-    name: eureka-server
+    name: server-center
+  profiles: #合并配置中心，测试方便
+    active: native    #激活本地文件系统
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/config   #本地配置代替git
 
 # 关闭保护模式
 # 主机名
@@ -15,8 +22,10 @@ eureka:
     hostname: eurekva
     prefer-ip-address: true
   client:
-    register-with-eureka: false
+    register-with-eureka: true  #配置中心需要注册
     fetch-registry: false
+    service-url:
+      defaultZone: http://eurekava:2001/eureka
 
 #引入日志信息
 logging:

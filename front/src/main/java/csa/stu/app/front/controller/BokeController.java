@@ -4,7 +4,7 @@ import csa.stu.app.common.entity.Boke;
 import csa.stu.app.common.entity.Picture;
 import csa.stu.app.common.entity.User;
 import csa.stu.app.common.util.UserinfoUtil;
-import csa.stu.app.front.feign.BokeService;
+import csa.stu.app.front.feign.UserWorkService;
 import csa.stu.util.myutils.constant.OperConstant;
 import csa.stu.util.myutils.pojo.ParamPojo;
 import csa.stu.util.myutils.pojo.ResultPojo;
@@ -24,7 +24,7 @@ import java.io.IOException;
 @Controller
 public class BokeController{
     @Autowired
-    private BokeService bokeService;
+    private UserWorkService userWorkService;
     @Autowired
     private UserinfoUtil userinfoUtil;
 
@@ -36,13 +36,13 @@ public class BokeController{
             return ResultPojo.newInstance(ResultPojo.NO,"获取用户信息失败，请重新登录");
         entity.setCreater(user.getUserId());
         if(OperConstant.OPER_ADD.equals(oper)){
-            return bokeService.addOne(entity);
+            return userWorkService.addOne(entity);
         }else if(OperConstant.OPER_UPD.equals(oper)){
-            return bokeService.updOne(entity);
+            return userWorkService.updOne(entity);
         }else if(OperConstant.OPER_STOP.equals(oper)){
-            return bokeService.stopOne(entity);
+            return userWorkService.stopOne(entity);
         }else if(OperConstant.OPER_DEL.equals(oper)){
-            return bokeService.delOne(entity);
+            return userWorkService.delOne(entity);
         }
         return ResultPojo.newInstance(ResultPojo.NO,"没有该操作");
     }
@@ -50,7 +50,7 @@ public class BokeController{
     @RequestMapping({"/queryData"})
     @ResponseBody
     public ResultPojo<Boke> queryData(@RequestBody ParamPojo paramPojo) {
-        return bokeService.queryData(paramPojo);
+        return userWorkService.queryData(paramPojo);
     }
 
     /**
@@ -72,7 +72,7 @@ public class BokeController{
         }
         Picture pic=new Picture();
         pic.setUserCode(user.getUserCode());
-        ResultPojo<Picture> rs=bokeService.uploadOne(file,user.getUserCode(),user.getUserId());
+        ResultPojo<Picture> rs= userWorkService.uploadOne(file,user.getUserCode(),user.getUserId());
         if(rs==null || rs.getModel()==null) return ;
         Picture picture=rs.getModel();
         String path="http://imgs/"+picture.getPath();
@@ -84,7 +84,7 @@ public class BokeController{
     @RequestMapping({"/queryById/{id}"})
     @ResponseBody
     public ResultPojo<Boke> queryById(@PathVariable String id) {
-        return bokeService.queryById(id);
+        return userWorkService.queryById(id);
     }
 
 

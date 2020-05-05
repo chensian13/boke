@@ -1,17 +1,10 @@
-package csa.stu.app.sysmanager.service.impl;
+package csa.stu.app.userwork.service.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.github.pagehelper.PageInfo;
-import csa.stu.app.common.constent.GenerateCode;
 import csa.stu.app.common.entity.SysDic;
 import csa.stu.app.common.entity.TreeNode;
-import csa.stu.app.sysmanager.dao.SysDicMapper;
-import csa.stu.app.sysmanager.service.SysDicService;
-import csa.stu.util.ap.mvc.helper.ServiceHelper;
+import csa.stu.app.userwork.dao.SysDicMapper;
+import csa.stu.app.userwork.service.SysDicService;
 import csa.stu.util.myutils.pojo.ParamPojo;
 import csa.stu.util.myutils.pojo.ResultPojo;
 import csa.stu.util.myutils.utils.EmptyUtil;
@@ -19,6 +12,9 @@ import csa.stu.util.myutils.utils.StrUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service("sysDicService")
 public class SysDicServiceImpl implements SysDicService {
