@@ -1,9 +1,12 @@
 package csa.stu.app.userwork.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.github.pagehelper.PageInfo;
 import csa.stu.app.common.constent.GenerateCode;
 import csa.stu.app.common.entity.Picture;
 import csa.stu.app.userwork.dao.PictureMapper;
 import csa.stu.app.userwork.service.PictureService;
+import csa.stu.util.ap.mvc.helper.ServiceHelper;
 import csa.stu.util.myutils.pojo.ParamPojo;
 import csa.stu.util.myutils.pojo.ResultPojo;
 import csa.stu.util.myutils.utils.EmptyUtil;
@@ -14,8 +17,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.File;
+import java.util.List;
 
 @Service("pictureService")
 public class PictureServiceImpl implements PictureService {
@@ -35,9 +38,14 @@ public class PictureServiceImpl implements PictureService {
         return null;
     }
 
+    @Transactional
     @Override
     public ResultPojo<Picture> delOne(Picture picture) {
-        return null;
+        Picture pic=pictureMapper.selectById(picture.getPictureId());
+        String path=filepath+File.separator+pic.getPath();
+        FileUtil.deleteFile(path); //删除文件系统
+        pictureMapper.deleteById(pic.getPictureId());
+        return ResultPojo.newInstance(ResultPojo.OK,null);
     }
 
     @Override
@@ -57,7 +65,15 @@ public class PictureServiceImpl implements PictureService {
 
     @Override
     public ResultPojo<Picture> selectData(ParamPojo wrap) {
-        return null;
+        ServiceHelper.canPage(wrap);
+        QueryWrapper<Picture> queryWrapper=new QueryWrapper<>();
+        queryWrapper.orderByDesc("createtime");
+        List<Picture> pictureList=pictureMapper.selectList(queryWrapper);
+        PageInfo<Picture> pageInfo=new PageInfo<>(pictureList);
+        for(Picture picture:pictureList){
+            picture.setHttpPath("http://imgs/"+picture.getPath());
+        }
+        return ResultPojo.newInstance(pictureList,pageInfo.getTotal());
     }
 
     @Override
@@ -73,7 +89,7 @@ public class PictureServiceImpl implements PictureService {
     @Transactional
     @Override
     public ResultPojo<Picture> uploadOne(MultipartFile file, Picture picture) {
-        if(EmptyUtil.isEmpty(picture.getUserCode())){
+        if(EmptyUtil.isEmpty(picture.getCreater())){
             return ResultPojo.newInstance(ResultPojo.NO,"没有用户信息");
         }
         //封装图片数据
@@ -83,7 +99,7 @@ public class PictureServiceImpl implements PictureService {
         picture.setSuffix(FileUtil.getSuffix(file.getOriginalFilename()));
         picture.setPictureName(file.getOriginalFilename());
         //数据库保存路径
-        String path= picture.getUserCode()
+        String path= picture.getCreater()
                 +"/"
                 +picture.getPictureId()
                 +"."

@@ -6,7 +6,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
 @FeignClient(name = "sso")
-public interface UserService {
+public interface SsoService {
 
     @RequestMapping("/user/login")
     public ResultPojo<User> loginByUser(@RequestBody User user);

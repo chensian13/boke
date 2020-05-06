@@ -8,6 +8,7 @@ import csa.stu.util.ap.mvc.plus.MyController;
 import csa.stu.util.myutils.pojo.ResultPojo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,14 +26,15 @@ public class SysDicController extends MyController<SysDic> {
 	
 	@ResponseBody
 	@RequestMapping("/getTree")
-	public ResultPojo<TreeNode> getTree(@RequestParam(name="parentId",required = false) String parentId){
-		return sysDicService.getTree(parentId);
+	public ResultPojo<TreeNode> getTree(@RequestParam(name="parentId",required = false) String parentId
+			,@RequestParam(name="userId",required = false) String userId){
+		return sysDicService.getTree(parentId,userId);
 	}
 
 	@ResponseBody
 	@RequestMapping("/getBokeTypes")
-	public ResultPojo<SysDic> getBokeTypes(){
-		return sysDicService.getBokeTypes();
+	public ResultPojo<SysDic> getBokeTypes(@RequestBody String userId){
+		return sysDicService.getBokeTypes(userId);
 	}
 
 

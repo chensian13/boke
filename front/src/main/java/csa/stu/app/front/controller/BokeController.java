@@ -13,9 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * @author csa
@@ -70,9 +75,7 @@ public class BokeController{
         if(EmptyUtil.isEmptys(user,user.getUserCode())){
             return ;
         }
-        Picture pic=new Picture();
-        pic.setUserCode(user.getUserCode());
-        ResultPojo<Picture> rs= userWorkService.uploadOne(file,user.getUserCode(),user.getUserId());
+        ResultPojo<Picture> rs= userWorkService.uploadOne(file,user.getUserId());
         if(rs==null || rs.getModel()==null) return ;
         Picture picture=rs.getModel();
         String path="http://imgs/"+picture.getPath();
@@ -86,7 +89,6 @@ public class BokeController{
     public ResultPojo<Boke> queryById(@PathVariable String id) {
         return userWorkService.queryById(id);
     }
-
 
 
 

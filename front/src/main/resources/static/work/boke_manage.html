@@ -172,7 +172,7 @@
         function dataList(){
             post(bokeUrl+"queryData",{'page':page,'pagesize':pagesize,'map':map},function (res) {
                 if(res.code=='OK'){
-                    tableData("table",res.list,config); //数据渲染
+                    tableData("table",res.list); //数据渲染
                     var sum=parseInt(res.count/pagesize);
                     sum=res.count%pagesize==0?sum:sum+1;
                     pageEvent(sum);

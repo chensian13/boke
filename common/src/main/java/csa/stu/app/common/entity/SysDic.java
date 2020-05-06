@@ -17,12 +17,15 @@ import lombok.Data;
 public class SysDic extends BaseEntity {
 	@TableId("dic_id")
 	private String dicId;
-	@TableId("dic_code")
+	@TableField("dic_code")
 	private String dicCode;
-	@TableId("dic_name")
+	@TableField("dic_name")
 	private String dicName;
-	@TableId("parent_id")
+	@TableField("parent_id")
 	private String parentId;
+
+	@TableField("creater")
+	private String creater;
 	
 	@TableField(exist=false)
 	private String parent;

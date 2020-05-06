@@ -1,8 +1,6 @@
 package csa.stu.app.userwork.controller;
 
 import csa.stu.app.common.entity.Picture;
-import csa.stu.app.common.entity.User;
-import csa.stu.app.common.util.UserinfoUtil;
 import csa.stu.app.userwork.service.PictureService;
 import csa.stu.util.ap.mvc.IService;
 import csa.stu.util.ap.mvc.plus.MyController;
@@ -12,8 +10,10 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import java.awt.image.BufferedImage;
+import java.io.InputStream;
 
 /**
  * @author  csa
@@ -32,13 +32,33 @@ public class PictureController extends MyController<Picture> {
     @ResponseBody
     @RequestMapping(value = "/upload",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResultPojo<Picture> uploadOne(@RequestPart("upload") MultipartFile file
-            , @RequestParam(name="userCode") String userCode
             , @RequestParam(name="userId") String userId
             , HttpServletRequest request){
+        if(!isPicture(file)){
+            return ResultPojo.newInstance(ResultPojo.NO,"图片格式不合法");
+        }
         Picture picture=new Picture();
-        picture.setUserCode(userCode);
         picture.setCreater(userId);
         return pictureService.uploadOne(file,picture);
+    }
+
+
+    /**
+     * 校验是否为图片
+     * @return
+     */
+    private boolean isPicture(MultipartFile file){
+        try {
+            InputStream in=file.getInputStream();
+            BufferedImage bufferedImage= ImageIO.read(in);
+            if(bufferedImage.getHeight()==0
+                    || bufferedImage.getWidth()==0){
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
 }

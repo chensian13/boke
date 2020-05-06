@@ -22,6 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 @FeignClient(name = "user-work",configuration = UserWorkService.FeignMultipartSupportConfig.class)
 public interface UserWorkService {
 
+    //*********************************************boke*******************************************
+
     @RequestMapping("/boke/data/add")
     ResultPojo<Boke> addOne(@RequestBody Boke entity);
 
@@ -39,7 +41,6 @@ public interface UserWorkService {
 
     @RequestMapping(value="/picture/upload",produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResultPojo<Picture> uploadOne(@RequestPart("upload") MultipartFile file
-            ,@RequestParam("userCode") String code
             ,@RequestParam("userId") String userId);
 
     @RequestMapping({"/boke/queryById/{id}"})
@@ -48,10 +49,11 @@ public interface UserWorkService {
 
     //*********************************************数据字典********************************************
     @RequestMapping("/dic/getTree")
-    public ResultPojo<TreeNode> getTree(@RequestParam(name="parentId",required = false) String parentId);
+    public ResultPojo<TreeNode> getTree(@RequestParam(name="parentId",required = false) String parentId
+            ,@RequestParam(name="userId",required = false) String userId);
 
     @RequestMapping("/dic/getBokeTypes")
-    public ResultPojo<SysDic> getBokeTypes();
+    public ResultPojo<SysDic> getBokeTypes(@RequestBody String userId);
 
     @RequestMapping("/dic/data/add")
     ResultPojo<SysDic> addOne(@RequestBody SysDic entity);
@@ -67,7 +69,12 @@ public interface UserWorkService {
     public ResultPojo<SysDic> queryDicById(@PathVariable String id) ;
 
 
+    //***********************************************picture**********************************************
+    @RequestMapping("/picture/data/del")
+    ResultPojo<Picture> delPictureOne(@RequestBody Picture entity);
 
+    @RequestMapping({"/picture/queryData"})
+    public ResultPojo<Picture> queryPictureData(@RequestBody ParamPojo paramPojo);
 
     /**
      * 既支持文件上传也支持实体类作为参数接收

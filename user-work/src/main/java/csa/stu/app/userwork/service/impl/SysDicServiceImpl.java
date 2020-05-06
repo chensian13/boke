@@ -56,9 +56,9 @@ public class SysDicServiceImpl implements SysDicService {
 	}
 
 	@Override
-	public ResultPojo<TreeNode> getTree(String parentId) {
+	public ResultPojo<TreeNode> getTree(String parentId,String userId) {
 		ResultPojo<TreeNode> rp=ResultPojo.newInstance();
-		List<SysDic> dics=sysDicMapper.selectByParent(parentId);
+		List<SysDic> dics=sysDicMapper.selectByParent(parentId,userId);
 		if(!EmptyUtil.isEmpty(dics)){
 			List<TreeNode> treeNodes=new ArrayList<>();
 			TreeNode treeNode=null;
@@ -79,15 +79,17 @@ public class SysDicServiceImpl implements SysDicService {
 	}
 
 	@Override
-	public ResultPojo<SysDic> getBokeTypes() {
+	public ResultPojo<SysDic> getBokeTypes(String userId) {
 		QueryWrapper<SysDic> queryWrapper=new QueryWrapper<>();
 		queryWrapper.eq("dic_code","boke_type");
+		queryWrapper.eq("creater",userId);
 		SysDic dic=sysDicMapper.selectOne(queryWrapper);
 		if(dic==null){
 			return ResultPojo.newInstance(ResultPojo.NO,null);
 		}
 		QueryWrapper<SysDic> queryWrapper2=new QueryWrapper<>();
 		queryWrapper2.eq("parent_id",dic.getDicId());
+		queryWrapper2.eq("creater",userId);
 		return ResultPojo.newInstance(sysDicMapper.selectList(queryWrapper2),0);
 	}
 

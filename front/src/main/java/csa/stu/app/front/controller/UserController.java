@@ -2,7 +2,7 @@ package csa.stu.app.front.controller;
 
 import csa.stu.app.common.entity.User;
 import csa.stu.app.common.util.UserinfoUtil;
-import csa.stu.app.front.feign.UserService;
+import csa.stu.app.front.feign.SsoService;
 import csa.stu.util.myutils.pojo.ResultPojo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,14 +18,14 @@ import java.io.IOException;
 @Controller
 public class UserController {
     @Autowired
-    private UserService userService;
+    private SsoService ssoService;
     @Autowired
     private UserinfoUtil userinfoUtil;
 
     @RequestMapping("/login")
     @ResponseBody
     public ResultPojo<User> loginByUser(@RequestBody User user, HttpServletResponse response){
-        ResultPojo<User> rs=userService.loginByUser(user);
+        ResultPojo<User> rs= ssoService.loginByUser(user);
         if(rs!=null
                 && ResultPojo.OK.equals(rs.getCode())){
             //验证通过，设置cookie
@@ -44,7 +44,7 @@ public class UserController {
     @PostMapping("/register")
     @ResponseBody
     public ResultPojo register(@RequestBody User user){
-        return userService.register(user);
+        return ssoService.register(user);
     }
 
 }

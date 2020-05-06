@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface SysDicMapper extends BaseMapper<SysDic> {
 	
-	public List<SysDic> selectByParent(@Param("parentId") String parentId);
+	public List<SysDic> selectByParent(@Param("parentId") String parentId,@Param("userId") String userId);
 	
 	public SysDic selectWithParentById(String id);
 

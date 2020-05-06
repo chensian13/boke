@@ -4,17 +4,20 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="csa.stu.app.userwork.dao.SysDicMapper">
 	
-	<sql id="cols">d.dic_id,d.dic_code,d.dic_name,d.parent_id,d.dic_type,d.info,d.isdel</sql>
+	<sql id="cols">d.dic_id,d.dic_code,d.dic_name,d.parent_id,d.dic_type,d.info,d.isdel,d.creater</sql>
 	
 	<select id="selectByParent" parameterType="map" resultType="sysDic">
 		select <include refid="cols"/>,p.dic_name as parent from sys_dictionary d left join sys_dictionary p
 		on d.parent_id=p.dic_id
 		<where>
+			<if test="userId!=null and userId!=''">
+				and d.creater=#{userId}
+			</if>
 			<if test="parentId!=null and parentId!=''">
 				and d.parent_id=#{parentId}
 			</if>
             <if test="parentId==null or parentId==''">
-                and d.parent_id is null || d.parent_id=''
+                and (d.parent_id is null || d.parent_id='')
             </if>
 		</where>
 		order by d.createtime desc

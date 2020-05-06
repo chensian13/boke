@@ -28,10 +28,16 @@ mybatis-plus:
 pagehelper:
     reasonable: true
 
-#引入日志信息
-#logging:
-#    level:
-#        com.jt.mapper: debug
+#日志配置
+logging:
+    level:
+        root: warn
+        csa.stu.app: debug
+        org.springframework: info
+        org.apache.ibatis: debug
+        com.alibaba.druid: debug
+    pattern:
+        console: "%d{yyyy/MM/dd-HH:mm:ss} [%thread] %-5level %logger- %msg%n"
 
 #ribbon配置
 ribbon:

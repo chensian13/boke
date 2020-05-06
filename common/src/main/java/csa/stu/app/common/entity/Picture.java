@@ -1,13 +1,14 @@
 package csa.stu.app.common.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 @TableName("file_picture")
 @Data
 public class Picture extends BaseEntity{
-    @TableField("picture_id")
+    @TableId("picture_id")
     private String pictureId;
 
     @TableField("picture_name")
@@ -25,7 +26,7 @@ public class Picture extends BaseEntity{
     private String path;
 
     @TableField(exist = false)
-    private String userCode;
+    private String httpPath;
 
 
 }

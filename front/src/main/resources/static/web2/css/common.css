@@ -228,3 +228,8 @@ tag-body iframe{
 	text-align: left;
 	padding: 15px;
 }
+
+.table-image{
+	max-width: 200px;
+	max-height: 120px;
+}
