@@ -1,9 +1,6 @@
 package csa.stu.app.front.feign;
 
-import csa.stu.app.common.entity.Boke;
-import csa.stu.app.common.entity.Picture;
-import csa.stu.app.common.entity.SysDic;
-import csa.stu.app.common.entity.TreeNode;
+import csa.stu.app.common.entity.*;
 import csa.stu.util.myutils.pojo.ParamPojo;
 import csa.stu.util.myutils.pojo.ResultPojo;
 import feign.codec.Encoder;
@@ -47,26 +44,22 @@ public interface UserWorkService {
     public ResultPojo<Boke> queryById(@PathVariable String id);
 
 
-    //*********************************************数据字典********************************************
-    @RequestMapping("/dic/getTree")
-    public ResultPojo<TreeNode> getTree(@RequestParam(name="parentId",required = false) String parentId
-            ,@RequestParam(name="userId",required = false) String userId);
+    //*********************************************博客类型********************************************
+    @RequestMapping("/type/queryData")
+    public ResultPojo<Type> getBokeTypes(@RequestBody ParamPojo paramPojo);
 
-    @RequestMapping("/dic/getBokeTypes")
-    public ResultPojo<SysDic> getBokeTypes(@RequestBody String userId);
+    @RequestMapping("/type/data/add")
+    ResultPojo<Type> addOne(@RequestBody Type entity);
 
-    @RequestMapping("/dic/data/add")
-    ResultPojo<SysDic> addOne(@RequestBody SysDic entity);
+    @RequestMapping("/type/data/upd")
+    ResultPojo<Type> updOne(@RequestBody Type entity);
 
-    @RequestMapping("/dic/data/upd")
-    ResultPojo<SysDic> updOne(@RequestBody SysDic entity);
-
-    @RequestMapping("/dic/data/del")
-    ResultPojo<SysDic> delOne(@RequestBody SysDic entity);
+    @RequestMapping("/type/data/del")
+    ResultPojo<Type> delOne(@RequestBody Type entity);
 
 
-    @RequestMapping({"/dic/queryById/{id}"})
-    public ResultPojo<SysDic> queryDicById(@PathVariable String id) ;
+    @RequestMapping({"/type/queryById/{id}"})
+    public ResultPojo<Type> queryTypeById(@PathVariable String id) ;
 
 
     //***********************************************picture**********************************************

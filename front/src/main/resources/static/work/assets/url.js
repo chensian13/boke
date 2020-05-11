@@ -1,7 +1,7 @@
 var host="http://127.0.0.1:9000/";
 var bokeUrl=host+"boke/";
 var userUrl=host+"user/";
-var dicUrl=host+"dic/";
+var typeUrl=host+"type/";
 var pictureUrl=host+"picture/";
 
 

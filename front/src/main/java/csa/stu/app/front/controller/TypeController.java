@@ -1,16 +1,17 @@
 package csa.stu.app.front.controller;
 
-import csa.stu.app.common.entity.SysDic;
-import csa.stu.app.common.entity.TreeNode;
+import csa.stu.app.common.entity.Type;
 import csa.stu.app.common.entity.User;
 import csa.stu.app.common.util.UserinfoUtil;
 import csa.stu.app.front.feign.UserWorkService;
 import csa.stu.util.myutils.constant.OperConstant;
+import csa.stu.util.myutils.pojo.ParamPojo;
 import csa.stu.util.myutils.pojo.ResultPojo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 
 /**
  * 
@@ -18,33 +19,29 @@ import javax.servlet.http.HttpServletRequest;
  *
  */
 @Controller
-@RequestMapping("/dic")
-public class SysDicController{
+@RequestMapping("/type")
+public class TypeController {
 	@Autowired
 	private UserWorkService userWorkService;
 	@Autowired
 	private UserinfoUtil userinfoUtil;
-	
-	@ResponseBody
-	@RequestMapping("/getTree")
-	public ResultPojo<TreeNode> getTree(@RequestParam(name="parentId",required = false) String parentId,HttpServletRequest request){
-		User user=userinfoUtil.getUserCookie(request);
-		if(user==null) return ResultPojo.newInstance(ResultPojo.NO,"用户信息获取失败");
-		return userWorkService.getTree(parentId,user.getUserId());
-	}
+
 
 	@ResponseBody
 	@RequestMapping("/getBokeTypes")
-	public ResultPojo<SysDic> getBokeTypes(HttpServletRequest request){
+	public ResultPojo<Type> getBokeTypes(HttpServletRequest request){
 		User user=userinfoUtil.getUserCookie(request);
 		if(user==null) return ResultPojo.newInstance(ResultPojo.NO,"用户信息获取失败");
-		return userWorkService.getBokeTypes(user.getUserId());
+		ParamPojo paramPojo=new ParamPojo();
+		paramPojo.setMap(new HashMap<>());
+		paramPojo.getMap().put("creater",user.getUserId());
+		return userWorkService.getBokeTypes(paramPojo);
 	}
 
 
 	@RequestMapping({"/data/{oper}"})
 	@ResponseBody
-	public ResultPojo<SysDic> operData(@RequestBody SysDic entity, @PathVariable String oper, HttpServletRequest request){
+	public ResultPojo<Type> operData(@RequestBody Type entity, @PathVariable String oper, HttpServletRequest request){
 		User user=userinfoUtil.getUserCookie(request);
 		if(user==null) return ResultPojo.newInstance(ResultPojo.NO,"用户信息获取失败");
 		entity.setCreater(user.getUserId());
@@ -60,8 +57,8 @@ public class SysDicController{
 
 	@RequestMapping({"/queryById/{id}"})
 	@ResponseBody
-	public ResultPojo<SysDic> queryById(@PathVariable String id) {
-		return userWorkService.queryDicById(id);
+	public ResultPojo<Type> queryById(@PathVariable String id) {
+		return userWorkService.queryTypeById(id);
 	}
 
 }

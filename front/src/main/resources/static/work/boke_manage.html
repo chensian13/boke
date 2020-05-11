@@ -122,12 +122,12 @@
 
     <script>
         $(function () {
-            post(dicUrl+"getBokeTypes",null,function (res) {
+            post(typeUrl+"getBokeTypes",null,function (res) {
                 if(res.code=='OK'){
                     var list=res.list;
                     var ops='';
                     for(var i=0;i<list.length;i++){
-                        ops=ops+"<option value='"+list[i].dicId+"'>"+list[i].dicName+"</option>";
+                        ops=ops+"<option value='"+list[i].typeId+"'>"+list[i].typeName+"</option>";
                     } //end for
                     $("#bokeType").html(ops);
                 }
