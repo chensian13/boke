@@ -18,6 +18,9 @@
       <if test="isdel!=null and isdel!=''">
         and b.isdel=#{isdel}
       </if>
+      <if test="creater!=null and creater!=''">
+        and b.creater=#{creater}
+      </if>
     </where>
     order by b.createtime desc
   </select>

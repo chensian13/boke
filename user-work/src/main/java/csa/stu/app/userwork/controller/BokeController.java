@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/boke")
 public class BokeController extends MyController<Boke> {
-    @Qualifier("bokeServiceImpl")
     @Autowired
     private BokeService bokeService;
 

@@ -33,11 +33,7 @@ public class LoginController {
     }
 
 
-    @PostMapping("/register")
-    @ResponseBody
-    public ResultPojo register(@RequestBody User user){
-        return userService.register(user);
-    }
+
 
 
 

@@ -39,26 +39,7 @@ public class UserServiceImpl implements UserService {
         return rs;
     }
 
-    @Transactional
-    @Override
-    public ResultPojo<User> register(User user) {
-        ResultPojo<User> rs=ResultPojo.newInstance();
-        user.setSalt(StrUtil.generateUUID32());
-        String sp=userinfoUtil.saltPassword(user.getPassword(),user.getSalt());
-        user.setPassword(sp);
-        user.setUserCode(StrUtil.generateCode(GenerateCode.USER));
-        user.setUserId(StrUtil.generateUUID32());
-        user.initDefault();
-        //重复校验
-        if(!checkUniqueField(user,rs,OperConstant.OPER_ADD)){
-            return rs;
-        }
-        userMapper.insert(user);
-        //安全处理
-        user.setPassword(null);
-        user.setSalt(null);
-        return ResultPojo.newInstance(user);
-    }
+
 
     @Override
     public ResultPojo<User> addOne(User user) {
@@ -102,16 +83,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean checkUniqueField(User data, ResultPojo<User> rs, String oper) {
-        QueryWrapper queryWrapper=new QueryWrapper();
-        queryWrapper.eq("user_name",data.getUserName());
-        int count=userMapper.selectCount(queryWrapper);
-        if(OperConstant.OPER_ADD.equals(oper)){
-            if(count>0){
-                rs.setCode(ResultPojo.NO);
-                rs.setMessage("用户名重复");
-                return false;
-            }
-        }
         return true;
     }
 }

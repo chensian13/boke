@@ -1,5 +1,6 @@
 package csa.stu.app.common.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -31,4 +32,7 @@ public class User extends BaseEntity{
     private String password;
 
     private String salt;
+
+    @TableField(exist = false)
+    private String oldPass;
 }

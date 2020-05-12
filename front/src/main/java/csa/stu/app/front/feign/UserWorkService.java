@@ -69,6 +69,19 @@ public interface UserWorkService {
     @RequestMapping({"/picture/queryData"})
     public ResultPojo<Picture> queryPictureData(@RequestBody ParamPojo paramPojo);
 
+    //**************************************************user*************************************************
+    @RequestMapping("/user/queryById/{id}")
+    ResultPojo<User> queryUserById(@PathVariable("id") String id);
+
+    @PostMapping("/user/register")
+    public ResultPojo register(@RequestBody User user);
+
+    @RequestMapping("/user/data/upd")
+    ResultPojo<User> updUserById(@RequestBody User user);
+
+    @PostMapping("/user/modPass")
+    ResultPojo modPass(@RequestBody User user);
+
     /**
      * 既支持文件上传也支持实体类作为参数接收
      */

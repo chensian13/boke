@@ -13,14 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author csa
@@ -54,7 +51,17 @@ public class BokeController{
 
     @RequestMapping({"/queryData"})
     @ResponseBody
-    public ResultPojo<Boke> queryData(@RequestBody ParamPojo paramPojo) {
+    public ResultPojo<Boke> queryData(@RequestBody ParamPojo paramPojo,HttpServletRequest request) {
+        User user=userinfoUtil.getUserCookie(request);
+        if(user==null)
+            return ResultPojo.newInstance(ResultPojo.NO,"获取用户信息失败，请重新登录");
+        if(paramPojo.getMap()==null){
+            Map<String,Object> map=new HashMap<>();
+            map.put("creater",user.getUserId());
+            paramPojo.setMap(map);
+        }else{
+            paramPojo.getMap().put("creater",user.getUserId());
+        }
         return userWorkService.queryData(paramPojo);
     }
 

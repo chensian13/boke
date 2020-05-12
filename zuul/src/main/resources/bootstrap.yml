@@ -1,0 +1,16 @@
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://eurekava:2001/eureka #,http://eurekavb:2002/eureka
+
+spring:
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: server-center
+      name: zuul-application
+      profile: dev

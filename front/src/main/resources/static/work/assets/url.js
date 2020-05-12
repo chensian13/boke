@@ -4,7 +4,6 @@ var userUrl=host+"user/";
 var typeUrl=host+"type/";
 var pictureUrl=host+"picture/";
 
-
 function post(url,param,reqOk){
     $.ajax({
         type : "POST",

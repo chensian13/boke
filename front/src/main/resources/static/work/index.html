@@ -44,7 +44,7 @@
                         <img src="assets/images/logged-user.jpg"  class="img-circle"  />
                     </figure>
                     <div class="profile-info">
-                        <span class="name">懒龙卧道</span>
+                        <span class="name" id="username"></span>
                         <span class="role">作者</span>
                     </div>
                     <i class="fa custom-caret"></i>
@@ -54,10 +54,10 @@
                     <ul class="list-unstyled">
                         <li class="divider"></li>
                         <li>
-                            <a role="menuitem" tabindex="-1" href="pages-user-profile.html"><i class="fa fa-user"></i>作者信息</a>
+                            <a role="menuitem" tag-target="tag" tag-href="user_info.html" tabindex="-1"><i class="fa fa-user"></i>作者信息</a>
                         </li>
                         <li>
-                            <a role="menuitem" tabindex="-1" href="#" data-lock-screen="true"><i class="fa fa-lock"></i>修改密码</a>
+                            <a role="menuitem" tag-target="tag" tag-href="user_pass.html" tabindex="-1" ><i class="fa fa-lock"></i>修改密码</a>
                         </li>
                         <li>
                             <a role="menuitem" id="logout" tabindex="-1"><i class="fa fa-power-off"></i>登出</a>
@@ -165,6 +165,17 @@
             post(userUrl+"logout",null,function (res) {
                 if(res.code=='OK'){
                     window.location.href="/work/signin";
+                }
+            });
+        });
+
+
+        $(function () {
+            post(userUrl+"userinfo",{},function (res) {
+                if(res.code=='OK'){
+                    $("#username").text(res.model.userName);
+                }else{
+                    toastShow(res.message);
                 }
             });
         });

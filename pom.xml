@@ -9,6 +9,7 @@
         <module>common</module>
         <module>front</module>
         <module>server-center</module>
+        <module>zuul</module>
     </modules>
 
     <parent>

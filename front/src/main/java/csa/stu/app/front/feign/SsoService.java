@@ -15,8 +15,6 @@ public interface SsoService {
     public ResultPojo logout();
 
 
-    @PostMapping("/user/register")
-    public ResultPojo register(@RequestBody User user);
 
 
 }

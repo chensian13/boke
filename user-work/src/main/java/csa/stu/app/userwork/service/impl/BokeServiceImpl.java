@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.Map;
 
-@Service("bokeServiceImpl")
+@Service("bokeService")
 public class BokeServiceImpl implements BokeService {
     @Autowired
     private BokeMapper bokeMapper;
@@ -107,6 +107,8 @@ public class BokeServiceImpl implements BokeService {
                 map.put("bokeTitle",entry.getValue());
             }else if(entry.getKey().equals("isdel")){
                 map.put("isdel",entry.getValue());
+            }else if(entry.getKey().equals("creater")){
+                map.put("creater",entry.getValue());
             }
         });
         //判断是否分页

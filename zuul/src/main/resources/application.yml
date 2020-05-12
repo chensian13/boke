@@ -1,0 +1,6 @@
+server:
+  port: 6001
+
+spring:
+  application:
+    name: zuul
