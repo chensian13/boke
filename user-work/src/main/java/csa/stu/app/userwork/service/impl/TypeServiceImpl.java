@@ -1,6 +1,7 @@
 package csa.stu.app.userwork.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import csa.stu.app.common.annotation.Resubmit;
 import csa.stu.app.common.constent.GenerateCode;
 import csa.stu.app.common.entity.Type;
 import csa.stu.app.userwork.dao.TypeMapper;
@@ -21,6 +22,7 @@ public class TypeServiceImpl implements TypeService {
 
 	@Transactional
 	@Override
+	@Resubmit
 	public ResultPojo<Type> addOne(Type type) {
 		type.setTypeId(StrUtil.generateUUID32());
 		type.setTypeCode(StrUtil.generateCode(GenerateCode.TYPE));
@@ -67,6 +69,7 @@ public class TypeServiceImpl implements TypeService {
 
 	@Transactional
 	@Override
+	@Resubmit
 	public ResultPojo<Type> updOne(Type type) {
 		ResultPojo<Type> rp=ResultPojo.newInstance();
 		int i=typeMapper.updateById(type);

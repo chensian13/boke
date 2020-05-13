@@ -2,6 +2,7 @@ package csa.stu.app.userwork.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageInfo;
+import csa.stu.app.common.annotation.Resubmit;
 import csa.stu.app.common.constent.GenerateCode;
 import csa.stu.app.common.entity.Picture;
 import csa.stu.app.userwork.dao.PictureMapper;
@@ -88,6 +89,7 @@ public class PictureServiceImpl implements PictureService {
 
     @Transactional
     @Override
+    @Resubmit
     public ResultPojo<Picture> uploadOne(MultipartFile file, Picture picture) {
         if(EmptyUtil.isEmpty(picture.getCreater())){
             return ResultPojo.newInstance(ResultPojo.NO,"没有用户信息");

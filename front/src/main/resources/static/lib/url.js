@@ -9,7 +9,7 @@ function post(url,param,reqOk){
         type : "POST",
         url : url,
         dataType : "json",
-        async : false,
+        async : true,
         contentType : 'application/json;charset=utf-8',
         data:JSON.stringify(param),
         xhrFields: {

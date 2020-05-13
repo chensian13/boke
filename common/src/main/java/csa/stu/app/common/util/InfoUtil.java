@@ -46,18 +46,23 @@ public abstract class InfoUtil {
      */
     public static String getFirstImgSrc(String info){
         if(EmptyUtil.isEmpty(info)) return null;
-        String src="src=";
+        String src="src=\"";
         String m="\"";
         int i=0;
+        int j=0;
         String img=null;
         StringBuffer sb=new StringBuffer(info);
         try {
-            while(i+src.length()<sb.length()){
-                i=info.indexOf(src);
-                img=sb.substring(i+src.length()+1,sb.indexOf(m,i+src.length()+2));
-                if(isImgURL(img)){
+            while(i<sb.length()
+                    && i>=0
+                    && j>i){
+                i=info.indexOf(src,i)+src.length()+1;
+                j=sb.indexOf(m,i);
+                img=sb.substring(i,j);
+                if(isImgPath(img)){
                     return img;
                 }
+                i=j;
             }
         }catch (Exception e){
             e.printStackTrace();
