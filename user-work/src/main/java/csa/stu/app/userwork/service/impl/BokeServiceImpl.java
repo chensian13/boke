@@ -1,9 +1,13 @@
 package csa.stu.app.userwork.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageInfo;
 import csa.stu.app.common.constent.GenerateCode;
 import csa.stu.app.common.entity.Boke;
+import csa.stu.app.common.entity.User;
+import csa.stu.app.common.util.InfoUtil;
 import csa.stu.app.userwork.dao.BokeMapper;
+import csa.stu.app.userwork.dao.UserMapper;
 import csa.stu.app.userwork.service.BokeService;
 import csa.stu.util.ap.mvc.helper.ServiceHelper;
 import csa.stu.util.myutils.pojo.ParamPojo;
@@ -22,6 +26,8 @@ import java.util.Map;
 public class BokeServiceImpl implements BokeService {
     @Autowired
     private BokeMapper bokeMapper;
+    @Autowired
+    private UserMapper userMapper;
 
     /**
      *
@@ -42,6 +48,8 @@ public class BokeServiceImpl implements BokeService {
         boke.initDefault();
         boke.setVersion("0");
         boke.setState("0");
+        //提取图片
+        boke.setCover(InfoUtil.getFirstImgSrc(boke.getInfo()));
         bokeMapper.insert(boke);
         rs=ResultPojo.newInstance(bokeMapper.selectById(boke.getBokeId()));
         return rs;
@@ -50,13 +58,11 @@ public class BokeServiceImpl implements BokeService {
     @Override
     @Transactional
     public ResultPojo<Boke> updOne(Boke boke) {
-        ResultPojo<Boke> rs=new ResultPojo<Boke>();
         boke.setModtime(DateUtil.nowTime());
-        {
-            bokeMapper.updateById(boke);
-            rs=ResultPojo.newInstance(bokeMapper.selectById(boke.getBokeId()));
-        }
-        return rs;
+        //提取图片
+        boke.setCover(InfoUtil.getFirstImgSrc(boke.getInfo()));
+        bokeMapper.updateById(boke);
+        return ResultPojo.newInstance(bokeMapper.selectById(boke.getBokeId()));
     }
 
     @Transactional
@@ -107,10 +113,24 @@ public class BokeServiceImpl implements BokeService {
                 map.put("bokeTitle",entry.getValue());
             }else if(entry.getKey().equals("isdel")){
                 map.put("isdel",entry.getValue());
+            }else if(entry.getKey().equals("bokeType")){
+                map.put("bokeType",entry.getValue());
             }else if(entry.getKey().equals("creater")){
                 map.put("creater",entry.getValue());
+            }else if(entry.getKey().equals("userCode")){
+                //依据userCode
+                QueryWrapper<User> queryWrapper=new QueryWrapper<>();
+                queryWrapper.eq("user_code",entry.getValue());
+                User user=userMapper.selectOne(queryWrapper);
+                if(user!=null){
+                    map.put("creater",user.getUserId());
+                }
             }
         });
+        //校验作者id
+        if(EmptyUtil.isEmptys(map.get("creater"))){
+            return ResultPojo.newInstance(ResultPojo.NO,"作者id不存在");
+        }
         //判断是否分页
         ServiceHelper.canPage(paramWrap);
         rs.setList(bokeMapper.selectTable(map));

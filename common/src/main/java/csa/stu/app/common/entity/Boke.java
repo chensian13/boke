@@ -50,9 +50,12 @@ public class Boke extends BaseEntity{
 
     @TableField("ispublic")
     private String ispublic;
+
+    private String cover; //封面
     //**********************************关联字段****************************************
     //对应作者
     @TableField(value = "author",exist = false)
     private String author;
+
 
 }

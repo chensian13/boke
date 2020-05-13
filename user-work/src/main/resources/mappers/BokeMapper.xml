@@ -9,7 +9,7 @@
 
   <select id="selectTable" parameterType="map" resultType="Boke">
     select
-    <include refid="cols" />
+    <include refid="cols" />,left(b.info, 72)
     from boke_boke b
     <where>
       <if test="bokeTitle!=null and bokeTitle!=''">
@@ -17,6 +17,9 @@
       </if>
       <if test="isdel!=null and isdel!=''">
         and b.isdel=#{isdel}
+      </if>
+      <if test="bokeType!=null and bokeType!=''">
+        and b.bokeType=#{bokeType}
       </if>
       <if test="creater!=null and creater!=''">
         and b.creater=#{creater}

@@ -53,14 +53,14 @@ public class BokeController{
     @ResponseBody
     public ResultPojo<Boke> queryData(@RequestBody ParamPojo paramPojo,HttpServletRequest request) {
         User user=userinfoUtil.getUserCookie(request);
-        if(user==null)
-            return ResultPojo.newInstance(ResultPojo.NO,"获取用户信息失败，请重新登录");
-        if(paramPojo.getMap()==null){
-            Map<String,Object> map=new HashMap<>();
-            map.put("creater",user.getUserId());
-            paramPojo.setMap(map);
-        }else{
-            paramPojo.getMap().put("creater",user.getUserId());
+        if(user!=null){
+            if(paramPojo.getMap()==null){
+                Map<String,Object> map=new HashMap<>();
+                map.put("creater",user.getUserId());
+                paramPojo.setMap(map);
+            }else{
+                paramPojo.getMap().put("creater",user.getUserId());
+            }
         }
         return userWorkService.queryData(paramPojo);
     }

@@ -11,8 +11,8 @@ spring:
 
 #ribbon配置
 ribbon:
-    ConnectTimeout: 2000
-    ReadTimeout: 2000
+    ConnectTimeout: 3000
+    ReadTimeout: 3000
     MaxAutoRetries: 1
     MaxAutoRetriesNextServer: 2
 
@@ -23,7 +23,7 @@ hystrix:
             execution:
                 isolation:
                     thread:
-                        timeoutInMilliseconds: 10000
+                        timeoutInMilliseconds: 15000
 
 #feign配置
 feign:
