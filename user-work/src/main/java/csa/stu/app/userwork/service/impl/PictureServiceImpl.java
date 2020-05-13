@@ -89,7 +89,6 @@ public class PictureServiceImpl implements PictureService {
 
     @Transactional
     @Override
-    @Resubmit
     public ResultPojo<Picture> uploadOne(MultipartFile file, Picture picture) {
         if(EmptyUtil.isEmpty(picture.getCreater())){
             return ResultPojo.newInstance(ResultPojo.NO,"没有用户信息");
