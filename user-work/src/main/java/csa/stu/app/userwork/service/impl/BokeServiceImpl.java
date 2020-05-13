@@ -2,6 +2,7 @@ package csa.stu.app.userwork.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageInfo;
+import csa.stu.app.common.annotation.Resubmit;
 import csa.stu.app.common.constent.GenerateCode;
 import csa.stu.app.common.entity.Boke;
 import csa.stu.app.common.entity.User;
@@ -15,6 +16,7 @@ import csa.stu.util.myutils.pojo.ResultPojo;
 import csa.stu.util.myutils.utils.DateUtil;
 import csa.stu.util.myutils.utils.EmptyUtil;
 import csa.stu.util.myutils.utils.StrUtil;
+import org.aspectj.lang.annotation.Around;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +38,7 @@ public class BokeServiceImpl implements BokeService {
      */
     @Override
     @Transactional
+    @Resubmit
     public ResultPojo<Boke> addOne(Boke boke) {
         ResultPojo<Boke> rs=new ResultPojo<Boke>();
         if(EmptyUtil.isEmpty(boke.getCreater())){
@@ -57,6 +60,7 @@ public class BokeServiceImpl implements BokeService {
 
     @Override
     @Transactional
+    @Resubmit
     public ResultPojo<Boke> updOne(Boke boke) {
         boke.setModtime(DateUtil.nowTime());
         //提取图片
