@@ -1,0 +1,51 @@
+<div id="logo">
+    <h1><a>假之物也</a></h1>
+    <h2><a id="work">我的工作室</a></h2>
+</div>
+<div id="menu"><ul id="types"></ul></div>
+<div style="clear: both; height: 30px">&nbsp;</div>
+
+
+<script>
+    $(function () {
+        var type=queryUrlParam('bokeType');
+        post(typeUrl+"getBokeTypes",{"userCode":queryUrlParam('userCode')},function (res) {
+            if(res.code=='OK'){
+                var list=res.list;
+                var ops='<li><a onclick="typeGo()">Home</a></li>';
+                if(isEmpty(type)){
+                    var ops='<li class="active"><a onclick="typeGo()">Home</a></li>';
+                }
+                for(var i=0;i<list.length;i++){
+                    if(type==list[i].typeId){
+                        ops=ops+li(list[i],true);
+                    }else{
+                        ops=ops+li(list[i],false);
+                    }
+                } //end for
+                $("#types").html(ops);
+            }
+        });
+
+        function li(e,ac){
+            if(ac){
+                return "<li class='active'><a onclick='typeGo(\""+e.typeId+"\")' >"+e.typeName+"</a></li>";
+            }
+            return "<li><a onclick='typeGo(\""+e.typeId+"\")' >"+e.typeName+"</a></li>";
+        }
+
+        $("#work").click(function () {
+             window.open(host+"work/hello");
+        });
+    });
+
+    function typeGo(type) {
+        var url=webUrl+"hello/"+queryUrlParam('userCode');
+        if(isEmpty(type)){
+            location.href=url;
+            return ;
+        }
+        location.href=url+"?bokeType="+type;
+    }
+
+</script>

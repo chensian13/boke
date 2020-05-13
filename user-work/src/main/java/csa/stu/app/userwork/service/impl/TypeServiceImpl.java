@@ -4,10 +4,13 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import csa.stu.app.common.annotation.Resubmit;
 import csa.stu.app.common.constent.GenerateCode;
 import csa.stu.app.common.entity.Type;
+import csa.stu.app.common.entity.User;
 import csa.stu.app.userwork.dao.TypeMapper;
+import csa.stu.app.userwork.dao.UserMapper;
 import csa.stu.app.userwork.service.TypeService;
 import csa.stu.util.myutils.pojo.ParamPojo;
 import csa.stu.util.myutils.pojo.ResultPojo;
+import csa.stu.util.myutils.utils.EmptyUtil;
 import csa.stu.util.myutils.utils.StrUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +22,8 @@ import java.util.Map;
 public class TypeServiceImpl implements TypeService {
 	@Autowired
 	private TypeMapper typeMapper;
+	@Autowired
+	private UserMapper userMapper;
 
 	@Transactional
 	@Override
@@ -39,11 +44,21 @@ public class TypeServiceImpl implements TypeService {
 		Map<String,String> map=new HashMap<>();
 		QueryWrapper<Type> queryWrapper=new QueryWrapper<>();
 		queryWrapper.orderByAsc("seq");
+		User user=new User();
 		ParamPojo.wrapParams(param,entry->{
 			if(entry.getKey().equals("creater")){
-				queryWrapper.eq("creater",entry.getValue());
+				user.setUserId(entry.getValue().toString());
+			}else if(entry.getKey().equals("userCode")){
+				QueryWrapper<User> userQueryWrapper=new QueryWrapper<>();
+				userQueryWrapper.eq("user_code",entry.getValue());
+				User user2=userMapper.selectOne(userQueryWrapper);
+				if(user2!=null)
+					user.setUserId(user2.getUserId());
 			}
 		});
+		if(EmptyUtil.isEmptys(user.getUserId()))
+			return ResultPojo.newInstance(ResultPojo.NO,"获取作者信息失败");
+		queryWrapper.eq("creater",user.getUserId());
 		return ResultPojo.newInstance(typeMapper.selectList(queryWrapper),0);
 	}
 

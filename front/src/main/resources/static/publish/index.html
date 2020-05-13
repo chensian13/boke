@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>假之物也</title>
+	<link href="assets/default.css" rel="stylesheet" type="text/css" media="screen" />
+	<link rel="stylesheet" href="../web2/css/common.css">
+
+	<script src="../lib/jquery.js"></script>
+	<script src="../lib/url.js"></script>
+	<script type="text/javascript" src="../web2/analyse/analyse-common.js" ></script>
+	<script type="text/javascript" src="../web2/component/component-btn.js" ></script>
+	<script type="text/javascript" src="../web2/component/component-toast.js" ></script>
+	<script type="text/javascript" src="../web2/component/component-page.js"></script>
+	<script type="text/javascript" src="../web2/component/component-table.js" ></script>
+</head>
+<body>
+<!-- start header -->
+<div id="header">
+</div>
+<div id="gallery">
+	<div id="top-photo">
+		<p><a><img src="assets/images/img08.jpg" alt="" width="830" height="300" /></a></p>
+	</div>
+</div>
+<!-- end header -->
+
+
+<!-- start page -->
+<div id="page">
+	<!-- start content -->
+	<div id="content">
+		<div id="bokes"></div>
+		<page-button id="pageBtn" ></page-button>
+	</div>
+
+	<!-- end content -->
+</div>
+
+<!-- end page -->
+</body>
+<script>
+	btnComponent();
+	pageComponent('pageBtn',0);
+	$(function () {
+		$("#header").load("nav.html");
+	});
+
+	var page=1;
+	var pagesize=10;
+	var map={
+		"isdel":'0',
+		'userCode':queryUrlParam('userCode'),
+		'bokeType':queryUrlParam('bokeType')
+	};
+	function bokelist() {
+		post(bokeUrl+"queryData",{'page':page,'pagesize':pagesize,'map':map},function (res) {
+			if(res.code=='OK'){
+				$("#bokes").empty();
+				var list=res.list;
+				for(var i=0;i<list.length;i++){
+					var ss='<div onclick="go(\''+list[i].bokeId+'\')" class="post">' +
+							'<h1 class="title">'+list[i].bokeTitle+'</h1>' +
+							'<p class="byline">'+list[i].bokeSubtitle+'</p>' +
+							'<div class="entry">'+list[i].info+'</div>' +
+							'</div>';
+					$("#bokes").append(ss);
+				}
+				var sum=parseInt(res.count/pagesize);
+				sum=res.count%pagesize==0?sum:sum+1;
+				pageEvent(sum);
+			}
+		});
+	}
+	bokelist();
+
+	function go(id) {
+		window.open(webUrl+"detail/"+id);
+	}
+
+	/**
+	 * 分页事件
+	 */
+	function pageEvent(sum){
+		pageSetMaxPage('pageBtn',sum);
+		pageResgisterEvent('pageBtn',function(n,max){
+			if(n==max) {
+				toastShow("已到最大页")
+			}
+			page=n;
+			bokelist();
+			btnComponent();
+		});
+	}
+</script>
+</html>

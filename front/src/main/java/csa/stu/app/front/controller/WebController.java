@@ -1,21 +1,10 @@
 package csa.stu.app.front.controller;
 
-import csa.stu.app.common.entity.Boke;
-import csa.stu.app.common.entity.User;
-import csa.stu.app.common.util.UserinfoUtil;
-import csa.stu.app.front.feign.UserWorkService;
-import csa.stu.util.myutils.pojo.ParamPojo;
-import csa.stu.util.myutils.pojo.ResultPojo;
-import org.springframework.beans.factory.annotation.Autowired;
+import csa.stu.util.myutils.utils.EmptyUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -25,7 +14,18 @@ import java.util.Map;
 @RequestMapping("/web")
 public class WebController {
 
+    @RequestMapping("/hello/{userCode}")
+    public String goUserWork(@PathVariable("userCode") String userCode, @RequestParam(required = false) String bokeType){
+        if(EmptyUtil.isEmptys(bokeType)){
+            return "redirect:/publish/index.html?userCode="+userCode;
+        }
+        return "redirect:/publish/index.html?userCode="+userCode+"&bokeType="+bokeType;
+    }
 
+    @RequestMapping("/detail/{bokeId}")
+    public String goUserWork(@PathVariable("bokeId") String bokeId){
+        return "redirect:/publish/detail.html?bokeId="+bokeId;
+    }
 
 
 }

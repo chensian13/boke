@@ -7,6 +7,7 @@ import csa.stu.app.front.feign.UserWorkService;
 import csa.stu.util.myutils.constant.OperConstant;
 import csa.stu.util.myutils.pojo.ParamPojo;
 import csa.stu.util.myutils.pojo.ResultPojo;
+import csa.stu.util.myutils.utils.EmptyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -29,12 +30,15 @@ public class TypeController {
 
 	@ResponseBody
 	@RequestMapping("/getBokeTypes")
-	public ResultPojo<Type> getBokeTypes(HttpServletRequest request){
-		User user=userinfoUtil.getUserCookie(request);
-		if(user==null) return ResultPojo.newInstance(ResultPojo.NO,"用户信息获取失败");
+	public ResultPojo<Type> getBokeTypes(HttpServletRequest request,@RequestBody(required = false) User user){
+		User user2=userinfoUtil.getUserCookie(request);
 		ParamPojo paramPojo=new ParamPojo();
 		paramPojo.setMap(new HashMap<>());
-		paramPojo.getMap().put("creater",user.getUserId());
+		if(user2!=null){
+			paramPojo.getMap().put("creater",user2.getUserId());
+		}else if(EmptyUtil.isEmptys(user,user.getUserCode())){
+			paramPojo.getMap().put("userCode",user.getUserCode());
+		}
 		return userWorkService.getBokeTypes(paramPojo);
 	}
 
