@@ -10,5 +10,5 @@ spring:
 #            max-request-size: 100MB
 #            max-file-size: 50MB
 
-#csa:
-#    filepath: E:/base/boke  #上传图片位置
+csa:
+    zuul: http://127.0.0.1:6001/

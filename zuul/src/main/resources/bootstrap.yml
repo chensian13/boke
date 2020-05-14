@@ -4,7 +4,7 @@ eureka:
     prefer-ip-address: true
   client:
     service-url:
-      defaultZone: http://eurekava:2001/eureka #,http://eurekavb:2002/eureka
+      defaultZone: http://eurekava:2001/eureka ,http://eurekavb:2002/eureka
 
 spring:
   cloud:

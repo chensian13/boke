@@ -1,10 +1,6 @@
 server:
   port: 2002
 
-spring:
-  application:
-    name: server-center-vb
-
 # 关闭保护模式
 # 主机名
 # 不注册,不拉取

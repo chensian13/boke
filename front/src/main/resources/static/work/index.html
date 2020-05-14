@@ -3,7 +3,7 @@
 <head>
     <!-- Basic -->
     <meta charset="UTF-8">
-    <title>假之物也</title>
+    <title>我的工作室---假之物也</title>
     <!-- Web Fonts  -->
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
     <!-- Vendor CSS -->
@@ -32,8 +32,9 @@
     <header class="header">
         <div class="logo-container">
             <a class="logo">
-                <h3>我的工作室---假之物也</h3>
+                <h3 id="web">我的工作室---假之物也</h3>
             </a>
+           
         </div>
 
         <!-- start: search & user box -->
@@ -169,6 +170,9 @@
             });
         });
 
+        $("#web").click(function () {
+            window.open(workUrl+"goWeb");
+        });
 
         $(function () {
             post(userUrl+"userinfo",{},function (res) {

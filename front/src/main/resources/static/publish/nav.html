@@ -40,12 +40,12 @@
     });
 
     function typeGo(type) {
-        var url=webUrl+"hello/"+queryUrlParam('userCode');
+        var url=serviceF+"/publish/index.html?userCode="+queryUrlParam('userCode');
         if(isEmpty(type)){
             location.href=url;
             return ;
         }
-        location.href=url+"?bokeType="+type;
+        location.href=url+"&bokeType="+type;
     }
 
 </script>
