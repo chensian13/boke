@@ -124,7 +124,7 @@
 			$("#login").click(function () {
 				post(userUrl+"/login",formDataMap("form"),function (res) {
 					if(res.code=='OK'){
-						window.location.href="/work/hello";
+						window.location.href=workUrl+"hello";
 					}else {
 						toastShow(res.message);
 					}

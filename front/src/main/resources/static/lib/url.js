@@ -1,9 +1,12 @@
-var host="http://127.0.0.1:9000/";
-var bokeUrl=host+"boke/";
-var userUrl=host+"user/";
-var typeUrl=host+"type/";
-var pictureUrl=host+"picture/";
-var webUrl=host+"web/";
+var host="http://127.0.0.1:6001/";
+var serviceF=host+"front/";
+
+var bokeUrl=serviceF+"boke/";
+var userUrl=serviceF+"user/";
+var typeUrl=serviceF+"type/";
+var pictureUrl=serviceF+"picture/";
+var webUrl=serviceF+"web/";
+var workUrl=serviceF+"work/";
 
 function post(url,param,reqOk){
     $.ajax({
