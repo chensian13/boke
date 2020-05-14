@@ -1,0 +1,15 @@
+项目说明：
+1.本项目属于微服务集群架构，基于springboot默认配置化，springcloud全家桶配置
+
+
+
+
+解决问题：
+1.zuul网关与微服务 跨域请求和跨域cookie携带问题：通过过滤器，允许域访问和cookie携带，注意域访问不可以*，否则cookie携带报错。
+
+2.将eureka和config-server配置在同一个项目server-config
+
+3.配置server-config集群，之前准备了两份yml文件：va,vb。
+属于个性化配置，针对eureka和端口。配置采用本地配置，所以程序启动参数必须如下：
+--spring.profiles.active=native,vb
+否则config center会默认到git下载配置文件，必须先配置native环境才行。

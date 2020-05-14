@@ -1,0 +1,20 @@
+server:
+  port: 2002
+
+spring:
+  application:
+    name: server-center-vb
+
+# 关闭保护模式
+# 主机名
+# 不注册,不拉取
+eureka:
+  instance:
+    hostname: eurekvb
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true  #配置中心需要注册
+    fetch-registry: true
+    service-url:
+      defaultZone: http://eurekava:2001/eureka
+
