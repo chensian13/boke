@@ -34,7 +34,7 @@ public class LoginInterceptor implements HandlerInterceptor {
                 logger.info("请求放行："+user);
                 return true;
             }
-            response.sendRedirect(app+zuul+"/work/signin");
+            response.sendRedirect(zuul+app+"/nouser/signin");
         }catch (Exception e){
             e.printStackTrace();
         }

@@ -25,31 +25,6 @@ public class UserController {
     @Autowired
     private UserinfoUtil userinfoUtil;
 
-    @RequestMapping("/login")
-    @ResponseBody
-    public ResultPojo<User> loginByUser(@RequestBody User user, HttpServletResponse response){
-        ResultPojo<User> rs= ssoService.loginByUser(user);
-        if(rs!=null
-                && ResultPojo.OK.equals(rs.getCode())){
-            //验证通过，设置cookie
-            userinfoUtil.setUserCookie(rs.getModel(),response);
-        }
-        return rs;
-    }
-
-    @RequestMapping("/logout")
-    @ResponseBody
-    public ResultPojo logout(HttpServletResponse response) throws IOException {
-        userinfoUtil.logout(response);
-        return ResultPojo.newInstance(ResultPojo.OK,"");
-    }
-
-    @PostMapping("/register")
-    @ResponseBody
-    public ResultPojo register(@RequestBody User user){
-        return userWorkService.register(user);
-    }
-
 
     @RequestMapping("/userinfo")
     @ResponseBody

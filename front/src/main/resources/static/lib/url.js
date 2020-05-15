@@ -3,6 +3,7 @@ var serviceF=host+"front/";
 
 var bokeUrl=serviceF+"boke/";
 var userUrl=serviceF+"user/";
+var nouserUrl=serviceF+"nouser/";
 var typeUrl=serviceF+"type/";
 var pictureUrl=serviceF+"picture/";
 var webUrl=serviceF+"web/";

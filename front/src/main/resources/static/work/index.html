@@ -4,27 +4,25 @@
     <!-- Basic -->
     <meta charset="UTF-8">
     <title>我的工作室---假之物也</title>
-    <!-- Web Fonts  -->
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
     <!-- Vendor CSS -->
-    <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.css" />
-    <link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.css" />
-    <link rel="stylesheet" href="assets/vendor/magnific-popup/magnific-popup.css" />
-    <link rel="stylesheet" href="assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
+    <link rel="stylesheet" href="/front/work/assets/vendor/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="/front/work/assets/vendor/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="/front/work/assets/vendor/magnific-popup/magnific-popup.css" />
+    <link rel="stylesheet" href="/front/work/assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
     <!-- Theme CSS -->
-    <link rel="stylesheet" href="assets/stylesheets/theme.css" />
+    <link rel="stylesheet" href="/front/work/assets/stylesheets/theme.css" />
     <!-- Skin CSS -->
-    <link rel="stylesheet" href="assets/stylesheets/skins/default.css" />
+    <link rel="stylesheet" href="/front/work/assets/stylesheets/skins/default.css" />
     <!-- Theme Custom CSS -->
-    <link rel="stylesheet" href="assets/stylesheets/theme-custom.css">
+    <link rel="stylesheet" href="/front/work/assets/stylesheets/theme-custom.css">
     <!-- Head Libs -->
-    <script src="assets/vendor/modernizr/modernizr.js"></script>
+    <script src="/front/work/assets/vendor/modernizr/modernizr.js"></script>
 
     <!--self-->
-    <script type="text/javascript" src="../web2/component/component-tag.js" ></script>
-    <link rel="stylesheet" href="../web2/css/common.css">
-    <script type="text/javascript" src="../lib/url.js" ></script>
-    <script type="text/javascript" src="../web2/analyse/analyse-common.js" ></script>
+    <script type="text/javascript" src="/front/work/web2/component/component-tag.js" ></script>
+    <link rel="stylesheet" href="/front/work/web2/css/common.css">
+    <script type="text/javascript" src="/front/work/lib/url.js" ></script>
+    <script type="text/javascript" src="/front/work/web2/analyse/analyse-common.js" ></script>
 </head>
 <body>
 <section class="body">
@@ -42,7 +40,7 @@
             <div id="userbox" class="userbox">
                 <a href="#" data-toggle="dropdown">
                     <figure class="profile-picture">
-                        <img src="assets/images/logged-user.jpg"  class="img-circle"  />
+                        <img src="/front/work/assets/images/logged-user.jpg"  class="img-circle"  />
                     </figure>
                     <div class="profile-info">
                         <span class="name" id="username"></span>
@@ -146,26 +144,26 @@
 
 
     <!-- Vendor -->
-    <script src="assets/vendor/jquery/jquery.js"></script>
-    <script src="assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
-    <script src="assets/vendor/bootstrap/js/bootstrap.js"></script>
-    <script src="assets/vendor/nanoscroller/nanoscroller.js"></script>
-    <script src="assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
+    <script src="/front/work/assets/vendor/jquery/jquery.js"></script>
+    <script src="/front/work/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+    <script src="/front/work/assets/vendor/bootstrap/js/bootstrap.js"></script>
+    <script src="/front/work/assets/vendor/nanoscroller/nanoscroller.js"></script>
+    <script src="/front/work/assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
 
     <!-- Specific Page Vendor -->
     <!-- Theme Base, Components and Settings -->
-    <script src="assets/javascripts/theme.js"></script>
+    <script src="/front/work/assets/javascripts/theme.js"></script>
     <!-- Theme Custom -->
-    <script src="assets/javascripts/theme.custom.js"></script>
+    <script src="/front/work/assets/javascripts/theme.custom.js"></script>
     <!-- Theme Initialization Files -->
-    <script src="assets/javascripts/theme.init.js"></script>
+    <script src="/front/work/assets/javascripts/theme.init.js"></script>
 
     <script>
         tagComponent("tag");
         $("#logout").click(function () {
-            post(userUrl+"logout",null,function (res) {
+            post(nouserUrl+"logout",null,function (res) {
                 if(res.code=='OK'){
-                    window.location.href="/work/signin";
+                    window.location.href=nouserUrl+"/signin";
                 }
             });
         });

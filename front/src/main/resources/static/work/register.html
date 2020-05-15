@@ -135,7 +135,7 @@
 					return ;
 				}
 
-				post(userUrl+"register",map,function (res) {
+				post(nouserUrl+"register",map,function (res) {
 					if(res.code=='OK'){
 						toastShow("注册成功！");
 						window.location.href="/work/signin";

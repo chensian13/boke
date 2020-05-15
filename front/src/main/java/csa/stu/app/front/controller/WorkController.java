@@ -29,16 +29,6 @@ public class WorkController {
         return "/work/index.html";
     }
 
-    @RequestMapping("/signin")
-    public String login(){
-        return "/work/login.html";
-    }
-
-    @RequestMapping("/signup")
-    public String register(){
-        return "/work/register.html";
-    }
-
     @RequestMapping("/goWeb")
     public String goWeb(HttpServletRequest request){
         User user=userinfoUtil.getUserCookie(request);

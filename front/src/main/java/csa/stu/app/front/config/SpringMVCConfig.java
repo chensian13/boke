@@ -24,8 +24,8 @@ public class SpringMVCConfig extends WebMvcConfigurerAdapter{
 	public void addInterceptors(InterceptorRegistry registry) {
         //不对静态资源起作用，针对接口拦截，html拦截
 		registry.addInterceptor(loginInterceptor)
-			.excludePathPatterns("user/login","user/register","/work/login.html","/work/register.html","/work/signup")
-			.addPathPatterns("/boke/**","user/**","/work/*.html");
+			.excludePathPatterns("/work/login.html","/work/register.html")
+			.addPathPatterns("/boke/**","/user/**","/work/*.html");
 	}
 
 

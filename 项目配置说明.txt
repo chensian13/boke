@@ -1,3 +1,6 @@
+访问路径：http://127.0.0.1:6001/front/work/hello
+
+
 项目说明：
 1.本项目属于微服务集群架构，基于springboot默认配置化，springcloud全家桶配置
 
