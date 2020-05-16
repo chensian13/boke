@@ -19,10 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 public class WorkController {
     @Autowired
     private UserinfoUtil userinfoUtil;
-    @Value("${spring.application.name}")
-    private String app;
-    @Value("${csa.zuul}")
-    private String zuul;
 
     @RequestMapping("/hello")
     public String goUserWork(){
@@ -32,7 +28,7 @@ public class WorkController {
     @RequestMapping("/goWeb")
     public String goWeb(HttpServletRequest request){
         User user=userinfoUtil.getUserCookie(request);
-        return "redirect:"+zuul+app+"/publish/index.html?userCode="+user.getUserCode();
+        return "redirect:/publish/index.html?userCode="+user.getUserCode();
     }
 
 
