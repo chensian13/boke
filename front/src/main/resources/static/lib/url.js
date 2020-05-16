@@ -1,5 +1,5 @@
-var host="http://127.0.0.1:6001/";
-var serviceF=host+"front/";
+var host="http://127.0.0.1:9000/";
+var serviceF=host;
 
 var bokeUrl=serviceF+"boke/";
 var userUrl=serviceF+"user/";

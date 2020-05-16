@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import csa.stu.app.common.entity.User;
 import csa.stu.util.myutils.utils.EmptyUtil;
 import org.apache.shiro.crypto.hash.SimpleHash;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,8 @@ import java.util.Base64;
 
 @Component
 public class UserinfoUtil {
+    @Value("${csa.redis:false}")
+    private boolean open; //是否开启redis
 
     /**
      * 盐值加密

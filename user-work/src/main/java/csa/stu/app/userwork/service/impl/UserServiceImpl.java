@@ -70,6 +70,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public ResultPojo<User> selectByCode(String code) {
+        QueryWrapper<User> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("user_code",code);
+        return ResultPojo.newInstance(userMapper.selectOne(queryWrapper));
+    }
+
+    @Override
     public ResultPojo<User> delOne(User user) {
         return null;
     }

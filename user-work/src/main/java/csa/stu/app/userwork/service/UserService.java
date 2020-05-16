@@ -9,4 +9,6 @@ public interface UserService extends IService<User> {
 
     ResultPojo<User> modPass(User user);
 
+    ResultPojo<User> selectByCode(String code);
+
 }

@@ -1,16 +1,19 @@
 package csa.stu.app.userwork.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import csa.stu.app.common.annotation.RedisCache;
 import csa.stu.app.common.annotation.Resubmit;
 import csa.stu.app.common.constent.GenerateCode;
 import csa.stu.app.common.entity.Type;
 import csa.stu.app.common.entity.User;
+import csa.stu.app.common.util.RedisUtil;
 import csa.stu.app.userwork.dao.TypeMapper;
 import csa.stu.app.userwork.dao.UserMapper;
 import csa.stu.app.userwork.service.TypeService;
 import csa.stu.util.myutils.pojo.ParamPojo;
 import csa.stu.util.myutils.pojo.ResultPojo;
 import csa.stu.util.myutils.utils.EmptyUtil;
+import csa.stu.util.myutils.utils.JSONUtil;
 import csa.stu.util.myutils.utils.StrUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +27,9 @@ public class TypeServiceImpl implements TypeService {
 	private TypeMapper typeMapper;
 	@Autowired
 	private UserMapper userMapper;
+	@Autowired
+	private RedisUtil redisUtil;
+	private final String tag="boke_type";
 
 	@Transactional
 	@Override
@@ -39,26 +45,12 @@ public class TypeServiceImpl implements TypeService {
 		return rp;
 	}
 
+	@RedisCache(key = tag)
 	@Override
-	public ResultPojo<Type> selectData(ParamPojo param) {
-		Map<String,String> map=new HashMap<>();
+	public ResultPojo<Type> selectData(String creater,ParamPojo param) {
 		QueryWrapper<Type> queryWrapper=new QueryWrapper<>();
 		queryWrapper.orderByAsc("seq");
-		User user=new User();
-		ParamPojo.wrapParams(param,entry->{
-			if(entry.getKey().equals("creater")){
-				user.setUserId(entry.getValue().toString());
-			}else if(entry.getKey().equals("userCode")){
-				QueryWrapper<User> userQueryWrapper=new QueryWrapper<>();
-				userQueryWrapper.eq("user_code",entry.getValue());
-				User user2=userMapper.selectOne(userQueryWrapper);
-				if(user2!=null)
-					user.setUserId(user2.getUserId());
-			}
-		});
-		if(EmptyUtil.isEmptys(user.getUserId()))
-			return ResultPojo.newInstance(ResultPojo.NO,"获取作者信息失败");
-		queryWrapper.eq("creater",user.getUserId());
+		queryWrapper.eq("creater",creater);
 		return ResultPojo.newInstance(typeMapper.selectList(queryWrapper),0);
 	}
 
@@ -82,6 +74,11 @@ public class TypeServiceImpl implements TypeService {
 		return rp;
 	}
 
+	@Override
+	public ResultPojo<Type> selectData(ParamPojo wrap) {
+		return null;
+	}
+
 	@Transactional
 	@Override
 	@Resubmit
@@ -90,6 +87,7 @@ public class TypeServiceImpl implements TypeService {
 		int i=typeMapper.updateById(type);
 		rp.setCode(ResultPojo.OK);
 		rp.setModel(typeMapper.selectById(type.getTypeId()));
+		redisUtil.del(tag+JSONUtil.formatJSON(type.getCreater()));
 		return rp;
 	}
 
@@ -99,6 +97,7 @@ public class TypeServiceImpl implements TypeService {
 		ResultPojo<Type> rp=ResultPojo.newInstance();
 		typeMapper.deleteById(type.getTypeId());
 		rp.setCode(ResultPojo.OK);
+		redisUtil.del(tag+JSONUtil.formatJSON(type.getCreater()));
 		return rp;
 	}
 

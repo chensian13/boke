@@ -35,7 +35,7 @@ public class TypeController {
 		ParamPojo paramPojo=new ParamPojo();
 		paramPojo.setMap(new HashMap<>());
 		if(user2!=null){
-			paramPojo.getMap().put("creater",user2.getUserId());
+			paramPojo.getMap().put("userCode",user2.getUserCode());
 		}else if(EmptyUtil.isEmptys(user,user.getUserCode())){
 			paramPojo.getMap().put("userCode",user.getUserCode());
 		}

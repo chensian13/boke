@@ -20,6 +20,7 @@ spring:
             # 是否缓存preparedStatement
             pool-prepared-statements: true
             max-pool-prepared-statement-per-connection-size: 20
+    #redis配置
 
 #mybatis配置
 mybatis-plus:
@@ -59,3 +60,6 @@ hystrix:
 feign:
     hystrix:
         enabled: true
+
+
+
