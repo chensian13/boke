@@ -14,7 +14,7 @@ spring:
       server:
         native:
           search-locations: classpath:/configs   #本地配置代替git
-        #prefix: /config  #解决eureka管理页面静态资源被config拦截
+        prefix: /config  #解决eureka管理页面静态资源被config拦截
 
 # 关闭保护模式
 # 主机名
