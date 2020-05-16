@@ -14,10 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/web")
 public class WebController {
-    @Value("${spring.application.name}")
-    private String app;
-    @Value("${csa.zuul}")
-    private String zuul;
     
 
 

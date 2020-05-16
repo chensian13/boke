@@ -51,11 +51,11 @@ public class NoUserController {
 
     @RequestMapping("/signin")
     public String login(){
-        return "/work/login.html";
+        return "redirect:/work/login.html";
     }
 
     @RequestMapping("/signup")
     public String register(){
-        return "/work/register.html";
+        return "redirect:/work/register.html";
     }
 }

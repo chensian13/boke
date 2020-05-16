@@ -5,10 +5,3 @@ server:
 spring:
     application:
         name: front
-#    servlet:
-#        multipart:
-#            max-request-size: 100MB
-#            max-file-size: 50MB
-
-csa:
-    zuul: http://127.0.0.1:6001/
