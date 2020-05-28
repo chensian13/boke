@@ -16,13 +16,16 @@ import java.util.Set;
 @Configuration
 @PropertySource("classpath:redis.properties")
 public class RedisConfig {
-    @Value("${spring.redis.sentinel.nodes}")
+    @Value("${spring.redis.sentinel.nodes:127.0.0.1:26379}")
     private String node;
-    @Value("${spring.redis.sentinel.master}")
+    @Value("${spring.redis.sentinel.master:mymaster}")
     private String master;
+    @Value("${csa.redis}")
+    private boolean open;
 
     @Bean
     public JedisSentinelPool jedisSentinelPool() {
+        if(!open) return null;
         Set<String> sentinels = new HashSet<>();
         sentinels.add(node);
         return new JedisSentinelPool(master, sentinels);

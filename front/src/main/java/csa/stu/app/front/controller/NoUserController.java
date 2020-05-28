@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
@@ -24,14 +25,15 @@ public class NoUserController {
     @Autowired
     private UserinfoUtil userinfoUtil;
 
+
     @RequestMapping("/login")
     @ResponseBody
-    public ResultPojo<User> loginByUser(@RequestBody User user, HttpServletResponse response){
+    public ResultPojo<User> loginByUser(@RequestBody User user, HttpServletResponse response, HttpServletRequest request){
         ResultPojo<User> rs= ssoService.loginByUser(user);
         if(rs!=null
                 && ResultPojo.OK.equals(rs.getCode())){
             //验证通过，设置cookie
-            userinfoUtil.setUserCookie(rs.getModel(),response);
+            userinfoUtil.setUserCookie(response,rs.getModel().getToken());
         }
         return rs;
     }
@@ -39,8 +41,7 @@ public class NoUserController {
     @RequestMapping("/logout")
     @ResponseBody
     public ResultPojo logout(HttpServletResponse response) throws IOException {
-        userinfoUtil.logout(response);
-        return ResultPojo.newInstance(ResultPojo.OK,"");
+        return ssoService.logout();
     }
 
     @PostMapping("/register")

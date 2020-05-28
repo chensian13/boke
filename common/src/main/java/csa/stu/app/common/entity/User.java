@@ -35,4 +35,7 @@ public class User extends BaseEntity{
 
     @TableField(exist = false)
     private String oldPass;
+
+    @TableField(exist = false)
+    private String token;
 }

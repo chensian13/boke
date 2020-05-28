@@ -21,7 +21,7 @@ spring:
 # 不注册,不拉取
 eureka:
   server:
-    enable-self-preservation: false # 保护模式
+    enable-self-preservation: true # 保护模式
   instance:
     hostname: eurekva
     prefer-ip-address: true

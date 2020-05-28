@@ -7,7 +7,6 @@ import csa.stu.util.myutils.pojo.ResultPojo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -18,7 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginController {
     @Autowired
     private UserService userService;
-
+    @Autowired
+    private UserinfoUtil userinfoUtil;
 
 
     /**
@@ -28,9 +28,16 @@ public class LoginController {
      */
     @RequestMapping("/login")
     @ResponseBody
-    public ResultPojo<User> loginByUser(@RequestBody User user){
-        return userService.login(user);
+    public ResultPojo<User> loginByUser(@RequestBody User user,HttpServletResponse response){
+        ResultPojo<User> rs=userService.login(user);
+        if(rs!=null
+                && ResultPojo.OK.equals(rs.getCode())){
+            //验证通过，设置cookie
+            userinfoUtil.setUserData(rs.getModel());
+        }
+        return rs;
     }
+
 
 
 
