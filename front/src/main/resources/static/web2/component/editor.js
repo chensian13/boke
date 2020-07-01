@@ -55,6 +55,8 @@ function setImg(){
 	btnImg.onclick=function(){
 		var formData = new FormData();
 		formData.append("upload",fileInputForm("file")[0]);
+		if(!isEmpty(bokeId))
+			formData.append("bokeId",bokeId);
 		postFile(formData,function (url) {
 			saveImg(null,url);
 		})

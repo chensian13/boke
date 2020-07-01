@@ -38,7 +38,7 @@ public interface UserWorkService {
 
     @RequestMapping(value="/picture/upload",produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResultPojo<Picture> uploadOne(@RequestPart("upload") MultipartFile file
-            ,@RequestParam("userId") String userId);
+            ,@RequestParam("userId") String userId,@RequestParam("bokeId") String bokeId);
 
     @RequestMapping({"/boke/queryById/{id}"})
     public ResultPojo<Boke> queryById(@PathVariable String id);

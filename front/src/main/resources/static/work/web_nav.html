@@ -1,9 +1,68 @@
-<div id="logo">
-    <h1><a>假之物也</a></h1>
-    <h2><a id="work">我的工作室</a></h2>
+<style>
+    .nav{
+        background:rgba(0,255,128,0.5);
+        padding: 15px;
+    }
+    #logo {
+        height: 100px;
+    }
+
+    #logo h1 {
+        float: left;
+        display: inline-block;
+    }
+
+    #logo h2 {
+        float: right;
+        display: inline-block;
+    }
+
+    #logo a {
+        text-decoration: none;
+        color: #372412;
+    }
+
+    #work:hover{
+        text-decoration: underline;
+    }
+
+    #menu ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    #menu li {
+        display: inline;
+    }
+
+    #menu a {
+        display: block;
+        float: left;
+        width: 166px;
+        text-decoration: none;
+        text-align: center;
+        font-size: 24px;
+        color: #FFFFFF;
+    }
+
+    #menu a:hover {
+        color: #FFFFFF;
+    }
+
+    #menu .active a {
+        color: #372412;
+    }
+</style>
+
+<div class="nav">
+    <div id="logo">
+        <h1><a>假之物也</a></h1>
+        <h2><a id="work">我的工作室</a></h2>
+    </div>
+    <div id="menu"><ul id="types"></ul></div>
+    <div style="clear: both; height: 30px">&nbsp;</div>
 </div>
-<div id="menu"><ul id="types"></ul></div>
-<div style="clear: both; height: 30px">&nbsp;</div>
 
 
 <script>
@@ -40,7 +99,7 @@
     });
 
     function typeGo(type) {
-        var url=serviceF+"/publish/index.html?userCode="+queryUrlParam('userCode');
+        var url=serviceF+"/work/boke_store.html?userCode="+queryUrlParam('userCode');
         if(isEmpty(type)){
             location.href=url;
             return ;

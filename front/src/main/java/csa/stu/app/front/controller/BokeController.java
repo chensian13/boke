@@ -75,6 +75,7 @@ public class BokeController{
     @RequestMapping("/upload")
     @ResponseBody
     public ResultPojo<String> uploadOne(@RequestPart("upload")  MultipartFile file
+            ,@RequestParam("bokeId") String bokeId
             ,HttpServletRequest request
             , HttpServletResponse response)
                 throws IOException {
@@ -82,11 +83,10 @@ public class BokeController{
         if(EmptyUtil.isEmpty(user)){
             return ResultPojo.newInstance(ResultPojo.NO,"登录信息过期");
         }
-        ResultPojo<Picture> rs= userWorkService.uploadOne(file,user.getUserId());
+        ResultPojo<Picture> rs= userWorkService.uploadOne(file,user.getUserId(),bokeId);
         if(rs==null || rs.getModel()==null) return ResultPojo.newInstance(ResultPojo.NO,null);;
         Picture picture=rs.getModel();
-        String path="http://imgs/"+picture.getPath();
-        return ResultPojo.newInstance(path);
+        return ResultPojo.newInstance(picture.getHttpPath());
     }
 
 

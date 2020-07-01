@@ -25,11 +25,7 @@ public class WorkController {
         return "/work/index.html";
     }
 
-    @RequestMapping("/goWeb")
-    public String goWeb(HttpServletRequest request){
-        User user=userinfoUtil.getUserCookie(request);
-        return "redirect:/publish/index.html?userCode="+user.getUserCode();
-    }
+
 
 
 }

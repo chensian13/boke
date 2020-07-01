@@ -105,6 +105,7 @@
     <script src="assets/javascripts/theme.init.js"></script>
 
     <script>
+        var bokeId;
         $(function () {
             post(typeUrl+"getBokeTypes",null,function (res) {
                 if(res.code=='OK'){
@@ -118,6 +119,7 @@
             });
 
             $("#editor").load("editor.html");
+            bokeId=uuid32();
         });
 
 
@@ -135,7 +137,7 @@
             }else{
                 map.ispublic="0";
             }
-
+            map.bokeId=bokeId;
             map.info=$("#content").html();
             post(bokeUrl+"data/add",map,function (res) {
                 if(res.code=='OK'){

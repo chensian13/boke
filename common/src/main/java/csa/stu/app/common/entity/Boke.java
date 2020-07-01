@@ -57,5 +57,8 @@ public class Boke extends BaseEntity{
     @TableField(value = "author",exist = false)
     private String author;
 
+    //对应作者
+    @TableField(value = "img",exist = false)
+    private String img;
 
 }

@@ -75,7 +75,7 @@ h1,h2,h3,h4,h5,h6{
  *
  */
 input[type='checkbox']{
-	height: 20px; 
+	height: 20px;
 	width: 20px;
 }
 
@@ -97,7 +97,7 @@ table td,th{
 	font-size: 14px;
 }
 table tbody{
-	
+
 }
 
 pop{
@@ -159,7 +159,7 @@ pop .close:hover{
 
 
 .float-menu {
-	position:absolute; 
+	position:absolute;
 	visibility:hidden;
 	text-align: left;
 	z-index: 9999;
@@ -214,7 +214,7 @@ tag-body{
 	display: block;
 }
 tag-body iframe{
-	width: 100%; 
+	width: 100%;
 	border-style: none;
 	display: none;
 	overflow: auto;
@@ -232,4 +232,36 @@ tag-body iframe{
 .table-image{
 	max-width: 200px;
 	max-height: 120px;
+}
+
+list{
+	display: block;
+}
+list-item{
+	display: block;
+	margin-bottom: 45px;
+}
+list-item img{
+	width: 24%;
+	float: left;
+}
+.list-info{
+	float: right;
+	width: 75%;
+	display: inline-block;
+}
+.list-info hr{
+	background: #009688;
+	margin: 10px 10px 5px 10px;
+}
+.list-info h1{
+	font-size: 20px;
+	margin: 0px;
+	padding: 0px;
+}
+.list-info{
+	font-size: 16px;
+}
+.list-info:hover{
+	text-decoration: underline;
 }

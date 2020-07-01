@@ -8,6 +8,7 @@ import csa.stu.app.common.entity.Boke;
 import csa.stu.app.common.entity.User;
 import csa.stu.app.common.util.InfoUtil;
 import csa.stu.app.userwork.dao.BokeMapper;
+import csa.stu.app.userwork.dao.PictureMapper;
 import csa.stu.app.userwork.dao.UserMapper;
 import csa.stu.app.userwork.service.BokeService;
 import csa.stu.util.ap.mvc.helper.ServiceHelper;
@@ -30,9 +31,11 @@ public class BokeServiceImpl implements BokeService {
     private BokeMapper bokeMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private PictureMapper pictureMapper;
 
     /**
-     *
+     *  id前端生产
      * @param boke
      * @return
      */
@@ -46,7 +49,6 @@ public class BokeServiceImpl implements BokeService {
             rs.setMessage("获取登录信息失败，请重新登录");
             return rs;
         }
-        boke.setBokeId(StrUtil.generateUUID32());
         boke.setBokeCode(StrUtil.generateCode(GenerateCode.BOKE));
         boke.initDefault();
         boke.setVersion("0");
@@ -97,6 +99,7 @@ public class BokeServiceImpl implements BokeService {
     @Override
     public ResultPojo<Boke> selectById(String id) {
         ResultPojo<Boke> rs=new ResultPojo<Boke>();
+        pi
         rs=ResultPojo.newInstance(bokeMapper.selectById(id));
         return rs;
     }
