@@ -24,6 +24,7 @@
 	overflow-y: scroll;
 	overflow-x: hidden;
 	padding: 10px;
+	height: 500px;
 }
 .editor-content img{
 	display: block;
@@ -51,33 +52,41 @@
 	vertical-align: top;
 }
 
-
+title{
+	display: block;
+}
 .h1{
 	padding:10px 0px;
+	margin: 0px;
 	font-size: 32px;
 	font-weight: bolder;
 }
 .h2{
+	margin: 0px;
 	padding:5px 0px;
 	font-size: 28px;
 	font-weight: bold;
 }
 .h3{
+	margin: 0px;
 	padding:5px 0px;
 	font-size: 24px;
 	font-weight: bold;
 }
 .h4{
+	margin: 0px;
 	padding:5px 0px;
 	font-size: 20px;
 	font-weight: bold;
 }
 .h5{
+	margin: 0px;
 	padding:5px 0px;
 	font-size: 16px;
 	font-weight: bold;
 }
 .h6{
+	margin: 0px;
 	padding:5px 0px;
 	font-size: 14px;
 	font-weight: bold;

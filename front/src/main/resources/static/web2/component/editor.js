@@ -5,9 +5,6 @@ var imgSrc=document.getElementById("imgSrc");
 var showImg=document.getElementById("showImg");
 var fileUp=document.getElementById("file");
 
-var maxW=content.offsetWidth;
-var maxH=content.offsetHeight;
-
 var contentImg=document.getElementById("contentImg");
 var contentHref=document.getElementById("contentHref");
 var contentTitle=document.getElementById("contentTitle");
@@ -42,17 +39,6 @@ function btnHref(a){
 	a.innerHTML=textA.value;
 	a.setAttribute("href",inpu.value);
 	a.setAttribute("target","_blank");
-	a.ondblclick=function(){
-		var thisA=this;
-		contentHref.getElementsByTagName("input")[0].value=thisA.getAttribute("href");
-		contentHref.getElementsByTagName("textarea")[0].value=thisA.innerHTML;
-		popShow("contentHref");
-		
-		var btn=contentHref.getElementsByTagName("button")[0];
-		btn.onclick=function(){
-			btnHref(thisA);
-		}
-	}
 	btn.onclick=function(){
 		btnHref();
 	}
@@ -75,10 +61,9 @@ function setImg(){
 	};
 }
 
-function saveImg(img,url){
+function saveImg(img,url){debugger
 	if(isEmpty(img)){
 		img=document.createElement("img");
-		imgEvent(img);
 		content.append(img);
 		content.append(document.createElement("br"));
 	}
@@ -87,7 +72,7 @@ function saveImg(img,url){
 	
 	var w=imgW.value;
 	var h=imgH.value;
-	if((isNotEmpty(w) && w>=maxW) 
+	if((isNotEmpty(w) && w>=content.offsetWidth)
 		|| isEmpty(w)){
 		w="100%";
 	}
@@ -107,24 +92,6 @@ function cleanImg(){
 	imgSrc.value="";
 }
 
-function imgEvent(img){
-	img.ondblclick=function(){
-		cleanImg();
-		popShow("contentImg");
-		showImg.style.display="block";
-		fileUp.style.display="none";
-		
-		showImg.setAttribute("src",img.getAttribute("src"));
-		imgW.value=img.getAttribute("width");
-		imgH.value=img.getAttribute("height");
-		imgSrc.value=img.getAttribute("src");
-		
-		var btnImg=contentImg.querySelectorAll("button")[1];
-		btnImg.onclick=function(){
-			saveImg(img);
-		};
-	};
-}
 
 
 function cleanTitle(){
@@ -148,23 +115,85 @@ function btnTitle(t){
 	var sele=contentTitle.querySelector("select");
 	
 	if(!t){
-		t=document.createElement("div");
+		t=document.createElement("title");
 		content.append(t);
 		content.append(document.createElement("br"));
 	}
 	t.innerHTML=inpu.value;
 	t.setAttribute("class",sele.value);
-	t.ondblclick=function(){
-		//cleanTitle();
-		var thisT=this;
-		inpu.value=thisT.innerHTML;
-		sele.value=t.getAttribute("class");
-		var btn=contentTitle.querySelector("button");
-		btn.onclick=function(){
-			btnTitle(thisT);
-		}
-		popShow("contentTitle");
-	}
 	popShow("contentTitle",false);
 }
 
+
+
+//************************************编辑事件***********************************
+
+function _edit_imgbind(){
+	var imgs=content.querySelectorAll("img");
+	for(var i=0;i<imgs.length;i++){
+		var img=imgs[i];
+		img.ondblclick=function(){
+			cleanImg();
+			popShow("contentImg");
+			showImg.style.display="block";
+			fileUp.style.display="none";
+
+			showImg.setAttribute("src",img.getAttribute("src"));
+			imgW.value=img.getAttribute("width");
+			imgH.value=img.getAttribute("height");
+			imgSrc.value=img.getAttribute("src");
+
+			var btnImg=contentImg.querySelectorAll("button")[1];
+			btnImg.onclick=function(){
+				saveImg(img);
+			};
+		};
+	}
+}
+
+
+function _edit_titlebind() {
+	var ts = content.querySelectorAll("title");
+	for (var i = 0; i < ts.length; i++) {
+		var t = ts[i];
+		t.ondblclick=function(){
+			var thisT=this;
+			inpu.value=thisT.innerHTML;
+			sele.value=t.getAttribute("class");
+			var btn=contentTitle.querySelector("button");
+			btn.onclick=function(){
+				btnTitle(thisT);
+			}
+			popShow("contentTitle");
+		}
+	}
+}
+
+
+function _edit_hrefbind() {
+	var as = content.querySelectorAll("a");
+	for (var i = 0; i < as.length; i++) {
+		var a = as[i];
+		a.ondblclick=function(){
+			var thisA=this;
+			contentHref.getElementsByTagName("input")[0].value=thisA.getAttribute("href");
+			contentHref.getElementsByTagName("textarea")[0].value=thisA.innerHTML;
+			popShow("contentHref");
+
+			var btn=contentHref.getElementsByTagName("button")[0];
+			btn.onclick=function(){
+				btnHref(thisA);
+			}
+		}
+	}
+}
+
+
+function _edit_bindAll() {
+	_edit_hrefbind();
+	_edit_imgbind();
+	_edit_titlebind();
+}
+
+
+window.setInterval(_edit_bindAll,500);
