@@ -29,20 +29,23 @@ function post(url,param,reqOk){
     });
 }
 
-// function postFile(url,boxId,dataObj,reqOk){
-//     $.ajaxFileUpload({
-//         url: url,
-//         secureuri: false, //安全模式
-//         processData:false,
-//         fileElementId: boxId,
-//         dataType: 'json',
-//         type:'post',
-//         data:JSON.stringify(dataObj),
-//         success : function (data) {
-//             reqOk(data);
-//         }
-//     });
-// }
+function postFile(formData,reqOk){
+    $.ajax({
+        url:bokeUrl+'/upload',
+        dataType:'json',
+        type:'POST',
+        async: false,
+        data: formData,
+        processData: false,
+        contentType : false, // 不要设置Content-Type请求头
+        success: function(data){
+            reqOk(data.model);
+        },
+        error:function(response){
+            console.log(response);
+        }
+    });
+}
 
 function queryUrlParam(key){
     var search=location.search;

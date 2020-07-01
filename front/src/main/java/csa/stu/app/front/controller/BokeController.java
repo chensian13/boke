@@ -73,21 +73,20 @@ public class BokeController{
      * @throws IOException
      */
     @RequestMapping("/upload")
-    public void uploadOne(@RequestParam("CKEditorFuncNum") String funNum
-            , @RequestPart("upload")  MultipartFile file
+    @ResponseBody
+    public ResultPojo<String> uploadOne(@RequestPart("upload")  MultipartFile file
             ,HttpServletRequest request
             , HttpServletResponse response)
                 throws IOException {
         User user = userinfoUtil.getUserCookie(request);
-        if(EmptyUtil.isEmptys(user,user.getUserCode())){
-            return ;
+        if(EmptyUtil.isEmpty(user)){
+            return ResultPojo.newInstance(ResultPojo.NO,"登录信息过期");
         }
         ResultPojo<Picture> rs= userWorkService.uploadOne(file,user.getUserId());
-        if(rs==null || rs.getModel()==null) return ;
+        if(rs==null || rs.getModel()==null) return ResultPojo.newInstance(ResultPojo.NO,null);;
         Picture picture=rs.getModel();
         String path="http://imgs/"+picture.getPath();
-        String resp = "<script type=\"text/javascript\">window.parent.CKEDITOR.tools.callFunction(" + funNum + ",'" + path + "','')</script>";
-        response.getWriter().println(resp);
+        return ResultPojo.newInstance(path);
     }
 
 

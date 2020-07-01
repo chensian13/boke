@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="assets/stylesheets/theme-custom.css">
     <!-- Head Libs -->
     <script src="assets/vendor/modernizr/modernizr.js"></script>
-    <script type="text/javascript" src="/lib/ckeditor/ckeditor.js" ></script>
 
     <!--self-->
     <link rel="stylesheet" href="/web2/css/common.css">
@@ -79,8 +78,7 @@
                 </div>
 
                 <div class="form-group">
-                    <div class="col-md-12">
-                        <textarea id="content" ></textarea>
+                    <div id="editor" class="col-md-12">
                     </div>
                 </div>
 
@@ -132,6 +130,8 @@
                     $("#bokeType").html(ops);
                 }
             });
+
+            $("#editor").load("editor.html");
         });
 
         //fileInputComponent('file');
@@ -205,18 +205,6 @@
             dataList();
         });
 
-        //文本编辑器
-        function initCkEdit(w,h){
-            CKEDITOR.env.isCompatible = true;
-            CKEDITOR.replace( 'content',{
-                toolbar : 'Full',
-                height: h,
-                width: w,
-                filebrowserImageUploadUrl:bokeUrl+"upload"
-            });
-        }
-        initCkEdit(600,440);
-
         popComponent('pop',9999,'编辑博客');
         /**
          *
@@ -239,7 +227,7 @@
                     }else{
                         map.ispublic="0";
                     }
-                    CKEDITOR.instances.content.setData(res.model.info);
+                    $("#content").html(res.model.info);
                 }
             });
         }
@@ -257,7 +245,7 @@
 
         $("#save").click(function(){
             var map=formDataMap("form");
-            map.info=CKEDITOR.instances.content.getData();
+            map.info=$("#content").html();
             if($("#ispublic").is(":checked")){
                 map.ispublic="1";
             }else{

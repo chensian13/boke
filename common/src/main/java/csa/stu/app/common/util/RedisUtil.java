@@ -5,10 +5,12 @@ import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisSentinelPool;
 
-@Component
 public class RedisUtil {
-    @Autowired(required = false)
     private JedisSentinelPool jedisSentinelPool;
+
+    public RedisUtil(JedisSentinelPool jedisSentinelPool) {
+        this.jedisSentinelPool = jedisSentinelPool;
+    }
 
     //封装方法  get
     public String get(String key) {

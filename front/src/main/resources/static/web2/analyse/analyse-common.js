@@ -106,6 +106,14 @@ function analyseColor(color){
 
 
 
+/**
+ * 定位组件
+ * @param {Object} cName
+ * @param {Object} id
+ */
+function queryComponent(cName,id){
+	return document.querySelector(cName+"[id="+id+"]");
+}
 
 
 

@@ -16,8 +16,6 @@
     <link rel="stylesheet" href="assets/stylesheets/theme-custom.css">
     <!-- Head Libs -->
     <script src="assets/vendor/modernizr/modernizr.js"></script>
-    <!--ckedit-->
-    <script type="text/javascript" src="../lib/ckeditor/ckeditor.js" ></script>
 
     <!--self-->
     <link rel="stylesheet" href="/web2/css/common.css">
@@ -53,8 +51,8 @@
 
                         <div class="form-group">
                             <label class="col-md-3 control-label" >内容</label>
-                            <div class="col-md-6">
-                                <textarea id="content" ></textarea>
+                            <div id="editor" class="col-md-6">
+
                             </div>
                         </div>
 
@@ -115,19 +113,11 @@
                     $("#bokeType").html(ops);
                 }
             });
+
+            $("#editor").load("editor.html");
         });
 
-        //文本编辑器
-        function initCkEdit(w,h){
-            CKEDITOR.env.isCompatible = true;
-            CKEDITOR.replace( 'content',{
-                toolbar : 'Full',
-                height: h,
-                width: w,
-                filebrowserImageUploadUrl:bokeUrl+"upload"
-            });
-        }
-        initCkEdit(600,440);
+
 
         formComponent("form");
         $("#save").click(function(){
@@ -143,12 +133,12 @@
                 map.ispublic="0";
             }
 
-            map.info=CKEDITOR.instances.content.getData();
+            map.info=$("#content").html();
             post(bokeUrl+"data/add",map,function (res) {
                 if(res.code=='OK'){
                     toastShow("保存成功！");
                     formDataClean('form');
-                    CKEDITOR.instances.content.setData(null);
+                    $("#content").html(null);
                 }
             });
         });

@@ -22,7 +22,7 @@ import java.util.List;
 @Component
 @Aspect
 public class RedisCacheAspect {
-    @Autowired
+    @Autowired(required = false)
     private RedisUtil redisUtil;
     @Value("${csa.redis:false}")
     private boolean open;
