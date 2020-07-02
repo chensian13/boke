@@ -118,7 +118,7 @@
             'bokeType':queryUrlParam('bokeType')
         };
         function bokelist() {
-            post(bokeUrl+"queryData",{'page':page,'pagesize':pagesize,'map':map},function (res) {
+            post(nouserUrl+"queryData/"+queryUrlParam("author"),{'page':page,'pagesize':pagesize,'map':map},function (res) {
                 if(res.code=='OK'){
                     $("#bokes").empty();
                     var list=res.list;

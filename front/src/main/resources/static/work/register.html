@@ -138,7 +138,7 @@
 				post(nouserUrl+"register",map,function (res) {
 					if(res.code=='OK'){
 						toastShow("注册成功！");
-						window.location.href="/work/signin";
+						window.location.href=nouserUrl+"signin";
 					}else{
 						toastShow("注册失败！"+res.message);
 					}

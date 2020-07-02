@@ -1,19 +1,21 @@
 package csa.stu.app.front.controller;
 
+import csa.stu.app.common.entity.Boke;
 import csa.stu.app.common.entity.User;
 import csa.stu.app.common.util.UserinfoUtil;
 import csa.stu.app.front.feign.SsoService;
 import csa.stu.app.front.feign.UserWorkService;
+import csa.stu.util.myutils.pojo.ParamPojo;
 import csa.stu.util.myutils.pojo.ResultPojo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @RequestMapping("/nouser")
 @Controller
@@ -59,4 +61,24 @@ public class NoUserController {
     public String register(){
         return "redirect:/work/register.html";
     }
+
+    @RequestMapping("/goRead/{userId}")
+    public String goRead(@PathVariable("userId") String userId){
+        return "redirect:/work/boke_store.html?author="+userId;
+    }
+
+
+    @RequestMapping({"/queryData/{userId}"})
+    @ResponseBody
+    public ResultPojo<Boke> queryData(@RequestBody ParamPojo paramPojo,@PathVariable("userId") String userId) {
+        if(paramPojo.getMap()==null){
+            Map<String,Object> map=new HashMap<>();
+            map.put("creater",userId);
+            paramPojo.setMap(map);
+        }else{
+            paramPojo.getMap().put("creater",userId);
+        }
+        return userWorkService.queryData(paramPojo);
+    }
+
 }

@@ -22,10 +22,14 @@ public class WorkController {
 
     @RequestMapping("/hello")
     public String goUserWork(){
-        return "/work/index.html";
+        return "redirect:/work/index.html";
     }
 
-
+    @RequestMapping("/goReadInner")
+    public String goReadInner(HttpServletRequest request){
+        User user=userinfoUtil.getUserCookie(request);
+        return "redirect:/work/boke_store.html?author="+user.getUserId();
+    }
 
 
 }
