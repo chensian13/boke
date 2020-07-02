@@ -7,10 +7,11 @@ function toastShow(msg){
 	var toast=_toast_create();
 	_toastCenter(toast);
 	_toastShow(toast,msg);
+	window.setTimeout(_toast_destroy,5000,toast);
 }
 
 /**
- * 
+ *
  * @param {Object} msg
  */
 function _toastShow(toast,msg){
@@ -44,6 +45,10 @@ function _toast_create(){
 	return toast;
 }
 
+
+function _toast_destroy(toast){
+	toast.remove();
+}
 
 
 

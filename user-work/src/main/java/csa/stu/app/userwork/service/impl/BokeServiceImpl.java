@@ -43,7 +43,6 @@ public class BokeServiceImpl implements BokeService {
      */
     @Override
     @Transactional
-    @Resubmit
     public ResultPojo<Boke> addOne(Boke boke) {
         ResultPojo<Boke> rs=new ResultPojo<Boke>();
         if(EmptyUtil.isEmpty(boke.getCreater())){
@@ -53,6 +52,7 @@ public class BokeServiceImpl implements BokeService {
         }
         boke.setBokeCode(StrUtil.generateCode(GenerateCode.BOKE));
         boke.initDefault();
+        boke.setBokeId(StrUtil.generateUUID32());
         boke.setVersion("0");
         boke.setState("0");
         //提取图片
@@ -64,7 +64,6 @@ public class BokeServiceImpl implements BokeService {
 
     @Override
     @Transactional
-    @Resubmit
     public ResultPojo<Boke> updOne(Boke boke) {
         boke.setModtime(DateUtil.nowTime());
         //提取图片

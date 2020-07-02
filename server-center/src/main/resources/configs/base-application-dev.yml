@@ -44,8 +44,9 @@ logging:
 ribbon:
     ConnectTimeout: 3000
     ReadTimeout: 3000
-    MaxAutoRetries: 1
-    MaxAutoRetriesNextServer: 2
+    MaxAutoRetries: 0
+    MaxAutoRetriesNextServer: 0
+
 
 #hystrix配置
 hystrix:

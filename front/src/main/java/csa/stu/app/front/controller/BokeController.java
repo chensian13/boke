@@ -75,7 +75,7 @@ public class BokeController{
     @RequestMapping("/upload")
     @ResponseBody
     public ResultPojo<String> uploadOne(@RequestPart("upload")  MultipartFile file
-            ,@RequestParam("bokeId") String bokeId
+            ,@RequestParam(value = "bokeId",required = false) String bokeId
             ,HttpServletRequest request
             , HttpServletResponse response)
                 throws IOException {

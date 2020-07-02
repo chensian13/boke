@@ -33,7 +33,7 @@ public class PictureController extends MyController<Picture> {
     @RequestMapping(value = "/upload",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResultPojo<Picture> uploadOne(@RequestPart("upload") MultipartFile file
             , @RequestParam(name="userId") String userId
-            ,@RequestParam("bokeId") String bokeId
+            ,@RequestParam(value = "bokeId",required = false) String bokeId
             , HttpServletRequest request){
         if(!isPicture(file)){
             return ResultPojo.newInstance(ResultPojo.NO,"图片格式不合法");

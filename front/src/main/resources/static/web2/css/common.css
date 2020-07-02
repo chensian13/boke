@@ -102,14 +102,15 @@ table tbody{
 
 pop{
 	display: none;
+
 }
 lay{
 	background:rgba(0,0,0,0.5);
 	display: none;
 	position: fixed;
+	z-index: 9999;
 	left: 0;
 	top: 0;
-	overflow-y: auto;
 }
 lay .titleDiv{
 	margin-bottom: 8px;

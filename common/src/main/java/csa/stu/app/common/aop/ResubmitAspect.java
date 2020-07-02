@@ -14,8 +14,9 @@ import java.lang.reflect.Method;
 
 /**
  * 防止重复提交切面定义
+ * 取消重复提交
  */
-@Component
+//@Component
 @Aspect
 public class ResubmitAspect {
     @Autowired
