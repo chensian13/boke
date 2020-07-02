@@ -6,10 +6,10 @@
     b.boke_id, b.boke_subtitle, b.boke_type, b.boke_title, b.boke_code, b.creater,b.ispublic,
     b.createtime, b.isdel, b.version,b.collect_num,b.state,b.picture_code,b.path
   </sql>
-
+  <!--left(b.info,72)-->
   <select id="selectTable" parameterType="map" resultType="Boke">
     select
-    <include refid="cols" />,left(b.info,72) as info
+    <include refid="cols" />,b.info as info
     from boke_boke b
     <where>
       <if test="bokeTitle!=null and bokeTitle!=''">

@@ -24,6 +24,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service("bokeService")
 public class BokeServiceImpl implements BokeService {
@@ -99,7 +101,6 @@ public class BokeServiceImpl implements BokeService {
     @Override
     public ResultPojo<Boke> selectById(String id) {
         ResultPojo<Boke> rs=new ResultPojo<Boke>();
-        pi
         rs=ResultPojo.newInstance(bokeMapper.selectById(id));
         return rs;
     }
@@ -144,6 +145,10 @@ public class BokeServiceImpl implements BokeService {
         PageInfo<Boke> pageInfo=new PageInfo<Boke>(rs.getList());
         rs.setCount(pageInfo.getTotal());
         rs.setCode(ResultPojo.OK);
+        if(!EmptyUtil.isEmpty(rs.getList()))
+            for(Boke boke:rs.getList()){
+                boke.setImg(checkoutImg(boke.getInfo()));
+            }
         return rs;
     }
 
@@ -152,14 +157,23 @@ public class BokeServiceImpl implements BokeService {
         return null;
     }
 
+    String patternString = "[http|https]+[://]+[0-9A-Za-z:/[-]_#[?][=][.][&]]*";
 
-
+    private String checkoutImg(String info){
+        Pattern pattern = Pattern.compile(patternString, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(info);
+        while (matcher.find()) {
+            return matcher.group();
+        }
+        return null;
+    }
 
     //************************************校验*********************************
     @Override
     public boolean checkUniqueField(Boke data, ResultPojo<Boke> rs, String oper) {
         return true;
     }
+
 
 
 }

@@ -58,7 +58,7 @@
 <div class="nav">
     <div id="logo">
         <h1><a>假之物也</a></h1>
-        <h2><a id="work">我的工作室</a></h2>
+        <!--<h2><a id="work">我的工作室</a></h2>-->
     </div>
     <div id="menu"><ul id="types"></ul></div>
     <div style="clear: both; height: 30px">&nbsp;</div>
@@ -92,10 +92,6 @@
             }
             return "<li><a onclick='typeGo(\""+e.typeId+"\")' >"+e.typeName+"</a></li>";
         }
-
-        $("#work").click(function () {
-             window.open(serviceF+"hello");
-        });
     });
 
     function typeGo(type) {

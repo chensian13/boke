@@ -243,6 +243,7 @@ list-item{
 }
 list-item img{
 	width: 24%;
+	max-height: 120px;
 	float: left;
 }
 .list-info{
