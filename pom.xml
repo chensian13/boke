@@ -10,6 +10,7 @@
         <module>front</module>
         <module>server-center</module>
         <module>zuul</module>
+        <module>single</module>
     </modules>
 
     <parent>

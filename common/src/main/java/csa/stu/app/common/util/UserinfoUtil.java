@@ -21,7 +21,7 @@ public class UserinfoUtil {
     private boolean open; //是否开启redis
     @Autowired(required = false)
     private RedisUtil redisUtil;
-    @Autowired
+    @Autowired(required = false)
     @Qualifier("myRestTemplate")
     private RestTemplate restTemplate;
 
