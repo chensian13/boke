@@ -38,7 +38,8 @@ public class UserController extends MyControllerPlus<User> {
 
     @PostMapping("/modPass")
     @ResponseBody
-    public ResultPojo modPass(@RequestBody User user){
+    public ResultPojo modPass(@RequestBody User user,HttpServletRequest request){
+        user.setUserId(loginCacher.get(request).getUserId());
         return userService.modPass(user);
     }
 
@@ -48,6 +49,14 @@ public class UserController extends MyControllerPlus<User> {
         User user=loginCacher.get(request);
         if(user==null) return ResultPojo.newInstance(ResultPojo.NO,"用户信息获取失败");
         return ResultPojo.newInstance(user);
+    }
+
+    @RequestMapping("/userinfoQuery")
+    @ResponseBody
+    public ResultPojo<User> userinfoQuery(HttpServletRequest request) {
+        User user=loginCacher.get(request);
+        if(user==null) return ResultPojo.newInstance(ResultPojo.NO,"用户信息获取失败");
+        return userService.selectById(user.getUserId());
     }
 
 }

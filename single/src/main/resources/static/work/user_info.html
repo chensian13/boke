@@ -131,7 +131,7 @@
 			});
 
 			$(function () {
-				post(userUrl+"userinfo",{},function (res) {
+				post(userUrl+"userinfoQuery",{},function (res) {
 					if(res.code=='OK'){
 						formDataBind('form',res.model);
 					}else{
