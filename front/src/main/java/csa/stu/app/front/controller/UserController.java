@@ -1,6 +1,7 @@
 package csa.stu.app.front.controller;
 
 import csa.stu.app.common.entity.User;
+import csa.stu.app.common.util.UserinfoRequestUtil;
 import csa.stu.app.common.util.UserinfoUtil;
 import csa.stu.app.front.feign.SsoService;
 import csa.stu.app.front.feign.UserWorkService;
@@ -21,7 +22,7 @@ public class UserController {
     @Autowired
     private UserWorkService userWorkService;
     @Autowired
-    private UserinfoUtil userinfoUtil;
+    private UserinfoRequestUtil userinfoUtil;
 
 
     @RequestMapping("/userinfo")
@@ -29,7 +30,7 @@ public class UserController {
     public ResultPojo<User> userinfo(HttpServletRequest request) {
         User user=userinfoUtil.getUserCookie(request);
         if(user==null) return ResultPojo.newInstance(ResultPojo.NO,"用户信息获取失败");
-        return userWorkService.queryUserById(user.getUserId());
+        return ResultPojo.newInstance(user);
     }
 
     @RequestMapping("/data/upd")

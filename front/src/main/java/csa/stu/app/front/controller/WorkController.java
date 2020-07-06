@@ -1,6 +1,7 @@
 package csa.stu.app.front.controller;
 
 import csa.stu.app.common.entity.User;
+import csa.stu.app.common.util.UserinfoRequestUtil;
 import csa.stu.app.common.util.UserinfoUtil;
 import csa.stu.util.myutils.pojo.ResultPojo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/work")
 public class WorkController {
     @Autowired
-    private UserinfoUtil userinfoUtil;
+    private UserinfoRequestUtil userinfoUtil;
 
     @RequestMapping("/hello")
     public String goUserWork(){

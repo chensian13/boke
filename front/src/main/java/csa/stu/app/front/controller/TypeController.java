@@ -2,6 +2,7 @@ package csa.stu.app.front.controller;
 
 import csa.stu.app.common.entity.Type;
 import csa.stu.app.common.entity.User;
+import csa.stu.app.common.util.UserinfoRequestUtil;
 import csa.stu.app.common.util.UserinfoUtil;
 import csa.stu.app.front.feign.UserWorkService;
 import csa.stu.util.myutils.constant.OperConstant;
@@ -25,7 +26,7 @@ public class TypeController {
 	@Autowired
 	private UserWorkService userWorkService;
 	@Autowired
-	private UserinfoUtil userinfoUtil;
+	private UserinfoRequestUtil userinfoUtil;
 
 
 	@ResponseBody
