@@ -2,6 +2,7 @@ package csa.stu.app.single.controller;
 
 import csa.stu.app.common.entity.Picture;
 import csa.stu.app.single.service.PictureService;
+import csa.stu.app.single.util.LoginCacher;
 import csa.stu.util.ap.mvc.IService;
 import csa.stu.util.ap.mvc.plus.MyController;
 import csa.stu.util.myutils.pojo.ResultPojo;
@@ -20,9 +21,11 @@ import java.io.InputStream;
  */
 @Controller
 @RequestMapping("/picture")
-public class PictureController extends MyController<Picture> {
+public class PictureController extends MyControllerPlus<Picture> {
     @Autowired
     private PictureService pictureService;
+    @Autowired
+    private LoginCacher loginCacher;
 
     @Override
     public IService<Picture> getService() {
@@ -61,6 +64,11 @@ public class PictureController extends MyController<Picture> {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public LoginCacher loginCacher() {
+        return loginCacher;
     }
 
 }

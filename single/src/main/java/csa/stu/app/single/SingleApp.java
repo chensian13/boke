@@ -1,6 +1,7 @@
 package csa.stu.app.single;
 
 import csa.stu.app.common.config.SimpleConfig;
+import csa.stu.app.common.util.UserinfoRequestUtil;
 import csa.stu.app.common.util.UserinfoUtil;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -24,7 +25,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
         ConfigClientAutoConfiguration.class,
         EurekaClientAutoConfiguration.class})
 @ComponentScan(value = {"csa.stu.app.common","csa.stu.app.single"},
-        excludeFilters = {@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {SimpleConfig.class,UserinfoUtil.class})})
+        excludeFilters = {@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {SimpleConfig.class, UserinfoRequestUtil.class})})
 public class SingleApp {
 
     public static void main(String[] args){

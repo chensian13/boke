@@ -1,8 +1,10 @@
 package csa.stu.app.single.util;
 import csa.stu.app.common.cache.LoginCache;
 import csa.stu.app.common.entity.User;
+import csa.stu.app.common.util.UserinfoUtil;
 import csa.stu.util.myutils.pojo.ResultPojo;
 import csa.stu.util.myutils.utils.EmptyUtil;
+import csa.stu.util.myutils.utils.StrUtil;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
@@ -18,42 +21,26 @@ import javax.servlet.http.HttpServletResponse;
  * 缓存
  */
 @Component
-public class LoginCacher {
+public class LoginCacher extends UserinfoUtil {
     @Autowired
     private LoginCache loginCache;
 
-    public User get(@RequestBody String token){
+    public User get(String token){
         return loginCache.get(token);
     }
 
-    public ResultPojo<User> put(@RequestBody User user){
-        if(EmptyUtil.isEmptys(user.getToken())){
-            return ResultPojo.newInstance(ResultPojo.NO,"token不存在");
-        }
+    public User get(HttpServletRequest request){
+        return loginCache.get(getTokenCookie(request));
+    }
+
+    public ResultPojo<User> put( User user){
+        String token= StrUtil.generateUUID32();
+        user.setToken(token);
         loginCache.put(user.getToken(),user);
         return ResultPojo.newInstance(ResultPojo.OK,null);
     }
 
 
-    /**
-     * 盐值加密
-     * @param password
-     * @return
-     */
-    public String saltPassword(String password,String salt){
-        if(EmptyUtil.isEmptys(password,salt)) return null;
-        SimpleHash sh=new SimpleHash("MD5", password, salt, 13);
-        //转换16进制
-        return sh.toHex();
-    }
-
-    public void setUserCookie(HttpServletResponse response, String token){
-        //存入token
-        Cookie cookie=new Cookie("token",token);
-        cookie.setMaxAge(60*60*24*7);
-        cookie.setPath("/");
-        response.addCookie(cookie);
-    }
 
     /**
      * 登出

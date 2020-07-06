@@ -3,6 +3,7 @@ package csa.stu.app.front.controller;
 import csa.stu.app.common.entity.Boke;
 import csa.stu.app.common.entity.Picture;
 import csa.stu.app.common.entity.User;
+import csa.stu.app.common.util.UserinfoRequestUtil;
 import csa.stu.app.common.util.UserinfoUtil;
 import csa.stu.app.front.feign.UserWorkService;
 import csa.stu.util.myutils.constant.OperConstant;
@@ -28,7 +29,7 @@ public class BokeController{
     @Autowired
     private UserWorkService userWorkService;
     @Autowired
-    private UserinfoUtil userinfoUtil;
+    private UserinfoRequestUtil userinfoUtil;
 
     @ResponseBody
     @RequestMapping("/data/{oper}")
@@ -56,11 +57,9 @@ public class BokeController{
         if(user!=null){
             if(paramPojo.getMap()==null){
                 Map<String,Object> map=new HashMap<>();
-                map.put("creater",user.getUserId());
                 paramPojo.setMap(map);
-            }else{
-                paramPojo.getMap().put("creater",user.getUserId());
             }
+            paramPojo.getMap().put("creater",user.getUserId());
         }
         return userWorkService.queryData(paramPojo);
     }

@@ -4,6 +4,7 @@ import csa.stu.app.common.entity.Type;
 import csa.stu.app.common.entity.User;
 import csa.stu.app.single.service.TypeService;
 import csa.stu.app.single.service.UserService;
+import csa.stu.app.single.util.LoginCacher;
 import csa.stu.util.ap.mvc.IService;
 import csa.stu.util.ap.mvc.plus.MyController;
 import csa.stu.util.myutils.pojo.ParamPojo;
@@ -24,11 +25,13 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Controller
 @RequestMapping("/type")
-public class TypeController extends MyController<Type> {
+public class TypeController extends MyControllerPlus<Type> {
 	@Autowired
 	private TypeService typeService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private LoginCacher loginCacher;
 
 	@Override
 	@RequestMapping({"/queryData"})
@@ -45,6 +48,10 @@ public class TypeController extends MyController<Type> {
 		return typeService.selectData(user.getUserId(),paramPojo);
 	}
 
+	@Override
+	public LoginCacher loginCacher() {
+		return loginCacher;
+	}
 
 	@Override
 	public IService<Type> getService() {

@@ -17,13 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 
 @Component
 public class UserinfoUtil {
-    @Value("${csa.redis:false}")
-    private boolean open; //是否开启redis
-    @Autowired(required = false)
-    private RedisUtil redisUtil;
-    @Autowired(required = false)
-    @Qualifier("myRestTemplate")
-    private RestTemplate restTemplate;
 
     /**
      * 盐值加密
@@ -46,26 +39,6 @@ public class UserinfoUtil {
     }
 
     /**
-     * 加入cookie
-     * @param password
-     * @return
-     */
-    public String setUserData(User login) {
-        if(login==null) return null;
-        String token=StrUtil.generateUUID32();
-        login.setToken(token);
-        if(open){
-            //开启redis缓存功能
-            redisUtil.set(token,JSON.toJSONString(login));
-        }else{
-            //不使用redis缓存
-            restTemplate.postForObject("http://sso/cache/put",login, ResultPojo.class);
-        }
-        return token;
-    }
-
-
-    /**
      * 登出
      * @param response
      */
@@ -76,27 +49,21 @@ public class UserinfoUtil {
         response.addCookie(cookie);
     }
 
+
     /**
-     * 获取用户cookie信息
+     * 获取token cookie信息
      * @param response
      */
-    public User getUserCookie(HttpServletRequest request){
+    public String getTokenCookie(HttpServletRequest request){
         Cookie[] cookies=request.getCookies();
         if(cookies==null) return null;
-        String token=null;
         for(Cookie cookie:cookies){
             if("token".equals(cookie.getName())
                     && !EmptyUtil.isEmpty(cookie.getValue())){
-                token= cookie.getValue();
-                break;
+                return cookie.getValue();
             }
         } //end for
-        if(EmptyUtil.isEmptys(token)) return null;
-        if(open){
-            return JSON.parseObject(redisUtil.get(token),User.class);
-        }else{
-            return restTemplate.postForObject("http://sso/cache/get",token, User.class);
-        } //end else
+       return null;
     }
 
 }

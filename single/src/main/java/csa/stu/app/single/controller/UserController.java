@@ -2,6 +2,7 @@ package csa.stu.app.single.controller;
 
 import csa.stu.app.common.entity.User;
 import csa.stu.app.single.service.UserService;
+import csa.stu.app.single.util.LoginCacher;
 import csa.stu.util.ap.mvc.IService;
 import csa.stu.util.ap.mvc.plus.MyController;
 import csa.stu.util.myutils.pojo.ResultPojo;
@@ -18,21 +19,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping("/user")
-public class UserController extends MyController<User> {
+public class UserController extends MyControllerPlus<User> {
     @Autowired
     private UserService userService;
+    @Autowired
+    private LoginCacher loginCacher;
+
+    @Override
+    public LoginCacher loginCacher() {
+        return loginCacher;
+    }
 
     @Override
     public IService<User> getService() {
         return userService;
     }
 
-
-    @PostMapping("/register")
-    @ResponseBody
-    public ResultPojo register(@RequestBody User user){
-        return userService.register(user);
-    }
 
     @PostMapping("/modPass")
     @ResponseBody
