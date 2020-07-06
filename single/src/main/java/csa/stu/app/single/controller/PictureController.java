@@ -1,10 +1,10 @@
 package csa.stu.app.single.controller;
 
 import csa.stu.app.common.entity.Picture;
+import csa.stu.app.common.entity.User;
 import csa.stu.app.single.service.PictureService;
 import csa.stu.app.single.util.LoginCacher;
 import csa.stu.util.ap.mvc.IService;
-import csa.stu.util.ap.mvc.plus.MyController;
 import csa.stu.util.myutils.pojo.ResultPojo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -34,17 +34,22 @@ public class PictureController extends MyControllerPlus<Picture> {
 
     @ResponseBody
     @RequestMapping(value = "/upload",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResultPojo<Picture> uploadOne(@RequestPart("upload") MultipartFile file
-            , @RequestParam(name="userId") String userId
+    public ResultPojo<String> uploadOne(@RequestPart("upload") MultipartFile file
             ,@RequestParam(value = "bokeId",required = false) String bokeId
             , HttpServletRequest request){
+        User user=loginCacher.get(request);
+        if(user==null){
+            return ResultPojo.newInstance(ResultPojo.NO,"用户信息为空");
+        }
         if(!isPicture(file)){
             return ResultPojo.newInstance(ResultPojo.NO,"图片格式不合法");
         }
         Picture picture=new Picture();
-        picture.setCreater(userId);
+        picture.setCreater(user.getUserId());
         picture.setTableId(bokeId);
-        return pictureService.uploadOne(file,picture);
+        ResultPojo<Picture> rs= pictureService.uploadOne(file,picture);
+        if(rs==null || rs.getModel()==null) return ResultPojo.newInstance(ResultPojo.NO,null);
+        return ResultPojo.newInstance(rs.getModel().getHttpPath());
     }
 
 

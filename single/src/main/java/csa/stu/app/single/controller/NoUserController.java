@@ -7,9 +7,12 @@ import csa.stu.app.single.service.UserService;
 import csa.stu.app.single.util.LoginCacher;
 import csa.stu.util.myutils.pojo.ParamPojo;
 import csa.stu.util.myutils.pojo.ResultPojo;
+import csa.stu.util.myutils.utils.EmptyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
@@ -24,6 +27,8 @@ public class NoUserController {
     private UserService userService;
     @Autowired
     private BokeService bokeService;
+    @Autowired
+    private LoginCacher loginCacher;
 
     /**
      * 网站用户登录
@@ -74,14 +79,12 @@ public class NoUserController {
 
     @RequestMapping({"/queryData/{userId}"})
     @ResponseBody
-    public ResultPojo<Boke> queryData(@RequestBody ParamPojo paramPojo,@PathVariable("userId") String userId) {
+    public ResultPojo<Boke> queryData(@RequestBody ParamPojo paramPojo, @PathVariable("userId") String userId) {
         if(paramPojo.getMap()==null){
             Map<String,Object> map=new HashMap<>();
-            map.put("creater",userId);
             paramPojo.setMap(map);
-        }else{
-            paramPojo.getMap().put("creater",userId);
         }
+        paramPojo.getMap().put("creater",userId);
         return bokeService.selectData(paramPojo);
     }
 

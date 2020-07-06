@@ -46,7 +46,7 @@ public class TypeServiceImpl implements TypeService {
 
 	@RedisCache(key = tag)
 	@Override
-	public ResultPojo<Type> selectData(String creater,ParamPojo param) {
+	public ResultPojo<Type> selectData(String creater) {
 		QueryWrapper<Type> queryWrapper=new QueryWrapper<>();
 		queryWrapper.orderByAsc("seq");
 		queryWrapper.eq("creater",creater);

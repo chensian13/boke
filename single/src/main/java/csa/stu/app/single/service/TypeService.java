@@ -7,6 +7,6 @@ import csa.stu.util.myutils.pojo.ResultPojo;
 
 public interface TypeService extends IService<Type> {
 
-    ResultPojo<Type> selectData(String creater, ParamPojo param);
+    ResultPojo<Type> selectData(String creater);
 
 }

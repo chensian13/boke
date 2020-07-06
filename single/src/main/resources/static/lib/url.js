@@ -31,7 +31,7 @@ function post(url,param,reqOk){
 
 function postFile(formData,reqOk){
     $.ajax({
-        url:bokeUrl+'/upload',
+        url:pictureUrl+'/upload',
         dataType:'json',
         type:'POST',
         async: false,

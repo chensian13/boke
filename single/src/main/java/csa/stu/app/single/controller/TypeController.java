@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 
 /**
  * 
@@ -33,19 +34,10 @@ public class TypeController extends MyControllerPlus<Type> {
 	@Autowired
 	private LoginCacher loginCacher;
 
-	@Override
-	@RequestMapping({"/queryData"})
+	@RequestMapping({"/getBokeTypes"})
 	@ResponseBody
-	public ResultPojo<Type> queryData(@RequestBody ParamPojo paramPojo, HttpServletRequest request, HttpServletResponse response) {
-		if(EmptyUtil.isEmptys(paramPojo.getMap(),paramPojo.getMap().get("userCode"))){
-			return ResultPojo.newInstance(ResultPojo.NO,"没有作者信息");
-		}
-		String userCode=paramPojo.getMap().get("userCode").toString();
-		User user=userService.selectByCode(userCode).getModel();
-		if(EmptyUtil.isEmptys(user,user.getUserId())){
-			return ResultPojo.newInstance(ResultPojo.NO,"获取不到作者信息");
-		}
-		return typeService.selectData(user.getUserId(),paramPojo);
+	public ResultPojo<Type> queryData(HttpServletRequest request) {
+		return typeService.selectData(loginCacher.get(request).getUserId());
 	}
 
 	@Override
