@@ -2,7 +2,6 @@ package csa.stu.app.single;
 
 import csa.stu.app.common.config.SimpleConfig;
 import csa.stu.app.common.util.UserinfoRequestUtil;
-import csa.stu.app.common.util.UserinfoUtil;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

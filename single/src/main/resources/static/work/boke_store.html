@@ -76,7 +76,7 @@
 
     <lay pop>
         <pop id="pop">
-            <div class="pop-dash" style="width: 660px;height: 600px;overflow-y: auto;">
+            <div class="pop-dash" style="width: 660px;">
                 <h3 id="title"></h3>
                 <div id="content"></div>
             </div>
@@ -130,9 +130,9 @@
                     listComponent('bokes',list,function (id) {
                         post(bokeUrl+"queryById/"+id,null,function (res) {
                             if(res.code=='OK'){
-                                popShow('pop');
                                 $("#title").val(res.model.bokeTitle);
                                 $("#content").html(res.model.info);
+                                popShow('pop');
                             }
                         });
                     });

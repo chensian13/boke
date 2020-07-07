@@ -97,7 +97,6 @@ public class PictureServiceImpl implements PictureService {
         picture.initDefault();
         picture.setPictureCode(StrUtil.generateCode(GenerateCode.PICTURE));
         picture.setSuffix(FileUtil.getSuffix(file.getOriginalFilename()));
-        picture.setPictureName(file.getOriginalFilename());
         //数据库保存路径
         String path= picture.getCreater()
                 +"/"

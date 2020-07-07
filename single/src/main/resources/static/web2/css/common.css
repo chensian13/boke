@@ -102,7 +102,7 @@ table tbody{
 
 pop{
 	display: none;
-
+	overflow: auto;
 }
 lay{
 	background:rgba(0,0,0,0.5);
@@ -111,6 +111,7 @@ lay{
 	z-index: 9999;
 	left: 0;
 	top: 0;
+	overflow: auto;
 }
 lay .titleDiv{
 	margin-bottom: 8px;
