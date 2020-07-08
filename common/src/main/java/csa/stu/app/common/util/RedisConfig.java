@@ -32,13 +32,13 @@ public class RedisConfig {
 //        return new JedisSentinelPool(master, sentinels);
 //    }
 
-    @Bean
-    public RedisUtil redisUtil() {
-        if(!open) return null;
-        Set<String> sentinels = new HashSet<>();
-        sentinels.add(node);
-        return new RedisUtil(new JedisSentinelPool(master, sentinels));
-    }
+//    @Bean
+//    public RedisUtil redisUtil() {
+//        if(!open) return null;
+//        Set<String> sentinels = new HashSet<>();
+//        sentinels.add(node);
+//        return new RedisUtil(new JedisSentinelPool(master, sentinels));
+//    }
 
 
 }
