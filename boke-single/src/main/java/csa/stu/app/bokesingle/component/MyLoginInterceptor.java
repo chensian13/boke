@@ -16,11 +16,11 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 public class MyLoginInterceptor extends LoginInterceptor {
     @Autowired
-    private LoginCacher userinfoUtil;
+    private LoginCacher loginCacher;
     private Logger logger= LoggerFactory.getLogger(MyLoginInterceptor.class);
 
     @Override
     public User getLoginUser(HttpServletRequest request) {
-        return userinfoUtil.get( request);
+        return loginCacher.get( request);
     }
 }
