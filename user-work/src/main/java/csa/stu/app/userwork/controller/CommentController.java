@@ -1,7 +1,7 @@
 package csa.stu.app.userwork.controller;
 
 import csa.stu.app.common.entity.Comment;
-import csa.stu.app.userwork.service.CommentService;
+import csa.stu.app.single.service.CommentService;
 import csa.stu.util.ap.mvc.IService;
 import csa.stu.util.ap.mvc.plus.MyController;
 import org.springframework.beans.factory.annotation.Autowired;

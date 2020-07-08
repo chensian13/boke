@@ -11,6 +11,8 @@
         <module>server-center</module>
         <module>zuul</module>
         <module>single</module>
+        <module>boke-single</module>
+        <module>single-web</module>
     </modules>
 
     <parent>

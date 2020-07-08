@@ -6,7 +6,6 @@ import csa.stu.app.common.entity.User;
 import csa.stu.app.common.util.UserinfoUtil;
 import csa.stu.app.single.dao.UserMapper;
 import csa.stu.app.single.service.UserService;
-import csa.stu.app.single.util.LoginCacher;
 import csa.stu.util.myutils.constant.OperConstant;
 import csa.stu.util.myutils.pojo.ParamPojo;
 import csa.stu.util.myutils.pojo.ResultPojo;
@@ -24,7 +23,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
     @Autowired
-    private LoginCacher userinfoUtil;
+    private UserinfoUtil userinfoUtil;
 
     @Override
     public ResultPojo<User> addOne(User user) {

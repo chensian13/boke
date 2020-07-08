@@ -28,7 +28,7 @@ public class WorkController {
 
     @RequestMapping("/goReadInner")
     public String goReadInner(HttpServletRequest request){
-        User user=userinfoUtil.getUserCookie(request);
+        User user=userinfoUtil.getUser(request);
         return "redirect:/work/boke_store.html?author="+user.getUserId();
     }
 

@@ -31,23 +31,19 @@ public class TypeController {
 
 	@ResponseBody
 	@RequestMapping("/getBokeTypes")
-	public ResultPojo<Type> getBokeTypes(HttpServletRequest request,@RequestBody(required = false) User user){
-		User user2=userinfoUtil.getUserCookie(request);
-		ParamPojo paramPojo=new ParamPojo();
-		paramPojo.setMap(new HashMap<>());
-		if(user2!=null){
-			paramPojo.getMap().put("userCode",user2.getUserCode());
-		}else if(EmptyUtil.isEmptys(user,user.getUserCode())){
-			paramPojo.getMap().put("userCode",user.getUserCode());
+	public ResultPojo<Type> getBokeTypes(HttpServletRequest request,@RequestBody(required = false) String userId){
+		if(EmptyUtil.isEmpty(userId)
+				|| "null".equals(userId)){
+			userId=userinfoUtil.getUser(request).getUserId();
 		}
-		return userWorkService.getBokeTypes(paramPojo);
+		return userWorkService.getBokeTypes(userId);
 	}
 
 
 	@RequestMapping({"/data/{oper}"})
 	@ResponseBody
 	public ResultPojo<Type> operData(@RequestBody Type entity, @PathVariable String oper, HttpServletRequest request){
-		User user=userinfoUtil.getUserCookie(request);
+		User user=userinfoUtil.getUser(request);
 		if(user==null) return ResultPojo.newInstance(ResultPojo.NO,"用户信息获取失败");
 		entity.setCreater(user.getUserId());
 		if(OperConstant.OPER_ADD.equals(oper)){

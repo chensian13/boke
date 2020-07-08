@@ -8,12 +8,12 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-@MapperScan({"csa.stu.app.sso.dao"})
+@MapperScan({"csa.stu.app.single.dao"})
 @EnableTransactionManagement
 @SpringBootApplication
 @EnableEurekaClient
 @EnableFeignClients
-@ComponentScan({"csa.stu.app.sso","csa.stu.app.common"})
+@ComponentScan({"csa.stu.app.sso","csa.stu.app.common","csa.stu.app.single"})
 public class SsoApp {
 
     public static void main(String[] args){

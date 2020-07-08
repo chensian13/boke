@@ -5,16 +5,12 @@ import csa.stu.app.common.entity.User;
 import csa.stu.util.myutils.pojo.ResultPojo;
 import csa.stu.util.myutils.utils.EmptyUtil;
 import csa.stu.util.myutils.utils.StrUtil;
-import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @Component
 public class UserinfoRequestUtil extends  UserinfoUtil{
@@ -51,10 +47,14 @@ public class UserinfoRequestUtil extends  UserinfoUtil{
 
     /**
      * 获取用户cookie信息
-     * @param response
+     * @param request
      */
-    public User getUserCookie(HttpServletRequest request){
+    public User getUser(HttpServletRequest request){
         String token=getTokenCookie(request);
+        return getUser(token);
+    }
+
+    public User getUser(String token){
         if(EmptyUtil.isEmptys(token)) return null;
         if(open){
             return JSON.parseObject(redisUtil.get(token),User.class);
@@ -62,8 +62,6 @@ public class UserinfoRequestUtil extends  UserinfoUtil{
             return restTemplate.postForObject("http://sso/cache/get",token, User.class);
         } //end else
     }
-
-
 
 
 }

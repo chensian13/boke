@@ -1,6 +1,6 @@
 package csa.stu.app.front.config;
 
-import csa.stu.app.front.component.LoginInterceptor;
+import csa.stu.app.front.component.MyLoginInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.*;
@@ -13,7 +13,7 @@ import org.springframework.web.servlet.config.annotation.*;
 @Configuration
 public class SpringMVCConfig extends WebMvcConfigurerAdapter{
     @Autowired
-    private LoginInterceptor loginInterceptor;
+    private MyLoginInterceptor loginInterceptor;
 
     @Override
     public void configurePathMatch(PathMatchConfigurer configurer) {

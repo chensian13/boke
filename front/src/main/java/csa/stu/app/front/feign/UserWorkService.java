@@ -45,8 +45,8 @@ public interface UserWorkService {
 
 
     //*********************************************博客类型********************************************
-    @RequestMapping("/type/queryData")
-    public ResultPojo<Type> getBokeTypes(@RequestBody ParamPojo paramPojo);
+    @RequestMapping("/type/getBokeTypes")
+    public ResultPojo<Type> getBokeTypes(@RequestBody String userId);
 
     @RequestMapping("/type/data/add")
     ResultPojo<Type> addOne(@RequestBody Type entity);

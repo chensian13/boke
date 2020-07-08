@@ -24,7 +24,7 @@ import java.util.List;
 public class PictureServiceImpl implements PictureService {
     @Autowired
     private PictureMapper pictureMapper;
-    @Value("${csa.filepath}")
+    @Value("${csa.filepath:C://base//boke//}")
     private String filepath;
 
 

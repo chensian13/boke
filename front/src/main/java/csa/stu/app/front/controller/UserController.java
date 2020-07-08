@@ -28,7 +28,7 @@ public class UserController {
     @RequestMapping("/userinfo")
     @ResponseBody
     public ResultPojo<User> userinfo(HttpServletRequest request) {
-        User user=userinfoUtil.getUserCookie(request);
+        User user=userinfoUtil.getUser(request);
         if(user==null) return ResultPojo.newInstance(ResultPojo.NO,"用户信息获取失败");
         return ResultPojo.newInstance(user);
     }
@@ -42,7 +42,7 @@ public class UserController {
     @PostMapping("/modPass")
     @ResponseBody
     public ResultPojo modPass(@RequestBody User user,HttpServletRequest request){
-        User user2=userinfoUtil.getUserCookie(request);
+        User user2=userinfoUtil.getUser(request);
         user.setUserId(user2.getUserId());
         return userWorkService.modPass(user);
     }

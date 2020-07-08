@@ -17,32 +17,8 @@
             <artifactId>common</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <optional>true</optional>
-        </dependency>
     </dependencies>
 
-    <build>
-        <plugins>
-            <!--跳过测试类打包 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <fork>true</fork> <!--重要-->
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+
 
 </project>

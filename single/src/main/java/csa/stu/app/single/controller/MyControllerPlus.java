@@ -1,7 +1,6 @@
 package csa.stu.app.single.controller;
 
 import csa.stu.app.common.entity.User;
-import csa.stu.app.single.util.LoginCacher;
 import csa.stu.util.ap.mvc.plus.MyController;
 import csa.stu.util.myutils.pojo.ParamPojo;
 import csa.stu.util.myutils.pojo.ResultPojo;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
@@ -18,7 +16,6 @@ import java.util.HashMap;
 
 public abstract class MyControllerPlus<T> extends MyController<T> {
 
-    public abstract LoginCacher loginCacher();
 
     @Override
     @RequestMapping({"/data/{oper}"})
@@ -55,12 +52,15 @@ public abstract class MyControllerPlus<T> extends MyController<T> {
     }
 
 
+    public abstract User getLoginUser(HttpServletRequest request);
+
+
     protected interface product{
         public ResultPojo pro(Object data);
     }
 
     protected ResultPojo checkUser(Object data, HttpServletRequest request, product product){
-        User user=loginCacher().get(request);
+        User user=getLoginUser(request);
         if(EmptyUtil.isEmpty(user)) {
             return ResultPojo.newInstance(ResultPojo.NO,"用户信息为空，请登录");
         }
@@ -83,5 +83,9 @@ public abstract class MyControllerPlus<T> extends MyController<T> {
         }
     }
 
+
+    public ResultPojo noLogin(){
+        return ResultPojo.newInstance(ResultPojo.NO,"请先登录");
+    }
 
 }

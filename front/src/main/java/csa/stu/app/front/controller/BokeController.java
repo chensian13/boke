@@ -34,7 +34,7 @@ public class BokeController{
     @ResponseBody
     @RequestMapping("/data/{oper}")
     public ResultPojo<Boke> addOne(@RequestBody Boke entity, @PathVariable String oper, HttpServletRequest request){
-        User user=userinfoUtil.getUserCookie(request);
+        User user=userinfoUtil.getUser(request);
         if(user==null)
             return ResultPojo.newInstance(ResultPojo.NO,"获取用户信息失败，请重新登录");
         entity.setCreater(user.getUserId());
@@ -53,7 +53,7 @@ public class BokeController{
     @RequestMapping({"/queryData"})
     @ResponseBody
     public ResultPojo<Boke> queryData(@RequestBody ParamPojo paramPojo,HttpServletRequest request) {
-        User user=userinfoUtil.getUserCookie(request);
+        User user=userinfoUtil.getUser(request);
         if(user!=null){
             if(paramPojo.getMap()==null){
                 Map<String,Object> map=new HashMap<>();
@@ -64,29 +64,7 @@ public class BokeController{
         return userWorkService.queryData(paramPojo);
     }
 
-    /**
-     * 上传图片
-     * @param funNum
-     * @param file
-     * @param response
-     * @throws IOException
-     */
-    @RequestMapping("/upload")
-    @ResponseBody
-    public ResultPojo<String> uploadOne(@RequestPart("upload")  MultipartFile file
-            ,@RequestParam(value = "bokeId",required = false) String bokeId
-            ,HttpServletRequest request
-            , HttpServletResponse response)
-                throws IOException {
-        User user = userinfoUtil.getUserCookie(request);
-        if(EmptyUtil.isEmpty(user)){
-            return ResultPojo.newInstance(ResultPojo.NO,"登录信息过期");
-        }
-        ResultPojo<Picture> rs= userWorkService.uploadOne(file,user.getUserId(),bokeId);
-        if(rs==null || rs.getModel()==null) return ResultPojo.newInstance(ResultPojo.NO,null);;
-        Picture picture=rs.getModel();
-        return ResultPojo.newInstance(picture.getHttpPath());
-    }
+
 
 
     @RequestMapping({"/queryById/{id}"})

@@ -11,7 +11,7 @@ public interface SsoService {
     @RequestMapping("/user/login")
     public ResultPojo<User> loginByUser(@RequestBody User user);
 
-    @RequestMapping("/user/logout")
+    @RequestMapping("/cache/logout")
     public ResultPojo logout();
 
 

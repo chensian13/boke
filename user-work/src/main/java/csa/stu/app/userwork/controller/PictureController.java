@@ -1,7 +1,7 @@
 package csa.stu.app.userwork.controller;
 
 import csa.stu.app.common.entity.Picture;
-import csa.stu.app.userwork.service.PictureService;
+import csa.stu.app.single.service.PictureService;
 import csa.stu.util.ap.mvc.IService;
 import csa.stu.util.ap.mvc.plus.MyController;
 import csa.stu.util.myutils.pojo.ResultPojo;
