@@ -143,10 +143,6 @@ public class BokeServiceImpl implements BokeService {
         PageInfo<Boke> pageInfo=new PageInfo<Boke>(rs.getList());
         rs.setCount(pageInfo.getTotal());
         rs.setCode(ResultPojo.OK);
-        if(!EmptyUtil.isEmpty(rs.getList()))
-            for(Boke boke:rs.getList()){
-                boke.setImg(checkoutImg(boke.getInfo()));
-            }
         return rs;
     }
 
@@ -155,16 +151,6 @@ public class BokeServiceImpl implements BokeService {
         return null;
     }
 
-    String patternString = "[http|https]+[://]+[0-9A-Za-z:/[-]_#[?][=][.][&]]*";
-
-    private String checkoutImg(String info){
-        Pattern pattern = Pattern.compile(patternString, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(info);
-        while (matcher.find()) {
-            return matcher.group();
-        }
-        return null;
-    }
 
     //************************************校验*********************************
     @Override

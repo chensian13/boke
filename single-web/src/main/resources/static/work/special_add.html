@@ -33,48 +33,20 @@
         <div class="col-lg-12">
             <section class="panel">
                 <header class="panel-heading">
-                    <h3 class="panel-title">新建博客</h3>
+                    <h3 class="panel-title">新建专辑</h3>
                 </header>
                 <div class="panel-body">
                     <form id="form" class="form-horizontal form-bordered">
                         <div class="form-group">
-                            <label class="col-md-3 control-label" >博客标题</label>
+                            <label class="col-md-3 control-label" >专辑名称</label>
                             <div class="col-md-6">
-                                <input type="text" msg="博客标题不可为空" check="has" name="bokeTitle" class="form-control" >
+                                <input type="text" msg="专辑标题不可为空" check="has" name="specialName" class="form-control" >
                             </div>
                         </div>
-
-                        <div class="form-group">
-                            <label class="col-md-3 control-label" >副标题</label>
-                            <div class="col-md-6">
-                                <input type="text" name="bokeSubtitle" msg="副标题不可为空" check="has"  class="form-control" >
-                            </div>
-                        </div>
-
 
                         <div class="form-group">
                             <label class="col-md-3 control-label" >内容</label>
-                            <div id="editor" class="col-md-6">
-
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-md-3 control-label" >博客类型</label>
-                            <div class="col-md-3">
-                                <select name="bokeType" id="bokeType" class="form-control mb-md">
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-md-3 control-label" ></label>
-                            <div class="col-md-6">
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" checked="" id="ispublic">
-                                    <label>是否公开</label>
-                                </div>
-                            </div>
+                            <textarea name="info" rows="6" class="col-md-6"></textarea>
                         </div>
 
                         <div class="form-group">
@@ -105,46 +77,25 @@
     <script src="assets/javascripts/theme.init.js"></script>
 
     <script>
-        $(function () {
-            post(typeUrl+"getBokeTypes",null,function (res) {
-                if(res.code=='OK'){
-                    var list=res.list;
-                    var ops='';
-                    for(var i=0;i<list.length;i++){
-                        ops=ops+"<option value='"+list[i].typeId+"'>"+list[i].typeName+"</option>";
-                    } //end for
-                    $("#bokeType").html(ops);
-                }
-            });
 
-            $("#editor").load("editor.html");
-        });
-
-        function saveBoke(){
+        function saveSpecial(){
             var map=formDataMap("form");
             var c=formCheckSubmit("form");
             if(c!=true){
                 toastShow(c);
                 return ;
             }
-            if($("#ispublic").is(":checked")){
-                map.ispublic="1";
-            }else{
-                map.ispublic="0";
-            }
-            map.info=$("#content").html();
-            post(bokeUrl+"data/add",map,function (res) {
+            post(specialUrl+"data/add",map,function (res) {
                 if(res.code=='OK'){
                     toastShow("保存成功！");
                     formDataClean('form');
-                    $("#content").html(null);
                 }
             });
         }
 
         formComponent("form");
         $("#save").click(function(){
-            saveBoke()
+            saveSpecial()
         });
     </script>
 </section>

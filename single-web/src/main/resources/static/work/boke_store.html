@@ -126,6 +126,7 @@
                         list[i].id=list[i].bokeId;
                         list[i].title=list[i].bokeTitle;
                         list[i].info=list[i].bokeSubtitle;
+                        list[i].img=list[i].cover;
                     }
                     listComponent('bokes',list,function (id) {
                         post(bokeUrl+"queryById/"+id,null,function (res) {

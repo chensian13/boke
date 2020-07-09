@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="csa.stu.app.single.dao.SpecialMapper">
+
+  <sql id="cols">
+    b.special_id, b.special_name, b.special_code, b.creater,b.ispublic, b.createtime, b.isdel, b.info
+  </sql>
+  <!--left(b.info,72)-->
+  <select id="selectTable" parameterType="map" resultType="special">
+    select
+    <include refid="cols" />,b.info as info
+    from boke_special b
+    <where>
+      <if test="specialName!=null and specialName!=''">
+        and b.specialName like '%${specialName}%'
+      </if>
+      <if test="isdel!=null and isdel!=''">
+        and b.isdel=#{isdel}
+      </if>
+      <if test="creater!=null and creater!=''">
+        and b.creater=#{creater}
+      </if>
+    </where>
+    order by b.createtime desc
+  </select>
+
+</mapper>

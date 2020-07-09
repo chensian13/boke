@@ -4,7 +4,7 @@
 
   <sql id="cols">
     b.boke_id, b.boke_subtitle, b.boke_type, b.boke_title, b.boke_code, b.creater,b.ispublic,
-    b.createtime, b.isdel, b.version,b.collect_num,b.state,b.picture_code,b.path
+    b.createtime, b.isdel, b.version,b.collect_num,b.state,b.picture_code,b.path,b.cover
   </sql>
   <!--left(b.info,72)-->
   <select id="selectTable" parameterType="map" resultType="Boke">

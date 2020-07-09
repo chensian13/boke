@@ -8,6 +8,7 @@ var typeUrl=serviceF+"type/";
 var pictureUrl=serviceF+"picture/";
 var webUrl=serviceF+"web/";
 var workUrl=serviceF+"work/";
+var specialUrl=serviceF+"special/";
 
 function post(url,param,reqOk){
     $.ajax({

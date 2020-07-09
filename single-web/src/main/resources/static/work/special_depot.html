@@ -54,50 +54,26 @@
     <lay pop>
         <pop id="pop">
             <div class="pop-dash">
-            <form id="form" style="height: 660px;" class="form-horizontal form-bordered">
-                <input type="hidden"  name="bokeId" />
-                <div class="form-group">
-                    <label class="col-md-2 control-label" >博客标题</label>
-                    <div class="col-md-10">
-                        <input type="text" name="bokeTitle" class="form-control" >
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-md-2 control-label" >副标题</label>
-                    <div class="col-md-10">
-                        <input type="text" name="bokeSubtitle"  class="form-control" >
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-md-2 control-label" >博客类型</label>
-                    <div class="col-md-4">
-                        <select name="bokeType" id="bokeType" class="form-control">
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div id="editor" class="col-md-12" class="col-md-12">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-6">
-                        <div class="checkbox-custom checkbox-primary">
-                            <input type="checkbox" id="ispublic">
-                            <label>是否公开</label>
+                <form id="form" style="width: 660px;" class="form-horizontal form-bordered">
+                    <input type="hidden" name="specialId" />
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" >专辑名称</label>
+                        <div class="col-md-6">
+                            <input type="text" msg="专辑标题不可为空" check="has" name="specialName" class="form-control" >
                         </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <div class="col-md-6 col-xs-11">
-                        <a id="save" class="btn btn-sm btn-primary" data-plugin-colorpicker data-color-format="hex" data-color="rgb(255, 255, 255)">保存</a>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" >内容</label>
+                        <textarea name="info" rows="6" class="col-md-6"></textarea>
                     </div>
-                </div>
-            </form>
+
+                    <div class="form-group">
+                        <div class="col-md-6 col-xs-11">
+                            <a id="save" class="btn btn-sm btn-primary" data-plugin-colorpicker data-color-format="hex" data-color="rgb(255, 255, 255)">保存</a>
+                        </div>
+                    </div>
+                </form>
             </div>
         </pop>
     </lay>
@@ -120,47 +96,20 @@
     <script src="assets/javascripts/theme.init.js"></script>
 
     <script>
-        $(function () {
-            post(typeUrl+"getBokeTypes",null,function (res) {
-                if(res.code=='OK'){
-                    var list=res.list;
-                    var ops='';
-                    for(var i=0;i<list.length;i++){
-                        ops=ops+"<option value='"+list[i].typeId+"'>"+list[i].typeName+"</option>";
-                    } //end for
-                    $("#bokeType").html(ops);
-                }
-            });
-
-            $("#editor").load("editor.html");
-        });
-
-        //fileInputComponent('file');
         formComponent('form');
         var config={
             header:[{
-                field:'bokeId',
+                field:'specialId',
                 value:"操作",
                 template:function(d,row){
                     return "<button onclick='showDetail(\""+d+"\")' color='blue'>编辑</button> <button onclick='uploadCover(\""+d+"\")' style='display: none' color='orange'>上传封面</button> <button onclick='del(\""+d+"\")' color='red'>下架</button>";
                 }
             },{
-                value:"博客标题",
-                field:'bokeTitle'
+                value:"专辑名称",
+                field:'specialName'
             },{
-                value:"副标题",
-                field:'bokeSubtitle'
-            },{
-                value:"是否公开",
-                field:'ispublic',
-                template:function(d){
-                    if(d=='1'){
-                        return "是";
-                    }else if(d=='0'){
-                        return "否";
-                    }
-                    return "";
-                }
+                value:"描述",
+                field:'info'
             }]
         };
         tableComponent("table",config); //注册table
@@ -171,7 +120,7 @@
         };
         pageComponent('page',0);
         function dataList(){
-            post(bokeUrl+"queryData",{'page':page,'pagesize':pagesize,'map':map},function (res) {
+            post(specialUrl+"queryData",{'page':page,'pagesize':pagesize,'map':map},function (res) {
                 if(res.code=='OK'){
                     tableData("table",res.list); //数据渲染
                     var sum=parseInt(res.count/pagesize);
@@ -201,12 +150,12 @@
 
         //搜索
         $("#search").click(function () {
-            map.bokeTitle=$("#q").val();
+            map.specialName=$("#q").val();
             page=1;
             dataList();
         });
 
-        popComponent('pop',9999,'编辑博客');
+        popComponent('pop',9999,'编辑专辑');
         /**
          *
          * @param id
@@ -214,22 +163,16 @@
         function showDetail(id){
             //重置表单
             formDataClean('form');
-            post(bokeUrl+"queryById/"+id,null,function (res) {
+            post(specialUrl+"queryById/"+id,null,function (res) {
                 if(res.code=='OK'){
                     popShow('pop');
                     formDataBind('form',res.model);
-                    if(res.model.ispublic=='1'){
-                        $("#ispublic").attr("checked","checked");
-                    }else{
-                        $("#ispublic").removeAttr("checked");
-                    }
-                    $("#content").html(res.model.info);
                 }
             });
         }
 
         function del(id){
-            post(bokeUrl+"data/stop",{"bokeId":id},function (res) {
+            post(specialUrl+"data/stop",{"specialId":id},function (res) {
                 if(res.code=='OK'){
                     toastShow("已放入回收站");
                     dataList();
@@ -239,15 +182,9 @@
             });
         }
 
-        function updBoke(){
+        function updspecial(){
             var map=formDataMap("form");
-            map.info=$("#content").html();
-            if($("#ispublic").is(":checked")){
-                map.ispublic="1";
-            }else{
-                map.ispublic="0";
-            }
-            post(bokeUrl+"data/upd",map,function (res) {
+            post(specialUrl+"data/upd",map,function (res) {
                 if(res.code=='OK'){
                     toastShow("保存成功！");
                     popShow('pop',false);
@@ -256,7 +193,7 @@
         }
 
         $("#save").click(function(){
-            updBoke();
+            updspecial();
         });
 
         btnComponent();
