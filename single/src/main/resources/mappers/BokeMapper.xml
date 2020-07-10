@@ -9,8 +9,8 @@
   <!--left(b.info,72)-->
   <select id="selectTable" parameterType="map" resultType="Boke">
     select
-    <include refid="cols" />,b.info as info
-    from boke_boke b
+    <include refid="cols" />,b.info as info,special_name
+    from boke_boke b left join boke_special s on s.special_id=b.special
     <where>
       <if test="bokeTitle!=null and bokeTitle!=''">
         and (b.boke_subtitle like '%${bokeTitle}%' or b.boke_title like '%${bokeTitle}%')
@@ -23,6 +23,9 @@
       </if>
       <if test="creater!=null and creater!=''">
         and b.creater=#{creater}
+      </if>
+      <if test="ispublic!=null and ispublic!=''">
+        and b.ispublic=#{ispublic}
       </if>
     </where>
     order by b.createtime desc

@@ -121,6 +121,8 @@ public class BokeServiceImpl implements BokeService {
                 map.put("isdel",entry.getValue());
             }else if(entry.getKey().equals("bokeType")){
                 map.put("bokeType",entry.getValue());
+            }else if(entry.getKey().equals("ispublic")){
+                map.put("ispublic",entry.getValue());
             }else if(entry.getKey().equals("creater")){
                 map.put("creater",entry.getValue());
             }else if(entry.getKey().equals("userCode")){

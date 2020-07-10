@@ -93,6 +93,13 @@
                 </div>
 
                 <div class="form-group">
+                    <label class="col-md-2 control-label" >加入专辑</label>
+                    <div class="col-md-10">
+                        <select id="special" class="form-control" name="special"></select>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <div class="col-md-6 col-xs-11">
                         <a id="save" class="btn btn-sm btn-primary" data-plugin-colorpicker data-color-format="hex" data-color="rgb(255, 255, 255)">保存</a>
                     </div>
@@ -135,14 +142,13 @@
             $("#editor").load("editor.html");
         });
 
-        //fileInputComponent('file');
         formComponent('form');
         var config={
             header:[{
                 field:'bokeId',
                 value:"操作",
                 template:function(d,row){
-                    return "<button onclick='showDetail(\""+d+"\")' color='blue'>编辑</button> <button onclick='uploadCover(\""+d+"\")' style='display: none' color='orange'>上传封面</button> <button onclick='del(\""+d+"\")' color='red'>下架</button>";
+                    return "<button onclick='showDetail(\""+d+"\")' color='blue'>编辑</button> <button onclick='del(\""+d+"\")' color='red'>下架</button>";
                 }
             },{
                 value:"博客标题",
@@ -150,6 +156,9 @@
             },{
                 value:"副标题",
                 field:'bokeSubtitle'
+            },{
+                value:"所属专辑",
+                field:'specialName'
             },{
                 value:"是否公开",
                 field:'ispublic',
@@ -207,6 +216,9 @@
         });
 
         popComponent('pop',9999,'编辑博客');
+        var map={
+            "isdel":'0'
+        };
         /**
          *
          * @param id
@@ -214,17 +226,27 @@
         function showDetail(id){
             //重置表单
             formDataClean('form');
-            post(bokeUrl+"queryById/"+id,null,function (res) {
+            post(specialUrl+"queryData",{'map':map},function (res) {
                 if(res.code=='OK'){
-                    popShow('pop');
-                    formDataBind('form',res.model);
-                    if(res.model.ispublic=='1'){
-                        $("#ispublic").attr("checked","checked");
-                    }else{
-                        $("#ispublic").removeAttr("checked");
-                    }
-                    $("#content").html(res.model.info);
-                }
+                    var ops='';
+                   for(var i=0;i<res.list.length;i++){
+                       ops=ops+'<option value="'+res.list[i].specialId+'">'+res.list[i].specialName+'</option>';
+                   }// end for
+                    $("#special").html(ops);
+
+                    post(bokeUrl+"queryById/"+id,null,function (res) {
+                        if(res.code=='OK'){
+                            popShow('pop');
+                            formDataBind('form',res.model);
+                            if(res.model.ispublic=='1'){
+                                $("#ispublic").attr("checked","checked");
+                            }else{
+                                $("#ispublic").removeAttr("checked");
+                            }
+                            $("#content").html(res.model.info);
+                        }
+                    });
+                } //end if
             });
         }
 

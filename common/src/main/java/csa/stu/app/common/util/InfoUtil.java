@@ -49,6 +49,7 @@ public abstract class InfoUtil {
      * @return
      */
     public static String getFirstImgSrc(String info){
+        if(EmptyUtil.isEmpty(info)) return null;
         Pattern pattern = Pattern.compile(patternString, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(info);
         while (matcher.find()) {
