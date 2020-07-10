@@ -228,7 +228,7 @@
             formDataClean('form');
             post(specialUrl+"queryData",{'map':map},function (res) {
                 if(res.code=='OK'){
-                    var ops='';
+                    var ops='<option value="null">--无选项--</option>';
                    for(var i=0;i<res.list.length;i++){
                        ops=ops+'<option value="'+res.list[i].specialId+'">'+res.list[i].specialName+'</option>';
                    }// end for
