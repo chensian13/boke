@@ -51,32 +51,6 @@
     </div>
     <!-- end: page -->
 
-    <lay pop>
-        <pop id="pop">
-            <div class="pop-dash">
-                <form id="form" style="width: 660px;" class="form-horizontal form-bordered">
-                    <input type="hidden" name="specialId" />
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" >专辑名称</label>
-                        <div class="col-md-6">
-                            <input type="text" msg="专辑标题不可为空" check="has" name="specialName" class="form-control" >
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" >内容</label>
-                        <textarea name="info" rows="6" class="col-md-6"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-md-6 col-xs-11">
-                            <a id="save" class="btn btn-sm btn-primary" data-plugin-colorpicker data-color-format="hex" data-color="rgb(255, 255, 255)">保存</a>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </pop>
-    </lay>
 
     <!-- Vendor -->
     <script src="assets/vendor/jquery/jquery.js"></script>
@@ -96,13 +70,12 @@
     <script src="assets/javascripts/theme.init.js"></script>
 
     <script>
-        formComponent('form');
         var config={
             header:[{
                 field:'specialId',
                 value:"操作",
                 template:function(d,row){
-                    return "<button onclick='showDetail(\""+d+"\")' color='blue'>编辑</button> <button onclick='uploadCover(\""+d+"\")' style='display: none' color='orange'>上传封面</button> <button onclick='del(\""+d+"\")' color='red'>下架</button>";
+                    return "<button onclick='resume(\""+d+"\")' color='blue'>恢复</button> <button onclick='del(\""+d+"\")' color='red'>删除</button>";
                 }
             },{
                 value:"专辑名称",
@@ -116,7 +89,7 @@
         var page=1;
         var pagesize=10;
         var map={
-            "isdel":'0'
+            "isdel":'1'
         };
         pageComponent('page',0);
         function dataList(){
@@ -130,7 +103,6 @@
             });
         }
         dataList();
-
 
 
         /**
@@ -155,46 +127,28 @@
             dataList();
         });
 
-        popComponent('pop',9999,'编辑专辑');
-        /**
-         *
-         * @param id
-         */
-        function showDetail(id){
-            //重置表单
-            formDataClean('form');
-            post(specialUrl+"queryById/"+id,null,function (res) {
+        function resume(id){
+            post(specialUrl+"data/upd",{"specialId":id,"isdel":"0"},function (res) {
                 if(res.code=='OK'){
-                    popShow('pop');
-                    formDataBind('form',res.model);
+                    toastShow("已恢复");
+                    dataList();
+                }else{
+                    toastShow("无法恢复");
                 }
             });
         }
 
         function del(id){
-            post(specialUrl+"data/stop",{"specialId":id},function (res) {
+            post(specialUrl+"data/del",{"specialId":id},function (res) {
                 if(res.code=='OK'){
-                    toastShow("已放入回收站");
+                    toastShow("已删除");
                     dataList();
                 }else{
-                    toastShow("下架失败");
+                    toastShow("删除失败");
                 }
             });
         }
 
-        function updspecial(){
-            var map=formDataMap("form");
-            post(specialUrl+"data/upd",map,function (res) {
-                if(res.code=='OK'){
-                    toastShow("保存成功！");
-                    popShow('pop',false);
-                }
-            });
-        }
-
-        $("#save").click(function(){
-            updspecial();
-        });
 
         btnComponent();
     </script>
