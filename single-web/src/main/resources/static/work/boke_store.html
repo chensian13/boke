@@ -83,6 +83,14 @@
         </pop>
     </lay>
 
+    <lay popImg>
+        <pop id="popImg">
+            <div class="pop-dash">
+                <img id="show_img" />
+            </div>
+        </pop>
+    </lay>
+
     <!-- Vendor -->
     <script src="assets/vendor/jquery/jquery.js"></script>
     <script src="assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
@@ -107,8 +115,10 @@
     </script>
     <script>
         btnComponent();
-        popComponent('pop',9999,'阅读博客');
+        popComponent('pop',999,'阅读博客');
+        popComponent('popImg',9999);
         pageComponent('pageBtn',0);
+
 
         var page=1;
         var pagesize=10;
@@ -135,7 +145,16 @@
                                 $("#title").val(res.model.bokeTitle);
                                 $("#content").html(res.model.info);
                                 popShow('pop');
-                            }
+                                $("#content img").click(function () {
+                                    $("#show_img").attr('src',$(this).attr('src')).on('load',function () {
+                                        //图片加载完毕弹窗效果最佳
+                                        if(this.width>window.innerWidth){
+                                            this.style.width=window.innerWidth*0.9+'px';
+                                        }
+                                        popShow('popImg');
+                                    });
+                                });
+                            } //end ok if
                         });
                     });
                     var sum=parseInt(res.count/pagesize);
@@ -161,6 +180,7 @@
                 btnComponent();
             });
         }
+
     </script>
 </section>
 </body>
