@@ -1,6 +1,6 @@
 package csa.stu.app.bokesingle.controller;
 
-import csa.stu.app.common.cache.LoginCacher;
+import csa.stu.app.bokesingle.component.LoginCacher;
 import csa.stu.app.common.entity.Special;
 import csa.stu.app.common.entity.User;
 import csa.stu.app.single.controller.MyControllerPlus;

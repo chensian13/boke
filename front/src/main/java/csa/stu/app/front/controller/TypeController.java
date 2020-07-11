@@ -2,11 +2,9 @@ package csa.stu.app.front.controller;
 
 import csa.stu.app.common.entity.Type;
 import csa.stu.app.common.entity.User;
-import csa.stu.app.common.util.UserinfoRequestUtil;
-import csa.stu.app.common.util.UserinfoUtil;
+import csa.stu.app.front.component.RestUserInfo;
 import csa.stu.app.front.feign.UserWorkService;
 import csa.stu.util.myutils.constant.OperConstant;
-import csa.stu.util.myutils.pojo.ParamPojo;
 import csa.stu.util.myutils.pojo.ResultPojo;
 import csa.stu.util.myutils.utils.EmptyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +24,7 @@ public class TypeController {
 	@Autowired
 	private UserWorkService userWorkService;
 	@Autowired
-	private UserinfoRequestUtil userinfoUtil;
+	private RestUserInfo userinfoUtil;
 
 
 	@ResponseBody

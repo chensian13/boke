@@ -33,7 +33,7 @@ public class LoginController {
         if(rs!=null
                 && ResultPojo.OK.equals(rs.getCode())){
             //验证通过，设置cookie
-            userinfoUtil.setUserData(rs.getModel());
+            userinfoUtil.putUser(rs.getModel(),null);
         }
         return rs;
     }

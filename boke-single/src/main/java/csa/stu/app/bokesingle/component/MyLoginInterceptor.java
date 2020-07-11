@@ -1,6 +1,5 @@
 package csa.stu.app.bokesingle.component;
 
-import csa.stu.app.common.cache.LoginCacher;
 import csa.stu.app.common.entity.User;
 import csa.stu.app.common.interceptor.LoginInterceptor;
 import org.slf4j.Logger;

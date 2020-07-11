@@ -1,6 +1,6 @@
 package csa.stu.app.bokesingle.controller;
 
-import csa.stu.app.common.cache.LoginCacher;
+import csa.stu.app.bokesingle.component.LoginCacher;
 import csa.stu.app.common.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

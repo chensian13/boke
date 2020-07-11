@@ -1,6 +1,6 @@
 package csa.stu.app.bokesingle.controller;
 
-import csa.stu.app.common.cache.LoginCacher;
+import csa.stu.app.bokesingle.component.LoginCacher;
 import csa.stu.app.common.entity.Boke;
 import csa.stu.app.common.entity.User;
 import csa.stu.app.single.service.BokeService;
@@ -10,7 +10,6 @@ import csa.stu.util.myutils.pojo.ResultPojo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

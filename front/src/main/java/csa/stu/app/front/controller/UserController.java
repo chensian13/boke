@@ -1,8 +1,7 @@
 package csa.stu.app.front.controller;
 
 import csa.stu.app.common.entity.User;
-import csa.stu.app.common.util.UserinfoRequestUtil;
-import csa.stu.app.common.util.UserinfoUtil;
+import csa.stu.app.front.component.RestUserInfo;
 import csa.stu.app.front.feign.SsoService;
 import csa.stu.app.front.feign.UserWorkService;
 import csa.stu.util.myutils.pojo.ResultPojo;
@@ -22,7 +21,7 @@ public class UserController {
     @Autowired
     private UserWorkService userWorkService;
     @Autowired
-    private UserinfoRequestUtil userinfoUtil;
+    private RestUserInfo userinfoUtil;
 
 
     @RequestMapping("/userinfo")

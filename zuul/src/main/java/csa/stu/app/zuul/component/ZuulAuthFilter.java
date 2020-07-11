@@ -63,7 +63,7 @@ public class ZuulAuthFilter extends ZuulFilter {
         HttpServletResponse response=ctx.getResponse();
         HttpServletRequest request = ctx.getRequest();
         try{
-            User user=userinfoUtil.getUser(request);
+            User user=userinfoUtil.getUser(request,null);
             if(user!=null){
                 logger.info("请求放行："+user);
                 return null;
