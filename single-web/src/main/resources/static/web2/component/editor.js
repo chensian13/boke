@@ -2,7 +2,6 @@ var content=document.getElementById("content");
 var imgW=document.getElementById("imgW");
 var imgH=document.getElementById("imgH");
 var imgSrc=document.getElementById("imgSrc");
-var showImg=document.getElementById("showImg");
 var fileUp=document.getElementById("file");
 
 var contentImg=document.getElementById("contentImg");
@@ -48,9 +47,7 @@ function btnHref(a){
 function setImg(){
 	cleanImg();
 	popShow("contentImg");
-	showImg.style.display="none";
-	fileUp.style.display="block";
-	
+
 	var btnImg=contentImg.querySelectorAll("button")[1];
 	btnImg.onclick=function(){
 		var formData = new FormData();
@@ -87,6 +84,7 @@ function saveImg(img,url){debugger
 
 function cleanImg(){
 	fileInputClean('file');
+	fileBanUpload('file',false);
 	imgW.value="";
 	imgH.value="";
 	imgSrc.value="";
@@ -135,10 +133,9 @@ function _edit_imgbind(){
 		img.ondblclick=function(){
 			cleanImg();
 			popShow("contentImg");
-			showImg.style.display="block";
-			fileUp.style.display="none";
+			fileShowImgae('file',img.getAttribute("src"));
+			fileBanUpload('file',true);
 
-			showImg.setAttribute("src",img.getAttribute("src"));
 			imgW.value=img.getAttribute("width");
 			imgH.value=img.getAttribute("height");
 			imgSrc.value=img.getAttribute("src");

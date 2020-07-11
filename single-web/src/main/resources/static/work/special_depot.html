@@ -78,6 +78,13 @@
                     return "<button onclick='resume(\""+d+"\")' color='blue'>恢复</button> <button onclick='del(\""+d+"\")' color='red'>删除</button>";
                 }
             },{
+                value:"封面",
+                field:'cover',
+                template:function (d) {
+                    if(isEmpty(d)) return '';
+                    return '<img src="'+d+'" height="120px" />';
+                }
+            },{
                 value:"专辑名称",
                 field:'specialName'
             },{

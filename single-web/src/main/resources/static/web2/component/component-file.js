@@ -47,6 +47,16 @@ function fileShowImgae(id,url){
 	img.setAttribute('src',url);
 	img.style.display="block";
 }
+
+function fileBanUpload(id,isban){
+	var fi=queryComponent("file-input",id);
+	var btn=fi.querySelector("button");
+	if(isban){
+		btn.style.visibility="hidden";
+	}else{
+		btn.style.visibility="visible";
+	}
+}
 //*************************************************************************************************
 function _file_decorate(fi,callback){
 	if(isEmpty(fi)) return;
