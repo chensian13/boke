@@ -38,6 +38,13 @@
                 <div class="panel-body">
                     <form id="form" class="form-horizontal form-bordered">
                         <div class="form-group">
+                            <label class="col-md-3 control-label" >专辑封面</label>
+                            <div class="col-md-6">
+                                <file-input big color='blue' id='file' head accept='image/*'  value='上传封面'></file-input>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label class="col-md-3 control-label" >专辑名称</label>
                             <div class="col-md-6">
                                 <input type="text" msg="专辑标题不可为空" check="has" name="specialName" class="form-control" >
@@ -85,13 +92,24 @@
                 toastShow(c);
                 return ;
             }
+            map.cover=coverImg;
             post(specialUrl+"data/add",map,function (res) {
                 if(res.code=='OK'){
                     toastShow("保存成功！");
                     formDataClean('form');
+                    fileInputClean('file');
                 }
             });
         }
+
+        var coverImg;
+        fileInputComponent('file',function(u){
+            var formData = new FormData();
+            formData.append("upload",fileInputForm("file")[0]);
+            postFile(formData,function (url) {
+                coverImg=url;
+            })
+        });
 
         formComponent("form");
         $("#save").click(function(){

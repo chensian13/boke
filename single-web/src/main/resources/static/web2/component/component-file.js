@@ -39,6 +39,14 @@ function fileFiles(id){
 	var ip=fi.querySelector("input");
 	return ip.files;
 }
+
+function fileShowImgae(id,url){
+	if(isEmpty(url)) return ;
+	var fi=queryComponent("file-input",id);
+	var img=fi.querySelector("img");
+	img.setAttribute('src',url);
+	img.style.display="block";
+}
 //*************************************************************************************************
 function _file_decorate(fi,callback){
 	if(isEmpty(fi)) return;

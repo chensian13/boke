@@ -3,7 +3,7 @@
 <mapper namespace="csa.stu.app.single.dao.SpecialMapper">
 
   <sql id="cols">
-    b.special_id, b.special_name, b.special_code, b.creater,b.ispublic, b.createtime, b.isdel, b.info
+    b.special_id, b.special_name, b.special_code, b.creater,b.ispublic, b.createtime, b.isdel, b.info ,b.cover
   </sql>
   <!--left(b.info,72)-->
   <select id="selectTable" parameterType="map" resultType="special">

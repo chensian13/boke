@@ -57,6 +57,13 @@
                 <form id="form" style="width: 660px;" class="form-horizontal form-bordered">
                     <input type="hidden" name="specialId" />
                     <div class="form-group">
+                        <label class="col-md-3 control-label" >专辑封面</label>
+                        <div class="col-md-6">
+                            <file-input big color='blue' id='file' head accept='image/*'  value='上传封面'></file-input>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label class="col-md-3 control-label" >专辑名称</label>
                         <div class="col-md-6">
                             <input type="text" msg="专辑标题不可为空" check="has" name="specialName" class="form-control" >
@@ -103,6 +110,13 @@
                 value:"操作",
                 template:function(d,row){
                     return "<button onclick='showDetail(\""+d+"\")' color='blue'>编辑</button> <button onclick='del(\""+d+"\")' color='red'>放入回收站</button>";
+                }
+            },{
+                value:"封面",
+                field:'cover',
+                template:function (d) {
+                    if(isEmpty(d)) return '';
+                    return '<img src="'+d+'" height="120px" />';
                 }
             },{
                 value:"专辑名称",
@@ -163,10 +177,12 @@
         function showDetail(id){
             //重置表单
             formDataClean('form');
+            fileInputClean('file');
             post(specialUrl+"queryById/"+id,null,function (res) {
                 if(res.code=='OK'){
                     popShow('pop');
                     formDataBind('form',res.model);
+                    fileShowImgae('file',res.model.cover);
                 }
             });
         }
@@ -184,6 +200,7 @@
 
         function updspecial(){
             var map=formDataMap("form");
+            map.cover=coverImg;
             post(specialUrl+"data/upd",map,function (res) {
                 if(res.code=='OK'){
                     toastShow("保存成功！");
@@ -196,7 +213,14 @@
             updspecial();
         });
 
-
+        var coverImg;
+        fileInputComponent('file',function(u){
+            var formData = new FormData();
+            formData.append("upload",fileInputForm("file")[0]);
+            postFile(formData,function (url) {
+                coverImg=url;
+            })
+        });
 
         btnComponent();
     </script>

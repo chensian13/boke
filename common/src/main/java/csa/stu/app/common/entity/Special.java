@@ -20,5 +20,7 @@ public class Special extends  BaseEntity{
 
     private String creater;
 
+    private String cover;
+
 
 }
