@@ -21,7 +21,7 @@ public class MyLoginInterceptor extends LoginInterceptor {
 
     @Override
     public User getLoginUser(HttpServletRequest request) {
-        return userinfoUtil.getUser(request);
+        return userinfoUtil.getUser(request,null);
     }
 
 }
