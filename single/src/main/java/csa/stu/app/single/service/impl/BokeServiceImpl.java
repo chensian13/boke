@@ -125,14 +125,6 @@ public class BokeServiceImpl implements BokeService {
                 map.put("ispublic",entry.getValue());
             }else if(entry.getKey().equals("creater")){
                 map.put("creater",entry.getValue());
-            }else if(entry.getKey().equals("userCode")){
-                //依据userCode
-                QueryWrapper<User> queryWrapper=new QueryWrapper<>();
-                queryWrapper.eq("user_code",entry.getValue());
-                User user=userMapper.selectOne(queryWrapper);
-                if(user!=null){
-                    map.put("creater",user.getUserId());
-                }
             }
         });
         //校验作者id

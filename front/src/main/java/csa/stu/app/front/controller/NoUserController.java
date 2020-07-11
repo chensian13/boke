@@ -73,11 +73,9 @@ public class NoUserController {
     public ResultPojo<Boke> queryData(@RequestBody ParamPojo paramPojo,@PathVariable("userId") String userId) {
         if(paramPojo.getMap()==null){
             Map<String,Object> map=new HashMap<>();
-            map.put("creater",userId);
             paramPojo.setMap(map);
-        }else{
-            paramPojo.getMap().put("creater",userId);
         }
+        paramPojo.getMap().put("creater",userId);
         return userWorkService.queryData(paramPojo);
     }
 
