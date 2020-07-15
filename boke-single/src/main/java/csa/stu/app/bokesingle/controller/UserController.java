@@ -26,7 +26,6 @@ public class UserController extends MyControllerPlus<User> {
     @Autowired
     private LoginCacher loginCacher;
 
-
     @Override
     public IService<User> getService() {
         return userService;
@@ -36,24 +35,31 @@ public class UserController extends MyControllerPlus<User> {
     @PostMapping("/modPass")
     @ResponseBody
     public ResultPojo modPass(@RequestBody User user,HttpServletRequest request){
-        user.setUserId(loginCacher.get(request).getUserId());
-        return userService.modPass(user);
+        return mustWrapUser(request,user2->{
+            user.setUserId(user2.getUserId());
+            return userService.modPass(user);
+        });
     }
 
     @RequestMapping("/userinfo")
     @ResponseBody
     public ResultPojo<User> userinfo(HttpServletRequest request) {
-        User user=loginCacher.get(request);
-        if(user==null) return ResultPojo.newInstance(ResultPojo.NO,"用户信息获取失败");
-        return ResultPojo.newInstance(user);
+        return mustWrapUser(request,user->{
+            return userService.selectById(user.getUserId());
+        });
     }
 
+    /**
+     * 不必登录
+     * @param request
+     * @return
+     */
     @RequestMapping("/userinfoQuery")
     @ResponseBody
     public ResultPojo<User> userinfoQuery(HttpServletRequest request) {
-        User user=loginCacher.get(request);
-        if(user==null) return ResultPojo.newInstance(ResultPojo.NO,"用户信息获取失败");
-        return userService.selectById(user.getUserId());
+        return wrapUser(request,user->{
+            return userService.selectById(user.getUserId());
+        });
     }
 
     @Override

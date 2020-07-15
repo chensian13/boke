@@ -57,21 +57,6 @@ public class NoUserController {
         return userService.register(user);
     }
 
-    @RequestMapping("/signin")
-    public String login(){
-        return "redirect:/work/login.html";
-    }
-
-    @RequestMapping("/signup")
-    public String register(){
-        return "redirect:/work/register.html";
-    }
-
-    @RequestMapping("/goRead/{userId}")
-    public String goRead(@PathVariable("userId") String userId){
-        return "redirect:/work/boke_store.html?author="+userId;
-    }
-
 
     @RequestMapping({"/queryData/{userId}"})
     @ResponseBody

@@ -21,8 +21,16 @@ public abstract class MyControllerPlus<T> extends MyController<T> {
     @RequestMapping({"/data/{oper}"})
     @ResponseBody
     public ResultPojo<T> operData(@RequestBody T entity, @PathVariable String oper, HttpServletRequest request, HttpServletResponse response) {
-        return checkUser(entity,request,data->{
-            return super.operData((T)data, oper, request, response);
+        return wrapUser(request,user->{
+            try {
+                if(user!=null){
+                    Method m=entity.getClass().getMethod("setCreater",String.class);
+                    m.invoke(entity,user.getUserId());
+                }
+                return super.operData(entity, oper, request, response);
+            } catch (Exception e) {
+                throw new RuntimeException("没有creater字段");
+            }
         });
     }
 
@@ -30,15 +38,19 @@ public abstract class MyControllerPlus<T> extends MyController<T> {
     @RequestMapping({"/queryById/{id}"})
     @ResponseBody
     public ResultPojo<T> queryById(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
-        return super.queryById(id, request, response);
+        return wrapUser(request,user->{
+            return super.queryById(id, request, response);
+        });
     }
 
     @Override
     @RequestMapping({"/queryData"})
     @ResponseBody
     public ResultPojo<T> queryData(@RequestBody ParamPojo paramPojo, HttpServletRequest request, HttpServletResponse response) {
-        return checkUser(paramPojo,request,data->{
-            return super.queryData((ParamPojo)data, request, response);
+        return wrapUser(request,user->{
+            if(user!=null)
+                paramPojo.put("creater",user.getUserId());
+            return super.queryData(paramPojo, request, response);
         });
     }
 
@@ -46,8 +58,10 @@ public abstract class MyControllerPlus<T> extends MyController<T> {
     @RequestMapping({"/querySimpleData"})
     @ResponseBody
     public ResultPojo<T> querySimpleData(@RequestBody ParamPojo paramPojo, HttpServletRequest request, HttpServletResponse response) {
-       return checkUser(paramPojo,request,data->{
-            return super.querySimpleData((ParamPojo)data, request, response);
+       return wrapUser(request,user->{
+           if(user!=null)
+               paramPojo.put("creater",user.getUserId());
+            return super.querySimpleData(paramPojo, request, response);
        });
     }
 
@@ -55,33 +69,39 @@ public abstract class MyControllerPlus<T> extends MyController<T> {
     public abstract User getLoginUser(HttpServletRequest request);
 
 
-    protected interface product{
-        public ResultPojo pro(Object data);
+    protected interface Product{
+        public ResultPojo exe(User user);
     }
 
-    protected ResultPojo checkUser(Object data, HttpServletRequest request, product product){
-        User user=getLoginUser(request);
-        if(EmptyUtil.isEmpty(user)) {
-            return ResultPojo.newInstance(ResultPojo.NO,"用户信息为空，请登录");
+    /**
+     * 封装登录信息+检查是否登录
+     * @param request
+     * @param product
+     * @return
+     */
+    protected ResultPojo wrapUser(HttpServletRequest request,Product product){
+        String cl=request.getHeader("checkLogin");
+        if(EmptyUtil.isEmpty(cl)){
+            //不必登录就可以访问
+            return product.exe(null);
         }
-        if(data instanceof ParamPojo){
-            ParamPojo paramPojo=(ParamPojo)data;
-            if(EmptyUtil.isEmpty(paramPojo.getMap())){
-                paramPojo.setMap(new HashMap<>());
-            }
-            paramPojo.getMap().put("creater",user.getUserId());
-            return product.pro(paramPojo);
-        }else{
-            try {
-                Method m=data.getClass().getMethod("setCreater",String.class);
-                m.invoke(data,user.getUserId());
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                return product.pro(data);
-            }
-        }
+        return mustWrapUser(request,product);
     }
+
+    /**
+     * 必须有登录信息
+     * @param request
+     * @param product
+     * @return
+     */
+    protected ResultPojo mustWrapUser(HttpServletRequest request,Product product){
+        User user=getLoginUser(request);
+        if(user==null){
+            return noLogin();
+        }
+        return product.exe(user);
+    }
+
 
 
     public ResultPojo noLogin(){

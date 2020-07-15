@@ -25,7 +25,7 @@ public abstract class LoginInterceptor implements HandlerInterceptor {
                 logger.info("请求放行："+user);
                 return true;
             }
-            response.sendRedirect("/nouser/signin");
+            response.sendRedirect("/web/login.html");
         }catch (Exception e){
             e.printStackTrace();
         }

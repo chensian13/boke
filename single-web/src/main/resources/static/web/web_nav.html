@@ -68,7 +68,7 @@
 <script>
     $(function () {
         var type=queryUrlParam('bokeType');
-        post(typeUrl+"getBokeTypes",queryUrlParam('userCode'),function (res) {
+        post(typeUrl+"getBokeTypes/"+queryUrlParam('author'),null,function (res) {
             if(res.code=='OK'){
                 var list=res.list;
                 var ops='<li><a onclick="typeGo()">Home</a></li>';
@@ -84,7 +84,7 @@
                 } //end for
                 $("#types").html(ops);
             }
-        });
+        },true);
 
         function li(e,ac){
             if(ac){
@@ -95,7 +95,7 @@
     });
 
     function typeGo(type) {
-        var url=serviceF+"/work/boke_store.html?author="+queryUrlParam('author');
+        var url=serviceF+"web/boke_store.html?author="+queryUrlParam('author');
         if(isEmpty(type)){
             location.href=url;
             return ;

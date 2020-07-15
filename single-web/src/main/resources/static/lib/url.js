@@ -10,12 +10,18 @@ var webUrl=serviceF+"web/";
 var workUrl=serviceF+"work/";
 var specialUrl=serviceF+"special/";
 
-function post(url,param,reqOk){
+function post(url,param,reqOk,notNeedLogin){
+    var headersParam={};
+    if(isEmpty(notNeedLogin)){
+        //需要校验登录
+        headersParam.checkLogin=true;
+    }
     $.ajax({
         type : "POST",
         url : url,
         dataType : "json",
         async : true,
+        headers : headersParam,
         contentType : 'application/json;charset=utf-8',
         data:JSON.stringify(param),
         xhrFields: {

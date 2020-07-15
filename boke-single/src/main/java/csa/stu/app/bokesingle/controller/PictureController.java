@@ -41,19 +41,17 @@ public class PictureController extends MyControllerPlus<Picture> {
     public ResultPojo<String> uploadOne(@RequestPart("upload") MultipartFile file
             ,@RequestParam(value = "bokeId",required = false) String bokeId
             , HttpServletRequest request){
-        User user=loginCacher.get(request);
-        if(user==null){
-            return noLogin();
-        }
-        if(!isPicture(file)){
-            return ResultPojo.newInstance(ResultPojo.NO,"图片格式不合法");
-        }
-        Picture picture=new Picture();
-        picture.setCreater(user.getUserId());
-        picture.setTableId(bokeId);
-        ResultPojo<Picture> rs= pictureService.uploadOne(file,picture);
-        if(rs==null || rs.getModel()==null) return ResultPojo.newInstance(ResultPojo.NO,null);
-        return ResultPojo.newInstance(rs.getModel().getHttpPath());
+        return mustWrapUser(request,user->{
+            if(!isPicture(file)){
+                return ResultPojo.newInstance(ResultPojo.NO,"图片格式不合法");
+            }
+            Picture picture=new Picture();
+            picture.setCreater(user.getUserId());
+            picture.setTableId(bokeId);
+            ResultPojo<Picture> rs= pictureService.uploadOne(file,picture);
+            if(rs==null || rs.getModel()==null) return ResultPojo.newInstance(ResultPojo.NO,null);
+            return ResultPojo.newInstance(rs.getModel().getHttpPath());
+        });
     }
 
 

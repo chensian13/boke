@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
         EurekaDiscoveryClientConfiguration.class,
         ConfigClientAutoConfiguration.class,
         EurekaClientAutoConfiguration.class})
-@ComponentScan(value = {"csa.stu.app.common","csa.stu.app.single","csa.stu.app.bokesingle"})
+@ComponentScan(value = {"csa.stu.app.common","csa.stu.app.single","csa.stu.app.singleweb","csa.stu.app.bokesingle"})
 public class BokeSingleApp {
 
     public static void main(String[] args){
