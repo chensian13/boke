@@ -36,7 +36,7 @@
 		<section class="body-sign">
 			<div class="center-sign">
 				<a href="/" class="logo pull-left">
-					<img src="assets/images/logo.png" height="54" alt="Porto Admin" />
+					<img src="/lib/assets/images/logo.png" height="54" alt="Porto Admin" />
 				</a>
 
 				<div class="panel panel-sign">
@@ -128,11 +128,15 @@
 					toastShow(c);
 					return ;
 				}
+				if(map.password!=map.pconfirm){
+					toastShow('两次密码输入不一致');
+					return ;
+				}
 
 				post(nouserUrl+"register",map,function (res) {
 					if(res.code=='OK'){
 						toastShow("注册成功！");
-						window.location.href=nouserUrl+"signin";
+						window.location.href=webUrl+"login.html";
 					}else{
 						toastShow("注册失败！"+res.message);
 					}
