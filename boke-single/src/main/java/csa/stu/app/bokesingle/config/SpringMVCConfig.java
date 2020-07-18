@@ -2,6 +2,7 @@ package csa.stu.app.bokesingle.config;
 
 import csa.stu.app.bokesingle.component.MyLoginInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
@@ -16,6 +17,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 public class SpringMVCConfig extends WebMvcConfigurerAdapter{
     @Autowired
     private MyLoginInterceptor loginInterceptor;
+    @Value("${csa.filepath}")
+    private String filepath;
 
     @Override
     public void configurePathMatch(PathMatchConfigurer configurer) {
@@ -29,6 +32,5 @@ public class SpringMVCConfig extends WebMvcConfigurerAdapter{
 			.excludePathPatterns("/web/**")
 			.addPathPatterns("/work/**");
 	}
-
 
 }

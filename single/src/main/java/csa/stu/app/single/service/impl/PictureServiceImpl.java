@@ -71,7 +71,7 @@ public class PictureServiceImpl implements PictureService {
         List<Picture> pictureList=pictureMapper.selectList(queryWrapper);
         PageInfo<Picture> pageInfo=new PageInfo<>(pictureList);
         for(Picture picture:pictureList){
-            picture.setHttpPath("http://imgs/"+picture.getPath());
+            picture.setHttpPath(picture.getHttpPath());
         }
         return ResultPojo.newInstance(pictureList,pageInfo.getTotal());
     }
