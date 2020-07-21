@@ -2,8 +2,9 @@ package csa.stu.app.front.controller;
 
 import csa.stu.app.common.entity.Picture;
 import csa.stu.app.common.entity.User;
-import csa.stu.app.front.component.RestUserInfo;
+import csa.stu.app.common.util.UserinfoRequestUtil;
 import csa.stu.app.front.feign.UserWorkService;
+import csa.stu.util.ap.mvc.plus.CheckLoginController;
 import csa.stu.util.myutils.pojo.ParamPojo;
 import csa.stu.util.myutils.pojo.ResultPojo;
 import csa.stu.util.myutils.utils.EmptyUtil;
@@ -20,22 +21,26 @@ import java.io.IOException;
  */
 @RequestMapping("/picture")
 @Controller
-public class PictureController {
+public class PictureController implements CheckLoginController {
     @Autowired
     private UserWorkService userWorkService;
     @Autowired
-    private RestUserInfo userinfoUtil;
+    private UserinfoRequestUtil userinfoUtil;
 
     @ResponseBody
     @RequestMapping("/data/del")
     public ResultPojo<Picture> delOne(@RequestBody Picture entity, HttpServletRequest request){
-        return userWorkService.delPictureOne(entity);
+        return mustWrapUser(request,data->{
+            return userWorkService.delPictureOne(entity);
+        });
     }
 
     @RequestMapping({"/queryData"})
     @ResponseBody
-    public ResultPojo<Picture> queryData(@RequestBody ParamPojo paramPojo) {
-        return userWorkService.queryPictureData(paramPojo);
+    public ResultPojo<Picture> queryData(@RequestBody ParamPojo paramPojo,HttpServletRequest request) {
+        return mustWrapUser(request,data->{
+            return userWorkService.queryPictureData(paramPojo);
+        });
     }
 
 
@@ -54,15 +59,18 @@ public class PictureController {
             ,HttpServletRequest request
             , HttpServletResponse response)
             throws IOException {
-        User user = userinfoUtil.getUser(request);
-        if(EmptyUtil.isEmpty(user)){
-            return ResultPojo.newInstance(ResultPojo.NO,"登录信息过期");
-        }
-        ResultPojo<Picture> rs= userWorkService.uploadOne(file,user.getUserId(),bokeId);
-        if(rs==null || rs.getModel()==null) return ResultPojo.newInstance(ResultPojo.NO,null);;
-        Picture picture=rs.getModel();
-        return ResultPojo.newInstance(picture.getHttpPath());
+        return mustWrapUser(request,data->{
+            User user = (User)data;
+            ResultPojo<Picture> rs= userWorkService.uploadOne(file,user.getUserId(),bokeId);
+            if(rs==null || rs.getModel()==null) return ResultPojo.newInstance(ResultPojo.NO,null);;
+            Picture picture=rs.getModel();
+            return ResultPojo.newInstance(picture.getHttpPath());
+        });
     }
 
 
+    @Override
+    public Object getLoginUser(HttpServletRequest request) {
+        return userinfoUtil.getUser(request);
+    }
 }

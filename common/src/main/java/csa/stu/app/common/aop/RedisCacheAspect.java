@@ -1,9 +1,7 @@
 package csa.stu.app.common.aop;
 
 import csa.stu.app.common.annotation.RedisCache;
-import csa.stu.app.common.annotation.Resubmit;
 import csa.stu.app.common.util.RedisUtil;
-import csa.stu.app.common.util.ResubmitLockUtil;
 import csa.stu.util.myutils.pojo.ResultPojo;
 import csa.stu.util.myutils.utils.EmptyUtil;
 import csa.stu.util.myutils.utils.JSONUtil;
@@ -13,8 +11,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  *

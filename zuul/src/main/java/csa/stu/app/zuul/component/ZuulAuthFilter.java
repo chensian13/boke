@@ -5,7 +5,6 @@ import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
 import csa.stu.app.common.entity.User;
 import csa.stu.app.common.util.UserinfoRequestUtil;
-import csa.stu.app.common.util.UserinfoUtil;
 import csa.stu.util.myutils.pojo.ResultPojo;
 import csa.stu.util.myutils.utils.JSONUtil;
 import org.slf4j.Logger;
@@ -63,7 +62,7 @@ public class ZuulAuthFilter extends ZuulFilter {
         HttpServletResponse response=ctx.getResponse();
         HttpServletRequest request = ctx.getRequest();
         try{
-            User user=userinfoUtil.getUser(request,null);
+            User user=userinfoUtil.getUser(request);
             if(user!=null){
                 logger.info("请求放行："+user);
                 return null;

@@ -1,6 +1,7 @@
-package csa.stu.app.single.controller;
+package csa.stu.app.common.controller;
 
 import csa.stu.app.common.entity.User;
+import csa.stu.util.ap.mvc.plus.CheckLoginController;
 import csa.stu.util.ap.mvc.plus.MyController;
 import csa.stu.util.myutils.pojo.ParamPojo;
 import csa.stu.util.myutils.pojo.ResultPojo;
@@ -9,13 +10,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
-import java.util.HashMap;
 
-public abstract class MyControllerPlus<T> extends MyController<T> {
-
+public abstract class MyControllerPlus<T> extends MyController<T> implements CheckLoginController {
 
     @Override
     @RequestMapping({"/data/{oper}"})
@@ -25,7 +25,7 @@ public abstract class MyControllerPlus<T> extends MyController<T> {
             try {
                 if(user!=null){
                     Method m=entity.getClass().getMethod("setCreater",String.class);
-                    m.invoke(entity,user.getUserId());
+                    m.invoke(entity,((User)user).getUserId());
                 }
                 return super.operData(entity, oper, request, response);
             } catch (Exception e) {
@@ -49,7 +49,7 @@ public abstract class MyControllerPlus<T> extends MyController<T> {
     public ResultPojo<T> queryData(@RequestBody ParamPojo paramPojo, HttpServletRequest request, HttpServletResponse response) {
         return wrapUser(request,user->{
             if(user!=null)
-                paramPojo.put("creater",user.getUserId());
+                paramPojo.put("creater",((User)user).getUserId());
             return super.queryData(paramPojo, request, response);
         });
     }
@@ -60,52 +60,9 @@ public abstract class MyControllerPlus<T> extends MyController<T> {
     public ResultPojo<T> querySimpleData(@RequestBody ParamPojo paramPojo, HttpServletRequest request, HttpServletResponse response) {
        return wrapUser(request,user->{
            if(user!=null)
-               paramPojo.put("creater",user.getUserId());
+               paramPojo.put("creater",((User)user).getUserId());
             return super.querySimpleData(paramPojo, request, response);
        });
-    }
-
-
-    public abstract User getLoginUser(HttpServletRequest request);
-
-
-    protected interface Product{
-        public ResultPojo exe(User user);
-    }
-
-    /**
-     * 封装登录信息+检查是否登录
-     * @param request
-     * @param product
-     * @return
-     */
-    protected ResultPojo wrapUser(HttpServletRequest request,Product product){
-        String cl=request.getHeader("checkLogin");
-        if(EmptyUtil.isEmpty(cl)){
-            //不必登录就可以访问
-            return product.exe(null);
-        }
-        return mustWrapUser(request,product);
-    }
-
-    /**
-     * 必须有登录信息
-     * @param request
-     * @param product
-     * @return
-     */
-    protected ResultPojo mustWrapUser(HttpServletRequest request,Product product){
-        User user=getLoginUser(request);
-        if(user==null){
-            return noLogin();
-        }
-        return product.exe(user);
-    }
-
-
-
-    public ResultPojo noLogin(){
-        return ResultPojo.newInstance(ResultPojo.NO,"请先登录");
     }
 
 }

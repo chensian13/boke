@@ -12,7 +12,7 @@ import org.springframework.retry.annotation.EnableRetry;
 @EnableEurekaClient
 @EnableFeignClients
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
-@ComponentScan({"csa.stu.app.common","csa.stu.app.front"})
+@ComponentScan({"csa.stu.app.common","csa.stu.app.front","csa.stu.util"})
 public class FrontApp {
 
     public static void main( String[] args ){

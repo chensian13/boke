@@ -1,9 +1,9 @@
 package csa.stu.app.bokesingle.controller;
 
 import csa.stu.app.bokesingle.component.LoginCacher;
+import csa.stu.app.common.controller.MyControllerPlus;
 import csa.stu.app.common.entity.Type;
 import csa.stu.app.common.entity.User;
-import csa.stu.app.single.controller.MyControllerPlus;
 import csa.stu.app.single.service.TypeService;
 import csa.stu.util.ap.mvc.IService;
 import csa.stu.util.myutils.pojo.ResultPojo;
@@ -47,7 +47,7 @@ public class TypeController extends MyControllerPlus<Type> {
 	@ResponseBody
 	public ResultPojo<Type> queryData(HttpServletRequest request) {
 		return mustWrapUser(request,user->{
-			return typeService.selectData(user.getUserId());
+			return typeService.selectData(((User)user).getUserId());
 		});
 	}
 

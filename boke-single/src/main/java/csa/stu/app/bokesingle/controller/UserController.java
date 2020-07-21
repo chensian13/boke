@@ -1,8 +1,8 @@
 package csa.stu.app.bokesingle.controller;
 
 import csa.stu.app.bokesingle.component.LoginCacher;
+import csa.stu.app.common.controller.MyControllerPlus;
 import csa.stu.app.common.entity.User;
-import csa.stu.app.single.controller.MyControllerPlus;
 import csa.stu.app.single.service.UserService;
 import csa.stu.util.ap.mvc.IService;
 import csa.stu.util.myutils.pojo.ResultPojo;
@@ -36,7 +36,7 @@ public class UserController extends MyControllerPlus<User> {
     @ResponseBody
     public ResultPojo modPass(@RequestBody User user,HttpServletRequest request){
         return mustWrapUser(request,user2->{
-            user.setUserId(user2.getUserId());
+            user.setUserId(((User)user2).getUserId());
             return userService.modPass(user);
         });
     }
@@ -45,7 +45,7 @@ public class UserController extends MyControllerPlus<User> {
     @ResponseBody
     public ResultPojo<User> userinfo(HttpServletRequest request) {
         return mustWrapUser(request,user->{
-            return userService.selectById(user.getUserId());
+            return userService.selectById(((User)user).getUserId());
         });
     }
 
@@ -58,7 +58,7 @@ public class UserController extends MyControllerPlus<User> {
     @ResponseBody
     public ResultPojo<User> userinfoQuery(HttpServletRequest request) {
         return wrapUser(request,user->{
-            return userService.selectById(user.getUserId());
+            return userService.selectById(((User)user).getUserId());
         });
     }
 

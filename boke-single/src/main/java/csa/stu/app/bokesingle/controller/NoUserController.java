@@ -1,11 +1,9 @@
 package csa.stu.app.bokesingle.controller;
 
 import csa.stu.app.bokesingle.component.LoginCacher;
-import csa.stu.app.common.entity.Boke;
 import csa.stu.app.common.entity.User;
 import csa.stu.app.single.service.BokeService;
 import csa.stu.app.single.service.UserService;
-import csa.stu.util.myutils.pojo.ParamPojo;
 import csa.stu.util.myutils.pojo.ResultPojo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,8 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 @RequestMapping("/nouser")
 @Controller
@@ -58,15 +54,6 @@ public class NoUserController {
     }
 
 
-    @RequestMapping({"/queryData/{userId}"})
-    @ResponseBody
-    public ResultPojo<Boke> queryData(@RequestBody ParamPojo paramPojo, @PathVariable("userId") String userId) {
-        if(paramPojo.getMap()==null){
-            Map<String,Object> map=new HashMap<>();
-            paramPojo.setMap(map);
-        }
-        paramPojo.getMap().put("creater",userId);
-        return bokeService.selectData(paramPojo);
-    }
+
 
 }

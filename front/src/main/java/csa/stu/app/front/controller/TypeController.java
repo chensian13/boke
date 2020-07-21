@@ -2,8 +2,9 @@ package csa.stu.app.front.controller;
 
 import csa.stu.app.common.entity.Type;
 import csa.stu.app.common.entity.User;
-import csa.stu.app.front.component.RestUserInfo;
+import csa.stu.app.common.util.UserinfoRequestUtil;
 import csa.stu.app.front.feign.UserWorkService;
+import csa.stu.util.ap.mvc.plus.CheckLoginController;
 import csa.stu.util.myutils.constant.OperConstant;
 import csa.stu.util.myutils.pojo.ResultPojo;
 import csa.stu.util.myutils.utils.EmptyUtil;
@@ -20,11 +21,11 @@ import java.util.HashMap;
  */
 @Controller
 @RequestMapping("/type")
-public class TypeController {
+public class TypeController implements CheckLoginController {
 	@Autowired
 	private UserWorkService userWorkService;
 	@Autowired
-	private RestUserInfo userinfoUtil;
+	private UserinfoRequestUtil userinfoUtil;
 
 
 	@ResponseBody
@@ -60,4 +61,8 @@ public class TypeController {
 		return userWorkService.queryTypeById(id);
 	}
 
+	@Override
+	public Object getLoginUser(HttpServletRequest request) {
+		return userinfoUtil.getUser(request);
+	}
 }

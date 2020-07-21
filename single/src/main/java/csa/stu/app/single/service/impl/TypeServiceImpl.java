@@ -2,7 +2,6 @@ package csa.stu.app.single.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import csa.stu.app.common.annotation.RedisCache;
-import csa.stu.app.common.annotation.Resubmit;
 import csa.stu.app.common.constent.GenerateCode;
 import csa.stu.app.common.entity.Type;
 import csa.stu.app.common.entity.User;

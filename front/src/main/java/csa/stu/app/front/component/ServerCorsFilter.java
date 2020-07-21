@@ -1,6 +1,6 @@
 package csa.stu.app.front.component;
 
-import csa.stu.app.common.aop.CorsFilter;
+import csa.stu.util.components.aop.CorsFilter;
 import org.springframework.stereotype.Component;
 
 @Component

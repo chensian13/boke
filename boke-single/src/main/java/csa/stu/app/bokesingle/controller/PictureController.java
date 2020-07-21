@@ -1,9 +1,9 @@
 package csa.stu.app.bokesingle.controller;
 
 import csa.stu.app.bokesingle.component.LoginCacher;
+import csa.stu.app.common.controller.MyControllerPlus;
 import csa.stu.app.common.entity.Picture;
 import csa.stu.app.common.entity.User;
-import csa.stu.app.single.controller.MyControllerPlus;
 import csa.stu.app.single.service.PictureService;
 import csa.stu.util.ap.mvc.IService;
 import csa.stu.util.myutils.pojo.ResultPojo;
@@ -46,7 +46,7 @@ public class PictureController extends MyControllerPlus<Picture> {
                 return ResultPojo.newInstance(ResultPojo.NO,"图片格式不合法");
             }
             Picture picture=new Picture();
-            picture.setCreater(user.getUserId());
+            picture.setCreater(((User)user).getUserId());
             picture.setTableId(bokeId);
             ResultPojo<Picture> rs= pictureService.uploadOne(file,picture);
             if(rs==null || rs.getModel()==null) return ResultPojo.newInstance(ResultPojo.NO,null);
