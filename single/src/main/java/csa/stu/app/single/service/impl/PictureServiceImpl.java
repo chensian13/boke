@@ -68,6 +68,7 @@ public class PictureServiceImpl implements PictureService {
         ServiceHelper.canPage(wrap);
         QueryWrapper<Picture> queryWrapper=new QueryWrapper<>();
         queryWrapper.orderByDesc("createtime");
+        queryWrapper.eq("creater",wrap.getMap().get("creater"));
         List<Picture> pictureList=pictureMapper.selectList(queryWrapper);
         PageInfo<Picture> pageInfo=new PageInfo<>(pictureList);
         for(Picture picture:pictureList){

@@ -53,12 +53,16 @@ function setImg(){
 		var formData = new FormData();
 		formData.append("upload",fileInputForm("file")[0]);
 		postFile(formData,function (url) {
+			if(isEmpty(url)){
+				toastShow("图片格式不合法");
+				return ;
+			}
 			saveImg(null,url);
 		})
 	};
 }
 
-function saveImg(img,url){debugger
+function saveImg(img,url){
 	if(isEmpty(img)){
 		img=document.createElement("img");
 		content.append(img);
@@ -129,8 +133,8 @@ function btnTitle(t){
 function _edit_imgbind(){
 	var imgs=content.querySelectorAll("img");
 	for(var i=0;i<imgs.length;i++){
-		var img=imgs[i];
-		img.ondblclick=function(){
+		imgs[i].ondblclick=function(){
+			var img=this;
 			cleanImg();
 			popShow("contentImg");
 			fileShowImgae('file',img.getAttribute("src"));
