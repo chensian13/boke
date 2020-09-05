@@ -2,9 +2,10 @@ package csa.stu.app.common.util;
 
 import com.alibaba.fastjson.JSON;
 import csa.stu.app.common.entity.User;
-import csa.stu.util.components.UserinfoUtil;
-import csa.stu.util.myutils.utils.EmptyUtil;
-import csa.stu.util.myutils.utils.StrUtil;
+import csa.stu.app.common.redis.RedisUtil;
+import csa.stu.util.ap.mvc.helper.ServiceHelper;
+import csa.stu.util.ap.web_helper.token.TokenUtilDefault;
+import csa.stu.util.myutils.direct.EmptyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -15,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  * 基于redis
  */
 @Component
-public class UserinfoRequestUtil extends UserinfoUtil {
+public class UserinfoRequestUtil extends TokenUtilDefault {
     @Value("${csa.redis:false}")
     private boolean open; //是否开启redis
     @Autowired(required = false)
@@ -30,7 +31,7 @@ public class UserinfoRequestUtil extends UserinfoUtil {
      */
     public String putUser(User login) {
         if(login==null) return null;
-        String token=StrUtil.generateUUID32();
+        String token= ServiceHelper.generateUUID32();
         login.setToken(token);
         if(open){
             //开启redis缓存功能
@@ -44,7 +45,7 @@ public class UserinfoRequestUtil extends UserinfoUtil {
     }
 
     public void logout(HttpServletResponse response,String token) {
-        super.logout(response);
+        super.removeTokenCookie(response);
         if(open){
             redisUtil.del(token);
         }

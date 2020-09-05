@@ -1,10 +1,10 @@
-package csa.stu.app.common.aop;
+package csa.stu.app.common.redis;
 
-import csa.stu.app.common.annotation.RedisCache;
-import csa.stu.app.common.util.RedisUtil;
-import csa.stu.util.myutils.pojo.ResultPojo;
-import csa.stu.util.myutils.utils.EmptyUtil;
-import csa.stu.util.myutils.utils.JSONUtil;
+import csa.stu.app.common.redis.RedisCache;
+import csa.stu.app.common.redis.RedisUtil;
+import csa.stu.util.ap.pojo.ResultPojo;
+import csa.stu.util.myutils.direct.EmptyUtil;
+import csa.stu.util.myutils.direct.JSONUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -32,7 +32,7 @@ public class RedisCacheAspect {
         String key=getKey(joinPoint,redisCache);
         String re = redisUtil.get(key);
         if(!EmptyUtil.isEmptys(re)){
-            return JSONUtil.parseObj(re,ResultPojo.class);
+            return JSONUtil.parseObj(re, ResultPojo.class);
         }
         Object da = joinPoint.proceed();
         redisUtil.set(getKey(joinPoint,redisCache),JSONUtil.formatJSON(da));

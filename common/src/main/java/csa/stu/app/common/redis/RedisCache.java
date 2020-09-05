@@ -1,4 +1,4 @@
-package csa.stu.app.common.annotation;
+package csa.stu.app.common.redis;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

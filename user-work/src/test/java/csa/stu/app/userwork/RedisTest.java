@@ -1,6 +1,6 @@
 package csa.stu.app.userwork;
 
-import csa.stu.app.common.util.RedisUtil;
+import csa.stu.app.common.redis.RedisUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

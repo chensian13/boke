@@ -1,16 +1,15 @@
 package csa.stu.app.single.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import csa.stu.app.common.constent.GenerateCode;
 import csa.stu.app.common.entity.Special;
 import csa.stu.app.single.dao.SpecialMapper;
 import csa.stu.app.single.service.SpecialService;
 import csa.stu.util.ap.mvc.helper.ServiceHelper;
-import csa.stu.util.myutils.pojo.ParamPojo;
-import csa.stu.util.myutils.pojo.ResultPojo;
-import csa.stu.util.myutils.utils.DateUtil;
-import csa.stu.util.myutils.utils.EmptyUtil;
-import csa.stu.util.myutils.utils.StrUtil;
+import csa.stu.util.ap.pojo.ParamPojo;
+import csa.stu.util.ap.pojo.ResultPojo;
+import csa.stu.util.myutils.direct.EmptyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,9 +31,9 @@ public class SpecialServiceImpl implements SpecialService {
     @Transactional
     public ResultPojo<Special> addOne(Special special) {
         ResultPojo<Special> rs=new ResultPojo<Special>();
-        special.setSpecialCode(StrUtil.generateCode(GenerateCode.SPECIAL));
+        special.setSpecialCode(ServiceHelper.generateCode(GenerateCode.SPECIAL));
         special.initDefault();
-        special.setSpecialId(StrUtil.generateUUID32());
+        special.setSpecialId(ServiceHelper.generateUUID32());
         specialMapper.insert(special);
         rs=ResultPojo.newInstance(specialMapper.selectById(special.getSpecialId()));
         return rs;
@@ -43,7 +42,7 @@ public class SpecialServiceImpl implements SpecialService {
     @Override
     @Transactional
     public ResultPojo<Special> updOne(Special special) {
-        special.setModtime(DateUtil.nowTime());
+        special.setModtime(System.currentTimeMillis());
         specialMapper.updateById(special);
         return ResultPojo.newInstance(specialMapper.selectById(special.getSpecialId()));
     }
@@ -91,7 +90,7 @@ public class SpecialServiceImpl implements SpecialService {
         ResultPojo<Special> rs=new ResultPojo<Special>();
         //条件封装
         Map<String,Object> map=new HashMap<String,Object>(1);
-        ParamPojo.wrapParams(paramWrap,entry->{
+        ParamPojo.wrapParams(paramWrap, entry->{
             if(entry.getKey().equals("specialName")){
                 map.put("specialName",entry.getValue());
             }else if(entry.getKey().equals("isdel")){
@@ -105,7 +104,10 @@ public class SpecialServiceImpl implements SpecialService {
             return ResultPojo.newInstance(ResultPojo.NO,"作者id不存在");
         }
         //判断是否分页
-        ServiceHelper.canPage(paramWrap);
+        //分页
+        ServiceHelper.page(paramWrap,(p,s)->{
+            PageHelper.startPage(p,s);
+        });
         rs.setList(specialMapper.selectTable(map));
         PageInfo<Special> pageInfo=new PageInfo<Special>(rs.getList());
         rs.setCount(pageInfo.getTotal());

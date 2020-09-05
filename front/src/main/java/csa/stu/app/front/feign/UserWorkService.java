@@ -1,8 +1,8 @@
 package csa.stu.app.front.feign;
 
 import csa.stu.app.common.entity.*;
-import csa.stu.util.myutils.pojo.ParamPojo;
-import csa.stu.util.myutils.pojo.ResultPojo;
+import csa.stu.util.ap.pojo.ParamPojo;
+import csa.stu.util.ap.pojo.ResultPojo;
 import feign.codec.Encoder;
 import feign.form.spring.SpringFormEncoder;
 import org.springframework.beans.factory.ObjectFactory;

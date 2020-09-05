@@ -1,8 +1,8 @@
 package csa.stu.app.front.component;
 
 import csa.stu.app.common.entity.User;
-import csa.stu.app.common.interceptor.LoginInterceptor;
 import csa.stu.app.common.util.UserinfoRequestUtil;
+import csa.stu.util.ap.web_helper.login.LoginInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +17,15 @@ import javax.servlet.http.HttpServletRequest;
 public class MyLoginInterceptor extends LoginInterceptor {
     @Autowired
     private UserinfoRequestUtil userinfoUtil;
-    private Logger logger= LoggerFactory.getLogger(MyLoginInterceptor.class);
 
     @Override
     public User getLoginUser(HttpServletRequest request) {
         return userinfoUtil.getUser(request);
+    }
+
+    @Override
+    public String getLoginPath() {
+        return "/web/login.html";
     }
 
 }

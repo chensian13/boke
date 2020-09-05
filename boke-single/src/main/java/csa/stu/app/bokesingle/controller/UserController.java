@@ -1,11 +1,12 @@
 package csa.stu.app.bokesingle.controller;
 
-import csa.stu.app.bokesingle.component.LoginCacher;
+import csa.stu.app.bokesingle.login_cache.LoginCache;
 import csa.stu.app.common.controller.MyControllerPlus;
 import csa.stu.app.common.entity.User;
 import csa.stu.app.single.service.UserService;
 import csa.stu.util.ap.mvc.IService;
-import csa.stu.util.myutils.pojo.ResultPojo;
+import csa.stu.util.ap.pojo.ResultPojo;
+import csa.stu.util.ap.web_helper.token.TokenUtilDefault;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +25,9 @@ public class UserController extends MyControllerPlus<User> {
     @Autowired
     private UserService userService;
     @Autowired
-    private LoginCacher loginCacher;
+    private LoginCache loginCache;
+    @Autowired
+    private TokenUtilDefault tokenUtilDefault;
 
     @Override
     public IService<User> getService() {
@@ -34,7 +37,7 @@ public class UserController extends MyControllerPlus<User> {
 
     @PostMapping("/modPass")
     @ResponseBody
-    public ResultPojo modPass(@RequestBody User user,HttpServletRequest request){
+    public ResultPojo modPass(@RequestBody User user, HttpServletRequest request){
         return mustWrapUser(request,user2->{
             user.setUserId(((User)user2).getUserId());
             return userService.modPass(user);
@@ -64,6 +67,6 @@ public class UserController extends MyControllerPlus<User> {
 
     @Override
     public User getLoginUser(HttpServletRequest request) {
-        return loginCacher.get(request);
+        return loginCache.get(tokenUtilDefault.getTokenCookie(request));
     }
 }

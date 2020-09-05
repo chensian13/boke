@@ -1,14 +1,14 @@
 package csa.stu.app.single.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import csa.stu.app.common.entity.Comment;
 import csa.stu.app.single.constant.CommentTargetType;
 import csa.stu.app.single.dao.CommentMapper;
 import csa.stu.app.single.service.CommentService;
 import csa.stu.util.ap.mvc.helper.ServiceHelper;
-import csa.stu.util.myutils.pojo.ParamPojo;
-import csa.stu.util.myutils.pojo.ResultPojo;
-import csa.stu.util.myutils.utils.StrUtil;
+import csa.stu.util.ap.pojo.ParamPojo;
+import csa.stu.util.ap.pojo.ResultPojo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +24,7 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     @Override
     public ResultPojo<Comment> addOne(Comment comment) {
-        comment.setCommentId(StrUtil.generateUUID32());
+        comment.setCommentId(ServiceHelper.generateUUID32());
         comment.initDefault();
         commentMapper.insert(comment);
         return ResultPojo.newInstance(commentMapper.selectWithUserById(comment.getCommentId()));
@@ -79,8 +79,10 @@ public class CommentServiceImpl implements CommentService {
                 map.put("isdel",entry.getValue());
             }
         });
-        //判断是否分页
-        ServiceHelper.canPage(paramWrap);
+        //分页
+        ServiceHelper.page(paramWrap,(p,s)->{
+            PageHelper.startPage(p,s);
+        });
         rs.setList(commentMapper.selectTable(map));
         PageInfo<Comment> pageInfo=new PageInfo<Comment>(rs.getList());
         rs.setCount(pageInfo.getTotal());

@@ -3,14 +3,12 @@ package csa.stu.app.common.controller;
 import csa.stu.app.common.entity.User;
 import csa.stu.util.ap.mvc.plus.CheckLoginController;
 import csa.stu.util.ap.mvc.plus.MyController;
-import csa.stu.util.myutils.pojo.ParamPojo;
-import csa.stu.util.myutils.pojo.ResultPojo;
-import csa.stu.util.myutils.utils.EmptyUtil;
+import csa.stu.util.ap.pojo.ParamPojo;
+import csa.stu.util.ap.pojo.ResultPojo;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;

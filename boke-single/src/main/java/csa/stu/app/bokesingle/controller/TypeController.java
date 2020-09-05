@@ -1,12 +1,13 @@
 package csa.stu.app.bokesingle.controller;
 
-import csa.stu.app.bokesingle.component.LoginCacher;
+import csa.stu.app.bokesingle.login_cache.LoginCache;
 import csa.stu.app.common.controller.MyControllerPlus;
 import csa.stu.app.common.entity.Type;
 import csa.stu.app.common.entity.User;
 import csa.stu.app.single.service.TypeService;
 import csa.stu.util.ap.mvc.IService;
-import csa.stu.util.myutils.pojo.ResultPojo;
+import csa.stu.util.ap.pojo.ResultPojo;
+import csa.stu.util.ap.web_helper.token.TokenUtilDefault;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +26,9 @@ public class TypeController extends MyControllerPlus<Type> {
 	@Autowired
 	private TypeService typeService;
 	@Autowired
-	private LoginCacher loginCacher;
+	private LoginCache loginCache;
+	@Autowired
+	private TokenUtilDefault tokenUtilDefault;
 
 	/**
 	 * 无需登录
@@ -59,6 +62,6 @@ public class TypeController extends MyControllerPlus<Type> {
 
 	@Override
 	public User getLoginUser(HttpServletRequest request) {
-		return loginCacher.get(request);
+		return loginCache.get(tokenUtilDefault.getTokenCookie(request));
 	}
 }

@@ -18,8 +18,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @ComponentScan(value = {"csa.stu.app.common",
                             "csa.stu.app.single",
                             "csa.stu.app.singleweb",
-                            "csa.stu.app.bokesingle",
-                            "csa.stu.util"})
+                            "csa.stu.app.bokesingle"})
 public class BokeSingleApp {
 
     public static void main(String[] args){

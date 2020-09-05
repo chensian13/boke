@@ -5,9 +5,9 @@ import csa.stu.app.common.entity.User;
 import csa.stu.app.common.util.UserinfoRequestUtil;
 import csa.stu.app.front.feign.UserWorkService;
 import csa.stu.util.ap.mvc.plus.CheckLoginController;
-import csa.stu.util.myutils.constant.OperConstant;
-import csa.stu.util.myutils.pojo.ParamPojo;
-import csa.stu.util.myutils.pojo.ResultPojo;
+import csa.stu.util.ap.pojo.ParamPojo;
+import csa.stu.util.ap.pojo.ResultPojo;
+import csa.stu.util.ap.pojo.constant.OperConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -48,7 +48,7 @@ public class BokeController implements CheckLoginController {
 
     @RequestMapping({"/queryData"})
     @ResponseBody
-    public ResultPojo<Boke> queryData(@RequestBody ParamPojo paramPojo,HttpServletRequest request) {
+    public ResultPojo<Boke> queryData(@RequestBody ParamPojo paramPojo, HttpServletRequest request) {
         return mustWrapUser(request,data->{
             User user=(User) data;
             if(paramPojo.getMap()==null){

@@ -1,9 +1,7 @@
 package csa.stu.app.common.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import csa.stu.util.myutils.utils.DateUtil;
 import lombok.Data;
-
 import java.io.Serializable;
 
 /**
@@ -28,7 +26,7 @@ public class BaseEntity implements Serializable {
      * 默认初始化
      */
     public void initDefault(){
-        createtime= DateUtil.nowTime();
+        createtime= System.currentTimeMillis();
         isdel="0";
         modtime=createtime;
     }

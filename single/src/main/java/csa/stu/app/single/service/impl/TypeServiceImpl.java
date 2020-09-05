@@ -1,24 +1,20 @@
 package csa.stu.app.single.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import csa.stu.app.common.annotation.RedisCache;
+import csa.stu.app.common.redis.RedisCache;
 import csa.stu.app.common.constent.GenerateCode;
 import csa.stu.app.common.entity.Type;
-import csa.stu.app.common.entity.User;
-import csa.stu.app.common.util.RedisUtil;
+import csa.stu.app.common.redis.RedisUtil;
 import csa.stu.app.single.dao.TypeMapper;
 import csa.stu.app.single.dao.UserMapper;
 import csa.stu.app.single.service.TypeService;
-import csa.stu.util.myutils.pojo.ParamPojo;
-import csa.stu.util.myutils.pojo.ResultPojo;
-import csa.stu.util.myutils.utils.EmptyUtil;
-import csa.stu.util.myutils.utils.JSONUtil;
-import csa.stu.util.myutils.utils.StrUtil;
+import csa.stu.util.ap.mvc.helper.ServiceHelper;
+import csa.stu.util.ap.pojo.ParamPojo;
+import csa.stu.util.ap.pojo.ResultPojo;
+import csa.stu.util.myutils.direct.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.HashMap;
-import java.util.Map;
 
 @Service("TypeService")
 public class TypeServiceImpl implements TypeService {
@@ -33,8 +29,8 @@ public class TypeServiceImpl implements TypeService {
 	@Transactional
 	@Override
 	public ResultPojo<Type> addOne(Type type) {
-		type.setTypeId(StrUtil.generateUUID32());
-		type.setTypeCode(StrUtil.generateCode(GenerateCode.TYPE));
+		type.setTypeId(ServiceHelper.generateUUID32());
+		type.setTypeCode(ServiceHelper.generateCode(GenerateCode.TYPE));
 		type.initDefault();
 		typeMapper.insert(type);
 		ResultPojo<Type> rp=ResultPojo.newInstance();
@@ -84,7 +80,7 @@ public class TypeServiceImpl implements TypeService {
 		int i=typeMapper.updateById(type);
 		rp.setCode(ResultPojo.OK);
 		rp.setModel(typeMapper.selectById(type.getTypeId()));
-		redisUtil.del(tag+JSONUtil.formatJSON(type.getCreater()));
+		redisUtil.del(tag+ JSONUtil.formatJSON(type.getCreater()));
 		return rp;
 	}
 

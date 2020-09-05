@@ -2,7 +2,7 @@ package csa.stu.app.single.service;
 
 import csa.stu.app.common.entity.User;
 import csa.stu.util.ap.mvc.IService;
-import csa.stu.util.myutils.pojo.ResultPojo;
+import csa.stu.util.ap.pojo.ResultPojo;
 
 public interface UserService extends IService<User> {
     ResultPojo<User> register(User user);

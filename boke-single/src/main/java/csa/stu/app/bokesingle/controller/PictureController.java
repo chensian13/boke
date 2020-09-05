@@ -1,12 +1,13 @@
 package csa.stu.app.bokesingle.controller;
 
-import csa.stu.app.bokesingle.component.LoginCacher;
+import csa.stu.app.bokesingle.login_cache.LoginCache;
 import csa.stu.app.common.controller.MyControllerPlus;
 import csa.stu.app.common.entity.Picture;
 import csa.stu.app.common.entity.User;
 import csa.stu.app.single.service.PictureService;
 import csa.stu.util.ap.mvc.IService;
-import csa.stu.util.myutils.pojo.ResultPojo;
+import csa.stu.util.ap.pojo.ResultPojo;
+import csa.stu.util.ap.web_helper.token.TokenUtilDefault;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -29,7 +30,9 @@ public class PictureController extends MyControllerPlus<Picture> {
     @Autowired
     private PictureService pictureService;
     @Autowired
-    private LoginCacher loginCacher;
+    private LoginCache loginCache;
+    @Autowired
+    private TokenUtilDefault tokenUtilDefault;
 
     @Override
     public IService<Picture> getService() {
@@ -39,7 +42,7 @@ public class PictureController extends MyControllerPlus<Picture> {
     @ResponseBody
     @RequestMapping(value = "/upload",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResultPojo<String> uploadOne(@RequestPart("upload") MultipartFile file
-            ,@RequestParam(value = "bokeId",required = false) String bokeId
+            , @RequestParam(value = "bokeId",required = false) String bokeId
             , HttpServletRequest request){
         return mustWrapUser(request,user->{
             if(!isPicture(file)){
@@ -76,6 +79,6 @@ public class PictureController extends MyControllerPlus<Picture> {
 
     @Override
     public User getLoginUser(HttpServletRequest request) {
-        return loginCacher.get(request);
+        return loginCache.get(tokenUtilDefault.getTokenCookie(request));
     }
 }

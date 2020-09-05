@@ -3,7 +3,6 @@ package csa.stu.app.common.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import csa.stu.util.myutils.utils.DateUtil;
 import lombok.Data;
 
 /**
@@ -34,11 +33,5 @@ public class Comment extends BaseEntity{
     private String userName;
 
 
-    /**
-     * 默认初始化
-     */
-    public void initDefault(){
-        createtime= DateUtil.nowTime();
-    }
 
 }

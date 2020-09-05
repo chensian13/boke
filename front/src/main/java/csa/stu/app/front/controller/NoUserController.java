@@ -5,9 +5,8 @@ import csa.stu.app.common.entity.User;
 import csa.stu.app.common.util.UserinfoRequestUtil;
 import csa.stu.app.front.feign.SsoService;
 import csa.stu.app.front.feign.UserWorkService;
-import csa.stu.util.components.UserinfoUtil;
-import csa.stu.util.myutils.pojo.ParamPojo;
-import csa.stu.util.myutils.pojo.ResultPojo;
+import csa.stu.util.ap.pojo.ParamPojo;
+import csa.stu.util.ap.pojo.ResultPojo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +24,7 @@ public class NoUserController {
     @Autowired
     private UserWorkService userWorkService;
     @Autowired
-    private UserinfoUtil userinfoUtil;
+    private UserinfoRequestUtil userinfoUtil;
 
 
     @RequestMapping("/login")
@@ -35,7 +34,7 @@ public class NoUserController {
         if(rs!=null
                 && ResultPojo.OK.equals(rs.getCode())){
             //验证通过，设置cookie
-            userinfoUtil.setUserCookie(response,rs.getModel().getToken());
+            userinfoUtil.setTokenCookie(response,rs.getModel().getToken());
         }
         return rs;
     }
@@ -70,7 +69,7 @@ public class NoUserController {
 
     @RequestMapping({"/queryData/{userId}"})
     @ResponseBody
-    public ResultPojo<Boke> queryData(@RequestBody ParamPojo paramPojo,@PathVariable("userId") String userId) {
+    public ResultPojo<Boke> queryData(@RequestBody ParamPojo paramPojo, @PathVariable("userId") String userId) {
         if(paramPojo.getMap()==null){
             Map<String,Object> map=new HashMap<>();
             paramPojo.setMap(map);

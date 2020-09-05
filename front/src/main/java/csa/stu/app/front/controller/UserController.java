@@ -4,7 +4,7 @@ import csa.stu.app.common.entity.User;
 import csa.stu.app.common.util.UserinfoRequestUtil;
 import csa.stu.app.front.feign.SsoService;
 import csa.stu.app.front.feign.UserWorkService;
-import csa.stu.util.myutils.pojo.ResultPojo;
+import csa.stu.util.ap.pojo.ResultPojo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

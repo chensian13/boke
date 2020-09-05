@@ -4,7 +4,7 @@ import csa.stu.app.common.entity.Picture;
 import csa.stu.app.single.service.PictureService;
 import csa.stu.util.ap.mvc.IService;
 import csa.stu.util.ap.mvc.plus.MyController;
-import csa.stu.util.myutils.pojo.ResultPojo;
+import csa.stu.util.ap.pojo.ResultPojo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -33,7 +33,7 @@ public class PictureController extends MyController<Picture> {
     @RequestMapping(value = "/upload",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResultPojo<Picture> uploadOne(@RequestPart("upload") MultipartFile file
             , @RequestParam(name="userId") String userId
-            ,@RequestParam(value = "bokeId",required = false) String bokeId
+            , @RequestParam(value = "bokeId",required = false) String bokeId
             , HttpServletRequest request){
         if(!isPicture(file)){
             return ResultPojo.newInstance(ResultPojo.NO,"图片格式不合法");

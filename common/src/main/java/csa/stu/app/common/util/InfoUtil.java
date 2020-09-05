@@ -1,8 +1,7 @@
 package csa.stu.app.common.util;
 
-import csa.stu.util.myutils.utils.EmptyUtil;
-import csa.stu.util.myutils.utils.ImageUtil;
-
+import csa.stu.util.myutils.direct.EmptyUtil;
+import csa.stu.util.myutils.direct.ImageUtil;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,7 +9,7 @@ import java.util.regex.Pattern;
  * info
  */
 public abstract class InfoUtil extends ImageUtil {
-
+    public static final String patternString = "[http|https]+[://]+[0-9A-Za-z:/[-]_#[?][=][.][&]]*";
 
     /**
      * 获取第一张图片

@@ -1,30 +1,24 @@
 package csa.stu.app.single.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import csa.stu.app.common.constent.GenerateCode;
 import csa.stu.app.common.entity.Boke;
-import csa.stu.app.common.entity.User;
 import csa.stu.app.common.util.InfoUtil;
 import csa.stu.app.single.dao.BokeMapper;
 import csa.stu.app.single.dao.PictureMapper;
 import csa.stu.app.single.dao.UserMapper;
 import csa.stu.app.single.service.BokeService;
 import csa.stu.util.ap.mvc.helper.ServiceHelper;
-import csa.stu.util.myutils.pojo.ParamPojo;
-import csa.stu.util.myutils.pojo.ResultPojo;
-import csa.stu.util.myutils.utils.DateUtil;
-import csa.stu.util.myutils.utils.EmptyUtil;
-import csa.stu.util.myutils.utils.StrUtil;
-import org.aspectj.lang.annotation.Around;
+import csa.stu.util.ap.pojo.ParamPojo;
+import csa.stu.util.ap.pojo.ResultPojo;
+import csa.stu.util.myutils.direct.EmptyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 @Service("bokeService")
 public class BokeServiceImpl implements BokeService {
@@ -49,9 +43,9 @@ public class BokeServiceImpl implements BokeService {
             rs.setMessage("获取登录信息失败，请重新登录");
             return rs;
         }
-        boke.setBokeCode(StrUtil.generateCode(GenerateCode.BOKE));
+        boke.setBokeCode(ServiceHelper.generateCode(GenerateCode.BOKE));
         boke.initDefault();
-        boke.setBokeId(StrUtil.generateUUID32());
+        boke.setBokeId(ServiceHelper.generateUUID32());
         boke.setVersion("0");
         boke.setState("0");
         //提取图片
@@ -64,7 +58,7 @@ public class BokeServiceImpl implements BokeService {
     @Override
     @Transactional
     public ResultPojo<Boke> updOne(Boke boke) {
-        boke.setModtime(DateUtil.nowTime());
+        boke.setModtime(System.currentTimeMillis());
         //提取图片
         boke.setCover(InfoUtil.getFirstImgSrc(boke.getInfo()));
         bokeMapper.updateById(boke);
@@ -114,7 +108,7 @@ public class BokeServiceImpl implements BokeService {
         ResultPojo<Boke> rs=new ResultPojo<Boke>();
         //条件封装
         Map<String,Object> map=new HashMap<String,Object>(1);
-        ParamPojo.wrapParams(paramWrap,entry->{
+        ParamPojo.wrapParams(paramWrap, entry->{
             if(entry.getKey().equals("bokeTitle")){
                 map.put("bokeTitle",entry.getValue());
             }else if(entry.getKey().equals("isdel")){
@@ -131,8 +125,10 @@ public class BokeServiceImpl implements BokeService {
         if(EmptyUtil.isEmptys(map.get("creater"))){
             return ResultPojo.newInstance(ResultPojo.NO,"作者id不存在");
         }
-        //判断是否分页
-        ServiceHelper.canPage(paramWrap);
+        //分页
+        ServiceHelper.page(paramWrap,(p,s)->{
+            PageHelper.startPage(p,s);
+        });
         rs.setList(bokeMapper.selectTable(map));
         PageInfo<Boke> pageInfo=new PageInfo<Boke>(rs.getList());
         rs.setCount(pageInfo.getTotal());

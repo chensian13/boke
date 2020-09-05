@@ -5,9 +5,9 @@ import csa.stu.app.common.entity.User;
 import csa.stu.app.common.util.UserinfoRequestUtil;
 import csa.stu.app.front.feign.UserWorkService;
 import csa.stu.util.ap.mvc.plus.CheckLoginController;
-import csa.stu.util.myutils.constant.OperConstant;
-import csa.stu.util.myutils.pojo.ResultPojo;
-import csa.stu.util.myutils.utils.EmptyUtil;
+import csa.stu.util.ap.pojo.ResultPojo;
+import csa.stu.util.ap.pojo.constant.OperConstant;
+import csa.stu.util.myutils.direct.EmptyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +30,7 @@ public class TypeController implements CheckLoginController {
 
 	@ResponseBody
 	@RequestMapping("/getBokeTypes")
-	public ResultPojo<Type> getBokeTypes(HttpServletRequest request,@RequestBody(required = false) String userId){
+	public ResultPojo<Type> getBokeTypes(HttpServletRequest request, @RequestBody(required = false) String userId){
 		if(EmptyUtil.isEmpty(userId)
 				|| "null".equals(userId)){
 			userId=userinfoUtil.getUser(request).getUserId();

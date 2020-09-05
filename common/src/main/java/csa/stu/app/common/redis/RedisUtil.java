@@ -1,4 +1,4 @@
-package csa.stu.app.common.util;
+package csa.stu.app.common.redis;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

@@ -6,11 +6,12 @@ import csa.stu.app.common.entity.User;
 import csa.stu.app.common.util.UserinfoRequestUtil;
 import csa.stu.app.single.dao.UserMapper;
 import csa.stu.app.single.service.UserService;
-import csa.stu.util.myutils.constant.OperConstant;
-import csa.stu.util.myutils.pojo.ParamPojo;
-import csa.stu.util.myutils.pojo.ResultPojo;
-import csa.stu.util.myutils.utils.EmptyUtil;
-import csa.stu.util.myutils.utils.StrUtil;
+import csa.stu.util.ap.mvc.helper.ServiceHelper;
+import csa.stu.util.ap.pojo.ParamPojo;
+import csa.stu.util.ap.pojo.ResultPojo;
+import csa.stu.util.ap.pojo.constant.OperConstant;
+import csa.stu.util.myutils.direct.EmptyUtil;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +31,18 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+    /**
+     * 盐值加密
+     * @param password
+     * @return
+     */
+    private String saltPassword(String password,String salt){
+        if(EmptyUtil.isEmptys(password,salt)) return null;
+        SimpleHash sh=new SimpleHash("MD5", password, salt, 13);
+        //转换16进制
+        return sh.toHex();
+    }
+
     @Transactional
     @Override
     public ResultPojo<User> updOne(User user) {
@@ -41,11 +54,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResultPojo<User> register(User user) {
         ResultPojo<User> rs=ResultPojo.newInstance();
-        user.setSalt(StrUtil.generateUUID32());
-        String sp=userinfoUtil.saltPassword(user.getPassword(),user.getSalt());
+        user.setSalt(ServiceHelper.generateUUID32());
+        String sp=saltPassword(user.getPassword(),user.getSalt());
         user.setPassword(sp);
-        user.setUserCode(StrUtil.generateCode(GenerateCode.USER));
-        user.setUserId(StrUtil.generateUUID32());
+        user.setUserCode(ServiceHelper.generateCode(GenerateCode.USER));
+        user.setUserId(ServiceHelper.generateUUID32());
         user.initDefault();
         //重复校验
         if(!checkUniqueField(user,rs, OperConstant.OPER_ADD)){
@@ -61,9 +74,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResultPojo<User> modPass(User user) {
         User user2=userMapper.selectById(user.getUserId());
-        String pass=userinfoUtil.saltPassword(user.getOldPass(),user2.getSalt());
+        String pass=saltPassword(user.getOldPass(),user2.getSalt());
         if(pass.equals(user2.getPassword())){
-            user.setPassword(userinfoUtil.saltPassword(user.getPassword(),user2.getSalt()));
+            user.setPassword(saltPassword(user.getPassword(),user2.getSalt()));
             userMapper.updateById(user);
             return ResultPojo.newInstance(ResultPojo.OK,null);
         }
@@ -108,12 +121,13 @@ public class UserServiceImpl implements UserService {
         User user1=userMapper.selectOne(queryWrapper);
         if(user1==null)
             return ResultPojo.newInstance(ResultPojo.NO,"该用户不存在");
-        String sp=userinfoUtil.saltPassword(user.getPassword(),user1.getSalt());
+        String sp=saltPassword(user.getPassword(),user1.getSalt());
         user.setPassword(sp);
         ResultPojo<User> rs=ResultPojo.newInstance(userMapper.login(user));
         if(EmptyUtil.isEmpty(rs.getModel())){
             rs.setMessage("登录失败，请检查用户名或者密码");
         }
+        rs.getModel().setToken(ServiceHelper.generateUUID32());
         return rs;
     }
 

@@ -3,7 +3,6 @@ package csa.stu.app.common.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import csa.stu.util.myutils.pojo.BaseSysEntity;
 
 
 /**
@@ -12,7 +11,7 @@ import csa.stu.util.myutils.pojo.BaseSysEntity;
  *
  */
 @TableName("sys_menu")
-public class SysMenu extends BaseSysEntity {
+public class SysMenu extends BaseEntity {
 	@TableId("menu_id")
 	private String menuId;
 	@TableId("menu_code")

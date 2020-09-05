@@ -1,7 +1,7 @@
 package csa.stu.app.front.feign;
 
 import csa.stu.app.common.entity.User;
-import csa.stu.util.myutils.pojo.ResultPojo;
+import csa.stu.util.ap.pojo.ResultPojo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
