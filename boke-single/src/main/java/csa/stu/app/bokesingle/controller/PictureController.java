@@ -81,4 +81,9 @@ public class PictureController extends MyControllerPlus<Picture> {
     public User getLoginUser(HttpServletRequest request) {
         return loginCache.get(tokenUtilDefault.getTokenCookie(request));
     }
+
+    @Override
+    public String[] getWhiteMethod() {
+        return null;
+    }
 }

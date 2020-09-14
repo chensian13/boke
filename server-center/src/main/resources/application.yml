@@ -8,13 +8,29 @@ spring:
   application:
     name: server-center
   profiles: #合并配置中心，测试方便
-    active: native    #激活本地文件系统
+    active: jdbc    # 数据库
   cloud:
     config:
       server:
-        native:
-          search-locations: classpath:/configs   #本地配置代替git
-        prefix: /config  #解决eureka管理页面静态资源被config拦截
+        bootstrap: true
+        jdbc:
+          sql: SELECT `KEY`, `VALUE` from PROPERTIES where APPLICATION=? and PROFILE=? and LABEL=?
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/csaplat2?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      # 配置获取连接等待超时的时间 ms
+      max-wait: 5000
+      # 是否缓存preparedStatement
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+
 
 # 关闭保护模式
 # 主机名

@@ -1,0 +1,162 @@
+<!doctype html>
+<html class="scroll">
+<head>
+    <!-- Basic -->
+    <meta charset="UTF-8">
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" href="/lib/assets/vendor/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="/lib/assets/vendor/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="/lib/assets/vendor/magnific-popup/magnific-popup.css" />
+    <link rel="stylesheet" href="/lib/assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="/lib/assets/stylesheets/theme.css" />
+    <!-- Skin CSS -->
+    <link rel="stylesheet" href="/lib/assets/stylesheets/skins/default.css" />
+    <!-- Theme Custom CSS -->
+    <link rel="stylesheet" href="/lib/assets/stylesheets/theme-custom.css">
+    <!-- Head Libs -->
+    <script src="/lib/assets/vendor/modernizr/modernizr.js"></script>
+
+    <!--self-->
+    <link rel="stylesheet" href="/web2/css/common.css">
+    <script type="text/javascript" src="/web2/analyse/analyse-common.js" ></script>
+    <script type="text/javascript" src="/web2/component/component-file.js" ></script>
+    <script type="text/javascript" src="/web2/component/component-btn.js" ></script>
+    <script type="text/javascript" src="/web2/component/component-page.js"></script>
+    <script type="text/javascript" src="/web2/component/component-table.js" ></script>
+    <script type="text/javascript" src="/web2/component/component-form.js" ></script>
+    <script type="text/javascript" src="/web2/component/component-toast.js" ></script>
+    <script type="text/javascript" src="/web2/component/component-pop.js" ></script>
+    <script type="text/javascript" src="/web2/component/component-file.js" ></script>
+    <script type="text/javascript" src="/lib/url.js" ></script>
+</head>
+<body>
+
+    <!-- start: page -->
+    <div class="row">
+        <div class="col-lg-12">
+            <section class="panel">
+                <table-oper>
+                    <div class="input-group input-search" style="width: 200px;">
+                        <input type="text" class="form-control"  id="q" placeholder="Search...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" id="search" type="submit"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </table-oper>
+                <table id="table" class="table table-bordered table-striped mb-none"></table>
+                <page-button id="page" ></page-button>
+            </section>
+        </div>
+    </div>
+    <!-- end: page -->
+
+
+    <!-- Vendor -->
+    <script src="/lib/assets/vendor/jquery/jquery.js"></script>
+    <script src="/lib/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+    <script src="/lib/assets/vendor/bootstrap/js/bootstrap.js"></script>
+    <script src="/lib/assets/vendor/nanoscroller/nanoscroller.js"></script>
+    <script src="/lib/assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
+
+    <!-- Specific Page Vendor -->
+    <!-- Theme Base, Components and Settings -->
+    <script src="/lib/assets/javascripts/theme.js"></script>
+    <!-- Theme Custom -->
+    <script src="/lib/assets/javascripts/theme.custom.js"></script>
+    <!-- Theme Initialization Files -->
+    <script src="/lib/assets/javascripts/theme.init.js"></script>
+
+    <script>
+        var config={
+            header:[{
+                field:'specialId',
+                value:"操作",
+                template:function(d,row){
+                    return "<button onclick='resume(\""+d+"\")' color='blue'>恢复</button> <button onclick='del(\""+d+"\")' color='red'>删除</button>";
+                }
+            },{
+                value:"封面",
+                field:'cover',
+                template:function (d) {
+                    if(isEmpty(d)) return '';
+                    return '<img src="'+d+'" height="120px" />';
+                }
+            },{
+                value:"专辑名称",
+                field:'specialName'
+            },{
+                value:"描述",
+                field:'info'
+            }]
+        };
+        tableComponent("table",config); //注册table
+        var page=1;
+        var pagesize=10;
+        var map={
+            "isdel":'1'
+        };
+        pageComponent('page',0);
+        function dataList(){
+            post(specialUrl+"queryData",{'page':page,'pagesize':pagesize,'map':map},function (res) {
+                if(res.code=='OK'){
+                    tableData("table",res.list); //数据渲染
+                    var sum=parseInt(res.count/pagesize);
+                    sum=res.count%pagesize==0?sum:sum+1;
+                    pageEvent(sum);
+                }
+            });
+        }
+        dataList();
+
+
+        /**
+         * 分页事件
+         */
+        function pageEvent(sum){
+            pageSetMaxPage('page',sum);
+            pageResgisterEvent('page',function(n,max){
+                if(n==max) {
+                    toastShow("已到最大页")
+                }
+                page=n;
+                dataList();
+                btnComponent();
+            });
+        }
+
+        //搜索
+        $("#search").click(function () {
+            map.specialName=$("#q").val();
+            page=1;
+            dataList();
+        });
+
+        function resume(id){
+            post(specialUrl+"data/upd",{"specialId":id,"isdel":"0"},function (res) {
+                if(res.code=='OK'){
+                    toastShow("已恢复");
+                    dataList();
+                }else{
+                    toastShow("无法恢复");
+                }
+            });
+        }
+
+        function del(id){
+            post(specialUrl+"data/del",{"specialId":id},function (res) {
+                if(res.code=='OK'){
+                    toastShow("已删除");
+                    dataList();
+                }else{
+                    toastShow("删除失败");
+                }
+            });
+        }
+
+
+        btnComponent();
+    </script>
+</section>
+</body>
+</html>

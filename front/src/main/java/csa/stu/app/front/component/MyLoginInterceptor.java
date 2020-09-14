@@ -1,10 +1,9 @@
 package csa.stu.app.front.component;
 
 import csa.stu.app.common.entity.User;
-import csa.stu.app.common.util.UserinfoRequestUtil;
+import csa.stu.app.common.token.UserInfoUtilBoth;
 import csa.stu.util.ap.web_helper.login.LoginInterceptor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import csa.stu.util.ap.web_helper.token.TokenUtilDefault;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
@@ -16,11 +15,13 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 public class MyLoginInterceptor extends LoginInterceptor {
     @Autowired
-    private UserinfoRequestUtil userinfoUtil;
+    private UserInfoUtilBoth userInfoUtilBoth;
+    @Autowired
+    private TokenUtilDefault tokenUtilDefault;
 
     @Override
     public User getLoginUser(HttpServletRequest request) {
-        return userinfoUtil.getUser(request);
+        return userInfoUtilBoth.getUser(tokenUtilDefault.getTokenCookie(request));
     }
 
     @Override

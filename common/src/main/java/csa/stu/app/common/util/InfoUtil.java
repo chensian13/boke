@@ -1,14 +1,13 @@
 package csa.stu.app.common.util;
 
 import csa.stu.util.myutils.direct.EmptyUtil;
-import csa.stu.util.myutils.direct.ImageUtil;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * info
  */
-public abstract class InfoUtil extends ImageUtil {
+public abstract class InfoUtil {
     public static final String patternString = "[http|https]+[://]+[0-9A-Za-z:/[-]_#[?][=][.][&]]*";
 
     /**

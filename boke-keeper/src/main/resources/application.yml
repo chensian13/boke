@@ -1,0 +1,74 @@
+##服务端
+#server:
+#  port: 8083
+#
+#spring:
+#  cloud:
+#    loadbalancer:
+#      retry:
+#        enabled: false
+#  application:
+#    name: boke-keeper
+#  profiles:
+#    include: database,feign,redis
+#  datasource:
+#    driver-class-name: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://127.0.0.1:3306/csaplat2?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
+#    username: root
+#    password: root
+#    type: com.alibaba.druid.pool.DruidDataSource
+#    druid:
+#      initial-size: 5
+#      min-idle: 5
+#      max-active: 20
+#      # 配置获取连接等待超时的时间 ms
+#      max-wait: 5000
+#      # 是否缓存preparedStatement
+#      pool-prepared-statements: true
+#      max-pool-prepared-statement-per-connection-size: 20
+#    #redis配置
+#
+##mybatis配置
+#mybatis-plus:
+#  mapper-locations: classpath:mappers/*Mapper.xml
+#  type-aliases-package: csa.stu.app.common.entity
+#pagehelper:
+#  reasonable: true
+#
+##日志配置
+#logging:
+#  level:
+#    root: warn
+#    csa.stu.app: debug
+#    org.springframework: info
+#    org.apache.ibatis: debug
+#    com.alibaba.druid: debug
+#  pattern:
+#    console: "%d{yyyy/MM/dd-HH:mm:ss} [%thread] %-5level %logger- %msg%n"
+#
+#
+#
+##ribbon配置
+#ribbon:
+#  ConnectTimeout: 3000
+#  ReadTimeout: 3000
+#  MaxAutoRetries: 0
+#  MaxAutoRetriesNextServer: 0
+#
+#
+##hystrix配置
+#hystrix:
+#  command:
+#    default:
+#      execution:
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds: 15000
+#
+##feign配置
+#feign:
+#  hystrix:
+#    enabled: true
+#
+#
+#

@@ -1,0 +1,134 @@
+<!doctype html>
+<html class="fixed">
+	<head>
+
+		<!-- Basic -->
+		<meta charset="UTF-8">
+
+		<meta name="keywords" content="HTML5 Admin Template" />
+		<meta name="description" content="Porto Admin - Responsive HTML5 Template">
+		<meta name="author" content="okler.net">
+
+		<!-- Mobile Metas -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+		<!-- Basic -->
+		<meta charset="UTF-8">
+		<!-- Vendor CSS -->
+		<link rel="stylesheet" href="/lib/assets/vendor/bootstrap/css/bootstrap.css" />
+		<link rel="stylesheet" href="/lib/assets/vendor/font-awesome/css/font-awesome.css" />
+		<link rel="stylesheet" href="/lib/assets/vendor/magnific-popup/magnific-popup.css" />
+		<link rel="stylesheet" href="/lib/assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
+		<!-- Theme CSS -->
+		<link rel="stylesheet" href="/lib/assets/stylesheets/theme.css" />
+		<!-- Skin CSS -->
+		<link rel="stylesheet" href="/lib/assets/stylesheets/skins/default.css" />
+		<!-- Theme Custom CSS -->
+		<link rel="stylesheet" href="/lib/assets/stylesheets/theme-custom.css">
+		<!-- Head Libs -->
+		<script src="/lib/assets/vendor/modernizr/modernizr.js"></script>
+
+		<link rel="stylesheet" href="/web2/css/common.css">
+		<script type="text/javascript" src="/lib/url.js" ></script>
+		<script type="text/javascript" src="/web2/analyse/analyse-common.js" ></script>
+		<script type="text/javascript" src="/web2/component/component-form.js" ></script>
+		<script type="text/javascript" src="/web2/component/component-toast.js" ></script>
+	</head>
+	<body>
+		<!-- start: page -->
+		<section class="body-sign">
+			<div class="center-sign">
+				<a class="logo pull-left">
+					<img src="/lib/assets/images/logo.png" height="54" alt="Porto Admin" />
+				</a>
+
+				<div class="panel panel-sign">
+					<div class="panel-title-sign mt-xl text-right">
+						<h2 class="title text-uppercase text-bold m-none"><i class="fa fa-user mr-xs"></i>工作空间入口</h2>
+					</div>
+					<div class="panel-body">
+						<form id="form">
+							<div class="form-group mb-lg">
+								<label>用户名</label>
+								<div class="input-group input-group-icon">
+									<input name="userName" type="text" class="form-control input-lg" />
+									<span class="input-group-addon">
+										<span class="icon icon-lg">
+											<i class="fa fa-user"></i>
+										</span>
+									</span>
+								</div>
+							</div>
+
+							<div class="form-group mb-lg">
+								<div class="clearfix">
+									<label class="pull-left">密码</label>
+									<a href="pages-recover-password.html" class="pull-right">Lost Password?</a>
+								</div>
+								<div class="input-group input-group-icon">
+									<input name="password" type="password" class="form-control input-lg" />
+									<span class="input-group-addon">
+										<span class="icon icon-lg">
+											<i class="fa fa-lock"></i>
+										</span>
+									</span>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-sm-8">
+									<div class="checkbox-custom checkbox-default">
+										<input id="RememberMe" name="rememberme" type="checkbox"/>
+										<label for="RememberMe">记住我</label>
+									</div>
+								</div>
+								<div class="col-sm-4 text-right">
+									<button id="login" class="btn btn-primary hidden-xs">登录</button>
+								</div>
+							</div>
+
+							<span class="mt-lg mb-lg line-thru text-center text-uppercase">
+								<span>or</span>
+							</span>
+
+							<p  class="text-center">还没有账号? <a id="register">注册!</a>
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- end: page -->
+
+		<!-- Vendor -->
+		<script src="/lib/assets/vendor/jquery/jquery.js"></script>
+		<script src="/lib/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+		<script src="/lib/assets/vendor/bootstrap/js/bootstrap.js"></script>
+		<script src="/lib/assets/vendor/nanoscroller/nanoscroller.js"></script>
+		<script src="/lib/assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
+
+		<!-- Specific Page Vendor -->
+		<!-- Theme Base, Components and Settings -->
+		<script src="/lib/assets/javascripts/theme.js"></script>
+		<!-- Theme Custom -->
+		<script src="/lib/assets/javascripts/theme.custom.js"></script>
+		<!-- Theme Initialization Files -->
+		<script src="/lib/assets/javascripts/theme.init.js"></script>
+		<script>
+			formComponent("form");
+			$("#login").click(function () {
+				post(ssoUrl+"/login",formDataMap("form"),function (res) {
+					if(res.code=='OK'){
+						window.location.href=workUrl+"hello";
+					}else {
+						toastShow(res.message);
+					}
+				})
+			});
+
+			$("#register").click(function () {
+				location.href=webUrl+"/register.html";
+			});
+		</script>
+
+	</body>
+</html>

@@ -1,6 +1,12 @@
-#业务微服务基础配置
+#服务端
+server:
+    port: 9000
 
 spring:
+    application:
+        name: front
+    profiles:
+        include: feign,redis
     cloud:
         config:
             override-none: true
@@ -8,24 +14,3 @@ spring:
         multipart:
             max-request-size: 100MB
             max-file-size: 50MB
-
-#ribbon配置
-ribbon:
-    ConnectTimeout: 3000
-    ReadTimeout: 3000
-    MaxAutoRetries: 0
-    MaxAutoRetriesNextServer: 0
-
-#hystrix配置
-hystrix:
-    command:
-        default:
-            execution:
-                isolation:
-                    thread:
-                        timeoutInMilliseconds: 15000
-
-#feign配置
-feign:
-    hystrix:
-        enabled: true

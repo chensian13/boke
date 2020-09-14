@@ -1,0 +1,286 @@
+<!doctype html>
+<html class="scroll">
+<head>
+    <!-- Basic -->
+    <meta charset="UTF-8">
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" href="/lib/assets/vendor/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="/lib/assets/vendor/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="/lib/assets/vendor/magnific-popup/magnific-popup.css" />
+    <link rel="stylesheet" href="/lib/assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="/lib/assets/stylesheets/theme.css" />
+    <!-- Skin CSS -->
+    <link rel="stylesheet" href="/lib/assets/stylesheets/skins/default.css" />
+    <!-- Theme Custom CSS -->
+    <link rel="stylesheet" href="/lib/assets/stylesheets/theme-custom.css">
+    <!-- Head Libs -->
+    <script src="/lib/assets/vendor/modernizr/modernizr.js"></script>
+
+    <!--self-->
+    <link rel="stylesheet" href="/web2/css/common.css">
+    <script type="text/javascript" src="/web2/analyse/analyse-common.js" ></script>
+    <script type="text/javascript" src="/web2/component/component-file.js" ></script>
+    <script type="text/javascript" src="/web2/component/component-btn.js" ></script>
+    <script type="text/javascript" src="/web2/component/component-page.js"></script>
+    <script type="text/javascript" src="/web2/component/component-table.js" ></script>
+    <script type="text/javascript" src="/web2/component/component-form.js" ></script>
+    <script type="text/javascript" src="/web2/component/component-toast.js" ></script>
+    <script type="text/javascript" src="/web2/component/component-pop.js" ></script>
+    <script type="text/javascript" src="/web2/component/component-file.js" ></script>
+    <script type="text/javascript" src="/lib/url.js" ></script>
+</head>
+<body>
+
+    <!-- start: page -->
+    <div class="row">
+        <div class="col-lg-12">
+            <section class="panel">
+                <table-oper>
+                    <div class="input-group input-search" style="width: 200px;">
+                        <input type="text" class="form-control"  id="q" placeholder="Search...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" id="search" type="submit"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </table-oper>
+                <table id="table" class="table table-bordered table-striped mb-none"></table>
+                <page-button id="page" ></page-button>
+            </section>
+        </div>
+    </div>
+    <!-- end: page -->
+
+    <lay pop>
+        <pop id="pop">
+            <div class="pop-dash">
+            <form id="form" style="height: 660px;" class="form-horizontal form-bordered">
+                <input type="hidden"  name="bokeId" />
+                <div class="form-group">
+                    <label class="col-md-2 control-label" >博客标题</label>
+                    <div class="col-md-10">
+                        <input type="text" name="bokeTitle" class="form-control" >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-2 control-label" >副标题</label>
+                    <div class="col-md-10">
+                        <input type="text" name="bokeSubtitle"  class="form-control" >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-2 control-label" >博客类型</label>
+                    <div class="col-md-4">
+                        <select name="bokeType" id="bokeType" class="form-control">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div id="editor" class="col-md-12" class="col-md-12">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <div class="checkbox-custom checkbox-primary">
+                            <input type="checkbox" id="ispublic">
+                            <label>是否公开</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-2 control-label" >加入专辑</label>
+                    <div class="col-md-10">
+                        <select id="special" class="form-control" name="special"></select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-6 col-xs-11">
+                        <a id="save" class="btn btn-sm btn-primary" data-plugin-colorpicker data-color-format="hex" data-color="rgb(255, 255, 255)">保存</a>
+                    </div>
+                </div>
+            </form>
+            </div>
+        </pop>
+    </lay>
+
+    <!-- Vendor -->
+    <script src="/lib/assets/vendor/jquery/jquery.js"></script>
+    <script src="/lib/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+    <script src="/lib/assets/vendor/bootstrap/js/bootstrap.js"></script>
+    <script src="/lib/assets/vendor/nanoscroller/nanoscroller.js"></script>
+    <script src="/lib/assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
+
+    <!-- Specific Page Vendor -->
+    <!-- Theme Base, Components and Settings -->
+    <script src="/lib/assets/javascripts/theme.js"></script>
+    <!-- Theme Custom -->
+    <script src="/lib/assets/javascripts/theme.custom.js"></script>
+    <!-- Theme Initialization Files -->
+    <script src="/lib/assets/javascripts/theme.init.js"></script>
+
+    <script>
+        $(function () {
+            post(typeUrl+"getBokeTypes",null,function (res) {
+                if(res.code=='OK'){
+                    var list=res.list;
+                    var ops='';
+                    for(var i=0;i<list.length;i++){
+                        ops=ops+"<option value='"+list[i].typeId+"'>"+list[i].typeName+"</option>";
+                    } //end for
+                    $("#bokeType").html(ops);
+                }
+            },true);
+
+            $("#editor").load("editor.html");
+        });
+
+        formComponent('form');
+        var config={
+            header:[{
+                field:'bokeId',
+                value:"操作",
+                template:function(d,row){
+                    return "<button onclick='showDetail(\""+d+"\")' color='blue'>编辑</button> <button onclick='del(\""+d+"\")' color='red'>下架</button>";
+                }
+            },{
+                value:"博客标题",
+                field:'bokeTitle'
+            },{
+                value:"副标题",
+                field:'bokeSubtitle'
+            },{
+                value:"所属专辑",
+                field:'specialName'
+            },{
+                value:"是否公开",
+                field:'ispublic',
+                template:function(d){
+                    if(d=='1'){
+                        return "是";
+                    }else if(d=='0'){
+                        return "否";
+                    }
+                    return "";
+                }
+            }]
+        };
+        tableComponent("table",config); //注册table
+        var page=1;
+        var pagesize=10;
+        var map={
+            "isdel":'0'
+        };
+        pageComponent('page',0);
+        function dataList(){
+            post(bokeUrl+"queryData",{'page':page,'pagesize':pagesize,'map':map},function (res) {
+                if(res.code=='OK'){
+                    tableData("table",res.list); //数据渲染
+                    var sum=parseInt(res.count/pagesize);
+                    sum=res.count%pagesize==0?sum:sum+1;
+                    pageEvent(sum);
+                }
+            });
+        }
+        dataList();
+
+
+
+        /**
+         * 分页事件
+         */
+        function pageEvent(sum){
+            pageSetMaxPage('page',sum);
+            pageResgisterEvent('page',function(n,max){
+                if(n==max) {
+                    toastShow("已到最大页")
+                }
+                page=n;
+                dataList();
+                btnComponent();
+            });
+        }
+
+        //搜索
+        $("#search").click(function () {
+            map.bokeTitle=$("#q").val();
+            page=1;
+            dataList();
+        });
+
+        popComponent('pop',9999,'编辑博客');
+        var map={
+            "isdel":'0'
+        };
+        /**
+         *
+         * @param id
+         */
+        function showDetail(id){
+            //重置表单
+            formDataClean('form');
+            post(specialUrl+"queryData",{'map':map},function (res) {
+                if(res.code=='OK'){
+                    var ops='<option value="null">--无选项--</option>';
+                   for(var i=0;i<res.list.length;i++){
+                       ops=ops+'<option value="'+res.list[i].specialId+'">'+res.list[i].specialName+'</option>';
+                   }// end for
+                    $("#special").html(ops);
+
+                    post(bokeUrl+"queryById/"+id,null,function (res) {
+                        if(res.code=='OK'){
+                            popShow('pop');
+                            formDataBind('form',res.model);
+                            if(res.model.ispublic=='1'){
+                                $("#ispublic").attr("checked","checked");
+                            }else{
+                                $("#ispublic").removeAttr("checked");
+                            }
+                            $("#content").html(res.model.info);
+                        }
+                    });
+                } //end if
+            });
+        }
+
+        function del(id){
+            post(bokeUrl+"data/stop",{"bokeId":id},function (res) {
+                if(res.code=='OK'){
+                    toastShow("已放入回收站");
+                    dataList();
+                }else{
+                    toastShow("下架失败");
+                }
+            });
+        }
+
+        function updBoke(){
+            var map=formDataMap("form");
+            map.info=$("#content").html();
+            if($("#ispublic").is(":checked")){
+                map.ispublic="1";
+            }else{
+                map.ispublic="0";
+            }
+            post(bokeUrl+"data/upd",map,function (res) {
+                if(res.code=='OK'){
+                    toastShow("保存成功！");
+                    popShow('pop',false);
+                }
+            });
+        }
+
+        $("#save").click(function(){
+            updBoke();
+        });
+
+        btnComponent();
+    </script>
+</section>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<link rel="stylesheet" href="/web2/css/editor.css" />
+
+<!--<script type="text/javascript" src="/web2/component/component-btn.js" ></script>-->
+<!--<script type="text/javascript" src="/web2/component/component-file.js" ></script>-->
+<!--<script type="text/javascript" src="/web2/component/component-pop.js" ></script>-->
+<script type="text/javascript" src="/web2/component/editor.js" ></script>
+
+	<div style="width: 640px;">
+		<div class="editor-nav">
+			<span onclick="setTitle()">标题</span>
+			<span onclick="setImg()">图片</span>
+			<span onclick="setHref()">超链接</span>
+		</div>
+		<div class="editor-content-shell">
+			<div contenteditable class="editor-content" id="content"></div>
+		</div>
+	</div>
+
+	<lay contentImg>
+	<pop id="contentImg">
+		<div class="pop">
+			<file-input big color="blue" id="file" accept="image/*" head value="上传图片"></file-input>
+			<div class="pop-item">
+				<label>图片地址：</label><input id="imgSrc" />
+			</div>
+			<div class="pop-item">
+				<label>宽度：</label><input id="imgW" placeholder="默认" />
+			</div>
+			<div class="pop-item">
+				<label>高度：</label><input id="imgH" placeholder="默认" />
+			</div>
+			<div class="pop-item">
+				<button id="btnImg" color="red">确定</button>
+			</div>
+		</div>
+	</pop>
+	</lay>
+
+	<lay contentHref>
+	<pop id="contentHref">
+		<div class="pop">
+			<div class="pop-item">
+				<label>超链接地址：</label><input  />
+			</div>
+			<div class="pop-item">
+				<label>显示内容：</label>
+				<textarea rows="4" style="width: 440px;"></textarea>
+			</div>
+			<div class="pop-item">
+				<button onclick="btnHref()" color="red">确定</button>
+			</div>
+		</div>
+	</pop>
+	</lay>
+
+	<lay contentTitle>
+	<pop id="contentTitle">
+		<div class="pop">
+			<div class="pop-item">
+				<label>标题：</label><input  />
+			</div>
+			<div class="pop-item">
+				<label>类型：</label>
+				<select>
+					<option value="h1">主标题</option>
+					<option value="h2">标题2</option>
+					<option value="h3">标题3</option>
+					<option value="h4">标题4</option>
+					<option value="h5">标题5</option>
+					<option value="h6">标题6</option>
+				</select>
+			</div>
+			<div class="pop-item">
+				<button onclick="btnTitle()" color="red">确定</button>
+			</div>
+		</div>
+	</pop>
+	</lay>
+
+	<script>
+
+	</script>
+

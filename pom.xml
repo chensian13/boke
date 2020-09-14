@@ -5,7 +5,6 @@
     <modelVersion>4.0.0</modelVersion>
     <modules>
         <module>user-work</module>
-        <module>sso</module>
         <module>common</module>
         <module>front</module>
         <module>server-center</module>
@@ -13,6 +12,7 @@
         <module>single</module>
         <module>boke-single</module>
         <module>single-web</module>
+        <module>boke-keeper</module>
     </modules>
 
     <parent>
@@ -84,14 +84,25 @@
         </dependency>
 
         <!--注册中心客户端-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.cloud</groupId>-->
+            <!--<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+            <version>0.2.1.RELEASE</version>
         </dependency>
-        <!--配置中心客户端-->
+        <!--&lt;!&ndash;配置中心客户端&ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.cloud</groupId>-->
+            <!--<artifactId>spring-cloud-starter-config</artifactId>-->
+        <!--</dependency>-->
+
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-config</artifactId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+            <version>0.2.1.RELEASE</version>
         </dependency>
 
         <dependency>

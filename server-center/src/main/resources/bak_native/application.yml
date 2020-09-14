@@ -1,0 +1,43 @@
+#默认配置
+server:
+  port: 2001
+
+spring:
+  mvc:
+    static-path-pattern: /**
+  application:
+    name: server-center
+  profiles: #合并配置中心，测试方便
+    active: native    #激活本地文件系统
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/configs   #本地配置代替git
+        prefix: /config  #解决eureka管理页面静态资源被config拦截
+
+# 关闭保护模式
+# 主机名
+# 不注册,不拉取
+eureka:
+  server:
+    enable-self-preservation: true # 保护模式
+  instance:
+    hostname: eurekva
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true  #配置中心需要注册
+    fetch-registry: false
+    service-url:
+      defaultZone: http://eurekava:2001/eureka
+
+#日志配置
+logging:
+  level:
+    root: warn
+    csa.stu.app: debug
+    org.springframework: info
+    org.apache.ibatis: debug
+    com.alibaba.druid: debug
+  pattern:
+    console: "%d{yyyy/MM/dd-HH:mm:ss} [%thread] %-5level %logger- %msg%n"

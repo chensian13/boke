@@ -1,10 +1,11 @@
 package csa.stu.app.front.controller;
 
 import csa.stu.app.common.entity.User;
-import csa.stu.app.common.util.UserinfoRequestUtil;
-import csa.stu.app.front.feign.SsoService;
-import csa.stu.app.front.feign.UserWorkService;
+import csa.stu.app.common.token.UserInfoUtilBoth;
+import csa.stu.app.front.feign.BokeKeeperService;
+import csa.stu.util.ap.mvc.plus.CheckLoginController;
 import csa.stu.util.ap.pojo.ResultPojo;
+import csa.stu.util.ap.web_helper.token.TokenUtilDefault;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -15,35 +16,51 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RequestMapping("/user")
 @Controller
-public class UserController {
+public class UserController implements CheckLoginController {
     @Autowired
-    private SsoService ssoService;
+    private BokeKeeperService bokeKeeperService;
     @Autowired
-    private UserWorkService userWorkService;
+    private TokenUtilDefault tokenUtilDefault;
     @Autowired
-    private UserinfoRequestUtil userinfoUtil;
+    private UserInfoUtilBoth userInfoUtilBoth;
 
+    @PostMapping("/register")
+    @ResponseBody
+    public ResultPojo register(@RequestBody User user){
+        return bokeKeeperService.register(user);
+    }
 
     @RequestMapping("/userinfo")
     @ResponseBody
     public ResultPojo<User> userinfo(HttpServletRequest request) {
-        User user=userinfoUtil.getUser(request);
-        if(user==null) return ResultPojo.newInstance(ResultPojo.NO,"用户信息获取失败");
-        return ResultPojo.newInstance(user);
+        return ResultPojo.newInstance(userInfoUtilBoth.getUser(tokenUtilDefault.getTokenCookie(request)));
     }
 
-    @RequestMapping("/data/upd")
+    @RequestMapping("/data/{oper}")
     @ResponseBody
-    public ResultPojo<User> userinfo(@RequestBody User user) {
-        return userWorkService.updUserById(user);
+    public ResultPojo<User> operData(@RequestBody User user,@PathVariable("oper") String oper,HttpServletRequest request) {
+        return mustWrapUser(request,data->{
+            user.setToken(tokenUtilDefault.getTokenCookie(request));
+            return bokeKeeperService.operUserData(user, oper);
+        });
     }
 
     @PostMapping("/modPass")
     @ResponseBody
     public ResultPojo modPass(@RequestBody User user,HttpServletRequest request){
-        User user2=userinfoUtil.getUser(request);
-        user.setUserId(user2.getUserId());
-        return userWorkService.modPass(user);
+        return mustWrapUser(request,user2->{
+            user.setUserId(((User)user2).getUserId());
+            return bokeKeeperService.modPass(user);
+        });
     }
 
+    @Override
+    public Object getLoginUser(HttpServletRequest request) {
+        return userInfoUtilBoth.getUser(tokenUtilDefault.getTokenCookie(request));
+    }
+
+    @Override
+    public String[] getWhiteMethod() {
+        return null ;
+    }
 }

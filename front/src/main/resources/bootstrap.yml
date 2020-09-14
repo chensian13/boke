@@ -1,18 +1,35 @@
-
-
 #配置注册中心
-eureka:
-  instance:
-    prefer-ip-address: true
-  client:
-    service-url:
-      defaultZone: http://eurekava:2001/eureka #,http://eurekavb:2002/eureka
+#eureka:
+##  instance:
+##    prefer-ip-address: true
+##  client:
+##    service-url:
+##      defaultZone: http://eurekava:2001/eureka #,http://eurekavb:2002/eureka
+##
+##spring:
+##  cloud:
+##    config:
+##      discovery:
+##        enabled: true
+##        service-id: server-center
+##      name: front-application
+##      profile: dev
 
 spring:
+  application:
+    name: front
+  profiles:
+    active: dev
   cloud:
-    config:
+    nacos:
       discovery:
-        enabled: true
-        service-id: server-center
-      name: front-application
-      profile: dev
+        server-addr: 127.0.0.1:20001
+      config:
+        server-addr: 127.0.0.1:20001
+        group: boke
+        file-extension: yml
+        ext-config:
+          - dataId: feign-dev.yml
+            group: boke
+          - dataId: redis-dev.yml
+            group: boke

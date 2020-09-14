@@ -19,7 +19,7 @@ public abstract class MyControllerPlus<T> extends MyController<T> implements Che
     @RequestMapping({"/data/{oper}"})
     @ResponseBody
     public ResultPojo<T> operData(@RequestBody T entity, @PathVariable String oper, HttpServletRequest request, HttpServletResponse response) {
-        return wrapUser(request,user->{
+        return wrapUser(request,"operData",user->{
             try {
                 if(user!=null){
                     Method m=entity.getClass().getMethod("setCreater",String.class);
@@ -36,7 +36,7 @@ public abstract class MyControllerPlus<T> extends MyController<T> implements Che
     @RequestMapping({"/queryById/{id}"})
     @ResponseBody
     public ResultPojo<T> queryById(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
-        return wrapUser(request,user->{
+        return wrapUser(request,"queryById",user->{
             return super.queryById(id, request, response);
         });
     }
@@ -45,7 +45,7 @@ public abstract class MyControllerPlus<T> extends MyController<T> implements Che
     @RequestMapping({"/queryData"})
     @ResponseBody
     public ResultPojo<T> queryData(@RequestBody ParamPojo paramPojo, HttpServletRequest request, HttpServletResponse response) {
-        return wrapUser(request,user->{
+        return wrapUser(request,"queryData",user->{
             if(user!=null)
                 paramPojo.put("creater",((User)user).getUserId());
             return super.queryData(paramPojo, request, response);
@@ -56,7 +56,7 @@ public abstract class MyControllerPlus<T> extends MyController<T> implements Che
     @RequestMapping({"/querySimpleData"})
     @ResponseBody
     public ResultPojo<T> querySimpleData(@RequestBody ParamPojo paramPojo, HttpServletRequest request, HttpServletResponse response) {
-       return wrapUser(request,user->{
+       return wrapUser(request,"querySimpleData",user->{
            if(user!=null)
                paramPojo.put("creater",((User)user).getUserId());
             return super.querySimpleData(paramPojo, request, response);

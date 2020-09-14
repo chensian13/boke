@@ -38,5 +38,10 @@ public class BokeController extends MyControllerPlus<Boke> {
         return loginCache.get(tokenUtilDefault.getTokenCookie(request));
     }
 
+    @Override
+    public String[] getWhiteMethod() {
+        return null;
+    }
+
 
 }
