@@ -4,13 +4,13 @@ import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
 import csa.stu.app.common.entity.User;
-import csa.stu.app.common.util.UserinfoRequestUtil;
+import csa.stu.app.common.token.UserInfoUtilBoth;
 import csa.stu.util.ap.pojo.ResultPojo;
+import csa.stu.util.ap.web_helper.token.TokenUtilDefault;
 import csa.stu.util.myutils.direct.JSONUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,12 +23,10 @@ import javax.servlet.http.HttpServletResponse;
 //@Component
 public class ZuulAuthFilter extends ZuulFilter {
     @Autowired
-    private UserinfoRequestUtil userinfoUtil;
+    private UserInfoUtilBoth userInfoUtilBoth;
+    @Autowired
+    private TokenUtilDefault tokenUtilDefault;
     private Logger logger= LoggerFactory.getLogger(ZuulAuthFilter.class);
-    @Value("${csa.front}")
-    private String app;
-    @Value("${csa.zuul}")
-    private String zuul;
 
     @Override
     public String filterType() {
@@ -61,13 +59,12 @@ public class ZuulAuthFilter extends ZuulFilter {
         HttpServletResponse response=ctx.getResponse();
         HttpServletRequest request = ctx.getRequest();
         try{
-            User user=userinfoUtil.getUser(request);
+            User user=userInfoUtilBoth.getUser(tokenUtilDefault.getTokenCookie(request));
             if(user!=null){
                 logger.info("请求放行："+user);
                 return null;
             }
             //没有登录
-            //response.sendRedirect(app+zuul+"/work/signin");
             ctx.setSendZuulResponse(false);
             ctx.setResponseStatusCode(200);
             ctx.setResponseBody(JSONUtil.formatJSON(ResultPojo.newInstance(ResultPojo.NO, "请登录")));

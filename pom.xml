@@ -7,11 +7,7 @@
         <module>user-work</module>
         <module>common</module>
         <module>front</module>
-        <module>server-center</module>
         <module>zuul</module>
-        <module>single</module>
-        <module>boke-single</module>
-        <module>single-web</module>
         <module>boke-keeper</module>
     </modules>
 
