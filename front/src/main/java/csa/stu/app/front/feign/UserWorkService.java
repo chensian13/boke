@@ -16,32 +16,28 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-@FeignClient(name = "user-work",configuration = UserWorkService.FeignMultipartSupportConfig.class)
+@FeignClient(name = "user-work")
 public interface UserWorkService {
 
     //*********************************************boke*******************************************
 
     @RequestMapping("/boke/data/add")
-    ResultPojo<Boke> addOne(@RequestBody Boke entity);
+    ResultPojo<Boke> addOneBoke(@RequestBody Boke entity);
 
     @RequestMapping("/boke/data/stop")
-    ResultPojo<Boke> stopOne(@RequestBody Boke entity);
+    ResultPojo<Boke> stopOneBoke(@RequestBody Boke entity);
 
     @RequestMapping("/boke/data/del")
-    ResultPojo<Boke> delOne(@RequestBody Boke entity);
+    ResultPojo<Boke> delOneBoke(@RequestBody Boke entity);
 
     @RequestMapping("/boke/data/upd")
-    ResultPojo<Boke> updOne(@RequestBody Boke entity);
+    ResultPojo<Boke> updOneBoke(@RequestBody Boke entity);
 
     @RequestMapping({"/boke/queryData"})
-    public ResultPojo<Boke> queryData(@RequestBody ParamPojo paramPojo);
-
-    @RequestMapping(value="/picture/upload",produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResultPojo<Picture> uploadOne(@RequestPart("upload") MultipartFile file
-            ,@RequestParam("userId") String userId,@RequestParam("bokeId") String bokeId);
+    public ResultPojo<Boke> queryBokeData(@RequestBody ParamPojo paramPojo);
 
     @RequestMapping({"/boke/queryById/{id}"})
-    public ResultPojo<Boke> queryById(@PathVariable String id);
+    public ResultPojo<Boke> queryBokeById(@PathVariable String id);
 
 
     //*********************************************博客类型********************************************
@@ -62,40 +58,27 @@ public interface UserWorkService {
     public ResultPojo<Type> queryTypeById(@PathVariable String id) ;
 
 
-    //***********************************************picture**********************************************
-    @RequestMapping("/picture/data/del")
-    ResultPojo<Picture> delPictureOne(@RequestBody Picture entity);
+//*********************************************special*******************************************
 
-    @RequestMapping({"/picture/queryData"})
-    public ResultPojo<Picture> queryPictureData(@RequestBody ParamPojo paramPojo);
+    @RequestMapping("/special/data/add")
+    ResultPojo<Special> addOneSpecial(@RequestBody Special entity);
 
-    //**************************************************user*************************************************
-    @RequestMapping("/user/queryById/{id}")
-    ResultPojo<User> queryUserById(@PathVariable("id") String id);
+    @RequestMapping("/special/data/stop")
+    ResultPojo<Special> stopOneSpecial(@RequestBody Special entity);
 
-    @PostMapping("/user/register")
-    public ResultPojo register(@RequestBody User user);
+    @RequestMapping("/special/data/del")
+    ResultPojo<Special> delOneSpecial(@RequestBody Special entity);
 
-    @RequestMapping("/user/data/upd")
-    ResultPojo<User> updUserById(@RequestBody User user);
+    @RequestMapping("/special/data/upd")
+    ResultPojo<Special> updOneSpecial(@RequestBody Special entity);
 
-    @PostMapping("/user/modPass")
-    ResultPojo modPass(@RequestBody User user);
+    @RequestMapping({"/special/queryData"})
+    public ResultPojo<Special> querySpecialData(@RequestBody ParamPojo paramPojo);
 
-    /**
-     * 既支持文件上传也支持实体类作为参数接收
-     */
-    @Configuration
-    class FeignMultipartSupportConfig {
-        @Autowired
-        private ObjectFactory<HttpMessageConverters> messageConverters;
+    @RequestMapping({"/special/queryById/{id}"})
+    public ResultPojo<Special> querySpecialById(@PathVariable String id);
 
-        @Bean
-        public Encoder feignFormEncoder() {
-            return new SpringFormEncoder(new SpringEncoder(messageConverters));
-        }
 
-    }
 
 
 }
