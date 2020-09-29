@@ -44,9 +44,7 @@ public class ZuulAuthFilter extends ZuulFilter {
         HttpServletRequest request = RequestContext.getCurrentContext().getRequest();
         String uri=request.getRequestURI();
         //针对以下请求拦截
-        if(uri.contains("/boke/")
-                || uri.contains("/user/")
-                || uri.contains("/work/")){
+        if(uri.contains("/work/")){
             logger.info("已拦截："+request.getRequestURI());
             return true;
         }

@@ -10,7 +10,6 @@ import csa.stu.app.common.entity.Picture;
 import csa.stu.util.ap.mvc.helper.ServiceHelper;
 import csa.stu.util.ap.pojo.ParamPojo;
 import csa.stu.util.ap.pojo.ResultPojo;
-import csa.stu.util.myutils.direct.EmptyUtil;
 import csa.stu.util.myutils.direct.FileUtil;
 import csa.stu.util.myutils.exception.CsaplatException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service("pictureService")
@@ -98,9 +99,6 @@ public class PictureServiceImpl implements PictureService {
     @Transactional
     @Override
     public ResultPojo<Picture> uploadOne(MultipartFile file, Picture picture) {
-        if(EmptyUtil.isEmpty(picture.getCreater())){
-            return ResultPojo.newInstance(ResultPojo.NO,"没有用户信息");
-        }
         //封装图片数据
         picture.setPictureId(ServiceHelper.generateUUID32());
         picture.initDefault();
@@ -111,16 +109,13 @@ public class PictureServiceImpl implements PictureService {
             throw new RuntimeException(e);
         }
         //数据库保存路径
-        String path= picture.getCreater()
-                +"/"
-                +picture.getPictureId()
-                +"."
-                +picture.getSuffix();
-        picture.setPath(path);
-        FileUtil.createDirs(filepath +File.separator+path); //创建目录
+        String path= generateDirPath();
+        String imgPath = generateFilePath(path,picture.getSuffix());
+        picture.setPath(imgPath);
+        FileUtil.createDirs(filepath +path); //创建目录
         try{
             //上传图片文件
-            file.transferTo(new File(filepath +File.separator+path));
+            file.transferTo(new File(filepath +imgPath));
         }catch (Exception e){
             throw new RuntimeException(e);
         }
@@ -128,4 +123,25 @@ public class PictureServiceImpl implements PictureService {
         pictureMapper.insert(picture);
         return ResultPojo.newInstance(picture);
     }
+
+    private String generateDirPath(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        StringBuilder sb=new StringBuilder();
+        sb.append(File.separator);
+        sb.append(calendar.get(Calendar.YEAR));
+        sb.append(calendar.get(Calendar.MONTH));
+        sb.append(calendar.get(Calendar.DAY_OF_MONTH));
+        return sb.toString();
+    }
+
+    private String generateFilePath(String path,String suffix){
+        StringBuilder sb=new StringBuilder(path);
+        sb.append(File.separator);
+        sb.append(ServiceHelper.generateTimestampID());
+        sb.append(".");
+        sb.append(suffix);
+        return sb.toString();
+    }
+
 }

@@ -8,6 +8,10 @@ import csa.stu.util.ap.mvc.plus.CheckLoginController;
 import csa.stu.util.ap.pojo.ParamPojo;
 import csa.stu.util.ap.pojo.ResultPojo;
 import csa.stu.util.ap.web_helper.token.TokenUtilDefault;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +23,7 @@ import java.io.IOException;
 /**
  * @author csa
  */
+@Api(value = "图片管理")
 @RequestMapping("/picture")
 @Controller
 public class PictureController implements CheckLoginController {
@@ -29,16 +34,23 @@ public class PictureController implements CheckLoginController {
     @Autowired
     private UserInfoUtilBoth userInfoUtilBoth;
 
-
+    @ApiOperation(value = "删除图片")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "entity")
+    })
     @ResponseBody
-    @RequestMapping("/data/del")
+    @PostMapping("/data/del")
     public ResultPojo<Picture> delOne(@RequestBody Picture entity, HttpServletRequest request){
         return mustWrapUser(request,data->{
             return bokeKeeperService.delPictureOne(entity);
         });
     }
 
-    @RequestMapping({"/queryData"})
+    @ApiOperation(value = "分页查询")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "paramPojo")
+    })
+    @PostMapping({"/queryData"})
     @ResponseBody
     public ResultPojo<Picture> queryData(@RequestBody ParamPojo paramPojo, HttpServletRequest request) {
         return mustWrapUser(request,data->{
@@ -57,7 +69,11 @@ public class PictureController implements CheckLoginController {
      * @param response
      * @throws IOException
      */
-    @RequestMapping("/upload")
+    @ApiOperation(value = "上传图片")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "upload")
+    })
+    @PostMapping("/upload")
     @ResponseBody
     public ResultPojo<String> uploadOne(@RequestPart("upload") MultipartFile file
             ,HttpServletRequest request
