@@ -8,11 +8,11 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-@MapperScan({"csa.stu.app.bk.dao"})
+@MapperScan({"csa.stu.app.bk.**.dao"})
 @EnableTransactionManagement
 @SpringBootApplication
-@EnableDiscoveryClient
-@EnableFeignClients
+//@EnableDiscoveryClient
+//@EnableFeignClients
 @ComponentScan({"csa.stu.app.bk","csa.stu.app.common"})
 public class BokeKeeperApp {
 

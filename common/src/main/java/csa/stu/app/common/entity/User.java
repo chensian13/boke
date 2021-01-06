@@ -21,8 +21,6 @@ public class User extends BaseEntity{
 
     private String realname;
 
-    private String userCode;
-
     private String creater;
 
     private String gender;

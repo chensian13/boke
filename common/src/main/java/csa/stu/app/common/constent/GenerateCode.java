@@ -4,7 +4,6 @@ package csa.stu.app.common.constent;
  * 生成code
  */
 public abstract class GenerateCode {
-    public static final String USER="USER";
     public static final String BOKE="BOKE";
     public static final String SPECIAL="SPECIAL";
     public static final String PICTURE="PICTURE";

@@ -2,10 +2,10 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="csa.stu.app.bk.dao.UserMapper">
+<mapper namespace="csa.stu.app.bk.sso.dao.SsoMapper">
 
     <sql id="cols">
-        user_id, email, user_name, user_code, creater, createtime, isdel, gender, tel,password ,info,salt,realname
+        user_id, email, user_name, creater, createtime, isdel, gender, tel,password ,info,salt,realname
       </sql>
 
 
