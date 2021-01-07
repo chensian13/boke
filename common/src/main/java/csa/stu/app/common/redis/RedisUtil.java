@@ -1,7 +1,7 @@
 package csa.stu.app.common.redis;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class RedisUtil {
     @Autowired(required = false)
-    private RedisTemplate redisTemplate;
+    private StringRedisTemplate redisTemplate;
 
     //封装方法  get
     public String get(String key) {

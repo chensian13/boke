@@ -36,4 +36,13 @@ public class User extends BaseEntity{
 
     @TableField(exist = false)
     private String token;
+    
+    /**
+     * 安全处理
+     */
+    public void saveProcess(){
+    	this.password = null;
+    	this.salt = null;
+    	this.oldPass = null;
+    }
 }
