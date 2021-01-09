@@ -13,7 +13,7 @@
         select
         <include refid="cols" />
         from boke_user
-        where user_name = #{userName,jdbcType=VARCHAR} and password=#{password}
+        where email = #{email} and password=#{password}
     </select>
 
 
