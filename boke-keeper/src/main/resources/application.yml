@@ -3,6 +3,10 @@ server:
   port: 8083
 
 spring:
+  servlet:
+    multipart:
+      max-request-size: 100MB
+      max-file-size: 50MB
   cloud:
     loadbalancer:
       retry:
@@ -60,27 +64,27 @@ logging:
 csa:
   filepath: E:/base/boke/  #上传图片位置
 
-##ribbon配置
-#ribbon:
-#  ConnectTimeout: 3000
-#  ReadTimeout: 3000
-#  MaxAutoRetries: 0
-#  MaxAutoRetriesNextServer: 0
-#
-#
-##hystrix配置
-#hystrix:
-#  command:
-#    default:
-#      execution:
-#        isolation:
-#          thread:
-#            timeoutInMilliseconds: 15000
-#
-##feign配置
-#feign:
-#  hystrix:
-#    enabled: true
-#
-#
-#
+#ribbon配置
+ribbon:
+  ConnectTimeout: 3000
+  ReadTimeout: 3000
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 0
+
+
+#hystrix配置
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 15000
+
+#feign配置
+feign:
+  hystrix:
+    enabled: true
+
+
+

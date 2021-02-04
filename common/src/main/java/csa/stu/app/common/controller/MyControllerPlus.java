@@ -1,6 +1,5 @@
 package csa.stu.app.common.controller;
 
-import csa.stu.app.common.entity.User;
 import csa.stu.util.ap.mvc.plus.CheckLoginController;
 import csa.stu.util.ap.mvc.plus.MyController;
 import csa.stu.util.ap.pojo.ParamPojo;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.lang.reflect.Method;
 
 public abstract class MyControllerPlus<T> extends MyController<T> implements CheckLoginController {
 
@@ -20,15 +18,7 @@ public abstract class MyControllerPlus<T> extends MyController<T> implements Che
     @ResponseBody
     public ResultPojo<T> operData(@RequestBody T entity, @PathVariable String oper, HttpServletRequest request, HttpServletResponse response) {
         return wrapUser(request,"operData",user->{
-            try {
-                if(user!=null){
-                    Method m=entity.getClass().getMethod("setCreater",String.class);
-                    m.invoke(entity,((User)user).getUserId());
-                }
-                return super.operData(entity, oper, request, response);
-            } catch (Exception e) {
-                throw new RuntimeException("没有creater字段");
-            }
+        	return super.operData(entity, oper, request, response);
         });
     }
 
@@ -46,8 +36,6 @@ public abstract class MyControllerPlus<T> extends MyController<T> implements Che
     @ResponseBody
     public ResultPojo<T> queryData(@RequestBody ParamPojo paramPojo, HttpServletRequest request, HttpServletResponse response) {
         return wrapUser(request,"queryData",user->{
-            if(user!=null)
-                paramPojo.put("creater",((User)user).getUserId());
             return super.queryData(paramPojo, request, response);
         });
     }
@@ -57,8 +45,6 @@ public abstract class MyControllerPlus<T> extends MyController<T> implements Che
     @ResponseBody
     public ResultPojo<T> querySimpleData(@RequestBody ParamPojo paramPojo, HttpServletRequest request, HttpServletResponse response) {
        return wrapUser(request,"querySimpleData",user->{
-           if(user!=null)
-               paramPojo.put("creater",((User)user).getUserId());
             return super.querySimpleData(paramPojo, request, response);
        });
     }

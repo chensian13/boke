@@ -30,11 +30,5 @@ public class Picture extends BaseEntity{
 
     private String path;
 
-    @TableField(exist = false)
-    private String httpPath;
 
-    public String getHttpPath() {
-        if(EmptyUtil.isEmpty(getPath())) return null;
-        return "http://imgs/"+getPath();
-    }
 }

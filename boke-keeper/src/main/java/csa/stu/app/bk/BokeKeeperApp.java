@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @SpringBootApplication
 //@EnableDiscoveryClient
-//@EnableFeignClients
+@EnableFeignClients
 @ComponentScan({"csa.stu.app.bk","csa.stu.app.common"})
 public class BokeKeeperApp {
 

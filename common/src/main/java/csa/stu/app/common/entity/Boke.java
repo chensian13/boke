@@ -1,5 +1,7 @@
 package csa.stu.app.common.entity;
 
+import java.util.List;
+
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -63,4 +65,7 @@ public class Boke extends BaseEntity{
     //专辑名称
     @TableField(value = "specialName",exist = false)
     private String specialName;
+    
+    @TableField(value = "specialName",exist = false)
+    private List<Image> images;
 }
